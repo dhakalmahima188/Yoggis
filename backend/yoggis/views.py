@@ -31,3 +31,9 @@ def videofeed(request):
 
 def yoga(request):
     return render(request,'yoggis/yoga.html')
+
+def home(request):
+    return render(request,'yoggis/home.html')
+
+def general(request):
+    return render(request,'yoggis/general.html')
