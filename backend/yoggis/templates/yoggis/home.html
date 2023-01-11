@@ -63,21 +63,79 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <section id="hero" class="d-flex align-items-center">
 
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1>Welcome to Yoggis</h1>
-          <h2>Perfect your practice with AI-powered yoga feedback and guidance</h2>
+            <div class="container">
+              <div class="row gy-4">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                  <h1>Welcome to Yoggis</h1>
+                  <h2>Perfect your practice with AI-powered yoga feedback and guidance</h2>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                  <img src="{% static 'yoggis/img/hero-img.jpeg' %}" class="img-fluid animated" alt="">
+                </div>
+              </div>
+            </div>
+        
+        
+          </section><!-- End Hero -->
         </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img">
-          <img src="{% static 'yoggis/img/hero-img.jpeg' %}" class="img-fluid animated" alt="">
-        </div>
-      </div>
-    </div>
+        <div class="carousel-item">
+          <section id="hero" class="d-flex align-items-center">
 
-  </section><!-- End Hero -->
+            <div class="container">
+              <div class="row gy-4">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                  <h1>Welcome to Yoggis</h1>
+                  <h2>Perfect your practice with AI-powered yoga feedback and guidance</h2>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                  <img src="{% static 'yoggis/img/about-img.jpeg' %}" class="img-fluid animated" alt="">
+                </div>
+              </div>
+            </div>
+        
+        
+          </section><!-- End Hero -->
+        </div>
+        <div class="carousel-item">
+          <section id="hero" class="d-flex align-items-center">
+
+            <div class="container">
+              <div class="row gy-4">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                  <h1>Welcome to Yoggis</h1>
+                  <h2>Perfect your practice with AI-powered yoga feedback and guidance</h2>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                  <img src="{% static 'yoggis/img/treepose.jpeg' %}" class="img-fluid animated" alt="">
+                </div>
+              </div>
+            </div>
+        
+        
+          </section><!-- End Hero -->
+        </div>
+  
+</div>
+<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="sr-only">Next</span>
+</a>
+</div>
 
   <main id="main">
 
