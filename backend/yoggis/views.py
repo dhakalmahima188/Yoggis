@@ -37,3 +37,6 @@ def home(request):
 
 def general(request):
     return render(request,'yoggis/general.html')
+
+def challenges(request):
+    return render(request,'yoggis/challenges.html')

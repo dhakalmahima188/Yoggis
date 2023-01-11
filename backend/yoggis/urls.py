@@ -6,6 +6,7 @@ urlpatterns = [
     path('video_feed/',views.videofeed,name='video_feed'),
     path('',views.home,name='home'),
     path('/general',views.general,name='general'),
+      path('challenges/',views.challenges,name='challenges'),
 
 
 ]

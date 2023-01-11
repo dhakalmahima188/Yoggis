@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'yoggis',
     'corsheaders',
     'rest_framework',
+
 ]
 
 MIDDLEWARE = [
