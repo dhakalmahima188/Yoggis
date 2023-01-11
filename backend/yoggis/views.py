@@ -40,3 +40,6 @@ def general(request):
 
 def challenges(request):
     return render(request,'yoggis/challenges.html')
+
+def leaderboard(request):
+    return render(request,'yoggis/leaderboard.html')
