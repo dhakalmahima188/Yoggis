@@ -1,67 +1,6 @@
+{% extends "yoggis/common.html" %}
+{% block main %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Yoggis</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="{% static 'yoggis/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'yoggis/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'yoggis/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'yoggis/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'yoggis/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'yoggis/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'yoggis/vendor/aos/aos.css' %}" rel="stylesheet">
-  <link href="{% static 'yoggis/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-
-  <link href ="{% static 'yoggis/css/carousel.css' %}" rel="stylesheet">
-
-  <link type="text/css" href="{% static 'yoggis/css/home.css' %}" rel="stylesheet">
- 
-
-  
-</head>
-
-<body>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
-
-      <div class="logo">
-        <h1 class="text-light"><a href="{% url 'home' %}"><span>Yoggis</span></a></h1>
-       
-      </div>
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#yogas">Services</a></li>
-          <li><a class="nav-link scrollto" href="#leaderboard">Challenges</a></li>
-          <li><a class="nav-link scrollto" href="#leaderboard">Pricing</a></li>
-
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
-    </div>
-  </header><!-- End Header -->
-
   <!-- ======= Hero Section ======= -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -197,7 +136,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">Challanges</a></h4>
+              <h4 class="title"><a href="">Meditation</a></h4>
             </div>
           </div>
 
@@ -319,19 +258,4 @@
    
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{% static 'yoggis/vendor/aos/aos.js' %}"></script>
-  <script src="{% static 'yoggis/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'yoggis/vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'yoggis/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'yoggis/vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'yoggis/vendor/php-email-form/validate.js' %}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{% static 'yoggis/js/main.js' %}"></script>
-
-</body>
-
-</html>
+  {% endblock main %}
