@@ -25,7 +25,15 @@ class YogaView(viewsets.ModelViewSet):
 
 #put below code in a class to render somewhere
 def videofeed(request):
-    return StreamingHttpResponse(gen_frames(), content_type="image/jpeg")
+    response= StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
+    response['Cache-Control'] = 'no-cache'
+    return response
 
 def yoga(request):
     return render(request,'yoggis/yoga.html')
+
+def home(request):
+    return render(request,'yoggis/home.html')
+
+def general(request):
+    return render(request,'yoggis/general.html')

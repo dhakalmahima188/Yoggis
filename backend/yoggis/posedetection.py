@@ -244,7 +244,7 @@ def gen_frames():
             # Perform the Pose Accuracy Stats.
             frame, _ = tPoseAccuracy(landmarks, frame, display=False)
         # Display the frame.
-        cv2.imshow('Pose Accuracy Stats', frame)
+        # cv2.imshow('Pose Accuracy Stats', frame)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         #print("hi",frame)
