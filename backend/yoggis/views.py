@@ -9,7 +9,7 @@ from rest_framework import viewsets
 from .serializers import YogaSerializer
  
 # import the Todo model from the models file
-from .models import Yoga
+from .models import Yoga,YogaScore
 from .posedetection import gen_frames
 
 # create a class for the Todo model viewsets
@@ -30,13 +30,23 @@ def videofeed(request):
     return response
 
 def yoga(request):
-    return render(request,'yoggis/yoga.html')
+    return render(request, 'yoggis/yoga.html')
 
 def home(request):
-    return render(request,'yoggis/home.html')
+    trending_yogas = Yoga.objects.all()
+    if len(trending_yogas) >= 4:
+        trending_yogas = trending_yogas[0:4]
+    leaderboard = YogaScore.objects.all()
+    if len(leaderboard) >= 5:
+        leaderboard = leaderboard[0:5]
+    context = {
+        "trending_yogas" : trending_yogas,
+        "leaderboard" : leaderboard
+    }
+    return render(request, 'yoggis/home.html', context)
 
 def general(request):
-    return render(request,'yoggis/general.html')
+    return render(request, 'yoggis/general.html')
 
 def challenges(request):
-    return render(request,'yoggis/challenges.html')
+    return render(request, 'yoggis/challenges.html')

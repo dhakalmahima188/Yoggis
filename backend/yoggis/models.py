@@ -6,6 +6,8 @@ class YogaScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField()
 
+    def __str__(self):
+        return self.user.username
 
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
@@ -26,14 +28,31 @@ class YogaCategory(models.Model):
 
 
 class Yoga(models.Model):
+    BEGINNER = 'C'
+    INTERMEDIATE = 'B'
+    ADVANCEDINTERMEDIATE = 'A'
+    EXPERT = 'S'
+    DIFFICULTY_CHOICES = [
+        (BEGINNER, 'Beginner'),
+        (INTERMEDIATE, 'Intermediate'),
+        (ADVANCEDINTERMEDIATE, 'Advanced Intermediate'),
+        (EXPERT, 'Expert')
+    ]
+
     title = models.CharField(max_length=50)
-    description = models.CharField(max_length=250)
+    description = models.TextField()
+    how_to_perform = models.TextField(blank=True)
     image = models.ImageField(upload_to='yogaImages/')
     # age group
     lower_age = models.IntegerField(default=0)
     upper_age = models.IntegerField(default=0)
+    difficulty = models.CharField(
+        max_length=1,
+        choices=DIFFICULTY_CHOICES,
+        default=BEGINNER,
+    )
     yoga_category = models.ManyToManyField(YogaCategory)
-    avoid_for_disorder = models.ManyToManyField(UserDisorder)
+    avoid_for_disorder = models.ManyToManyField(UserDisorder,blank=True)
 
     def __str__(self):
         return self.title
@@ -43,3 +62,6 @@ class CorrectVectorLocations(models.Model):
     angle_location = models.CharField(max_length=20)
     angle_value = models.FloatField()
     angle_of = models.ForeignKey(Yoga, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.angle_location
