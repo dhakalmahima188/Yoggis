@@ -511,6 +511,8 @@ body {
     border-radius: 15px;
     text-align: center;
     border-bottom: 3px solid #fff;
+    height: 200px;
+    width:250px;
   }
   .services .icon-box:hover {
     transform: translateY(-5px);
@@ -534,6 +536,16 @@ body {
     font-size: 15px;
     line-height: 28px;
     margin-bottom: 0;
+  }
+
+ .services .image_yoga{
+    width: 150px;
+    height: 130px;
+    border-radius: 10%;
+    padding:10px;
+  
+    
+
   }
   
   /*--------------------------------------------------------------
