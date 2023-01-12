@@ -28,7 +28,7 @@ DEBUG = True
 
 SERVE = False
 
-ALLOWED_HOSTS = ['4.224.27.113','hackaweek.krishbin.tech','127.0.0.1']
+ALLOWED_HOSTS = ['4.224.27.113','hackaweek.krishbin.tech','127.0.0.1','krishbin.centralindia.cloudapp.azure.com']
 
 
 # Application definition
