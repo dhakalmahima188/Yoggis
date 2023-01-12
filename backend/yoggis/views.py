@@ -1,16 +1,19 @@
 
 from django.shortcuts import render
-from django.http.response import StreamingHttpResponse
- 
+from django.http.response import StreamingHttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 # import view sets from the REST framework
 from rest_framework import viewsets
- 
+from django.conf import settings
 # import the TodoSerializer from the serializer file
 from .serializers import YogaSerializer
  
 # import the Todo model from the models file
 from .models import Yoga,YogaScore
-from .posedetection import gen_frames
+
+if settings.SERVE:
+    from .posedetection import gen_frames
 
 # create a class for the Todo model viewsets
 class YogaView(viewsets.ModelViewSet):
@@ -25,9 +28,11 @@ class YogaView(viewsets.ModelViewSet):
 
 #put below code in a class to render somewhere
 def videofeed(request):
-    response= StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
-    response['Cache-Control'] = 'no-cache'
-    return response
+    if settings.SERVE:
+        response= StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
+        response['Cache-Control'] = 'no-cache'
+        return response
+    return HttpResponseRedirect(reverse('home'))
 
 def yoga(request):
     return render(request, 'yoggis/yoga.html')
