@@ -1429,3 +1429,7 @@ body {
   -ms-flex: 1; /* IE 10 */
   flex: 1;
 }
+.button_text{
+  margin-top:20px;
+  /* padding:20px; */
+}

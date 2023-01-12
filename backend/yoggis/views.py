@@ -61,11 +61,13 @@ def general(request):
 
 def challenges(request):
     return render(request,'yoggis/challenges.html')
+def squad(request):
+    return render(request,'yoggis/squad.html')
 
+def session(request):
+    return render(request,'yoggis/session.html')
 def chronic(request):
     return render(request,'yoggis/chronic.html')
-def leaderboard(request):
-    return render(request,'yoggis/leaderboard.html')
 
 def tpose(request):
     return render(request,'yoggis/tpose.html')

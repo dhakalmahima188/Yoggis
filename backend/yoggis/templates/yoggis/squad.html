@@ -1,0 +1,46 @@
+{% extends "yoggis/common.html" %}
+{% block main %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <section id="hero" class="d-flex align-items-center">
+
+          <div class="container">
+            <div class="row gy-4">
+              <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                <h1>Welcome to Yoga Squad</h1>
+                <h2>Make Yoga as a source of entertainment as well. <br>Invite friends<br></h2>
+                <div class="button_text"> <a href="/squad/session"><button type="button"
+                      class=" button_text btn btn-success">Start Session</button> </a></div>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                <img src="{% static 'yoggis/img/squad.jpg' %}" class="img-fluid animated" alt="">
+              </div>
+            </div>
+          </div>
+
+
+        </section><!-- End Hero -->
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  {% endblock main %}
