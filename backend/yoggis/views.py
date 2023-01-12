@@ -58,7 +58,16 @@ def general(request):
         "general":general
     }
     return render(request, 'yoggis/general.html',context)
+def chronic(request):
+    yogas= Yoga.objects.all()
+    asthma=yogas.filter(yoga_category__type__contains="Asthma")
 
+
+    context={
+        "asthma":asthma
+    }
+    return render(request, 'yoggis/chronic.html',context)
+    
 def challenges(request):
     return render(request,'yoggis/challenges.html')
 def squad(request):
