@@ -50,6 +50,7 @@
                 <img src="{{ yoga.image.url }}" class="img-fluid rounded d-block" style="height: fit-content;">
             </div>
             <div class="container">
+                {% if leaderboard %}
                 <div class="leaderboard">
                     <h1>
                         <svg class="ico-cup">
@@ -66,6 +67,7 @@
                         {% endfor %}
                     </ol>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
