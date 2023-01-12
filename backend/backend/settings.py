@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-7y1=@=4$-_vt#jtfm=dp52d^u&kki4f+vf+43joi2#2*myrpz1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+SERVE = False
+
+ALLOWED_HOSTS = ['4.224.27.113','hackaweek.krishbin.tech','127.0.0.1']
 
 
 # Application definition
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'yoggis',
     'corsheaders',
     'rest_framework',
@@ -81,11 +84,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hackaweek',
+        'USER': 'nads',
+        'PASSWORD': 'nads123',
+        'HOST': "20.210.222.169",
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -132,6 +138,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
+# STATICFILES_STORAGE = 'backend.custom_azure.AzureMediaStorage'
+
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+AZURE_ACCOUNT_NAME = "hackaweek"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 # White listing the localhost:3000 port
 # for React
 CORS_ORIGIN_WHITELIST = (

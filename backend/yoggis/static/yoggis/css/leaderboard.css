@@ -1,0 +1,150 @@
+
+Body
+--------------------*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 450px;
+    height: 100vh;
+    margin: 0;
+    /* background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%); */
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+}
+
+/*--------------------
+Leaderboard
+--------------------*/
+.leaderboard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 600px;
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+    border-radius: 10px;
+    box-shadow: 0 7px 30px rgba(62, 9, 11, 0.3);
+}
+
+.leaderboard h1 {
+    font-size: 18px;
+    color: #e1e1e1;
+    padding: 12px 13px 18px;
+}
+
+.leaderboard h1 svg {
+    width: 25px;
+    height: 26px;
+    position: relative;
+    top: 3px;
+    margin-right: 6px;
+    vertical-align: baseline;
+}
+
+.leaderboard ol {
+    counter-reset: leaderboard;
+}
+
+.leaderboard ol li {
+    position: relative;
+    z-index: 1;
+    font-size: 14px;
+    counter-increment: leaderboard;
+    padding: 18px 10px 18px 50px;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1, 1);
+}
+
+.leaderboard ol li::before {
+    content: counter(leaderboard);
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    color: #c24448;
+    background: #fff;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.leaderboard ol li mark {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 18px 10px 18px 50px;
+    margin: 0;
+    background: none;
+    color: #fff;
+}
+
+.leaderboard ol li mark::before,
+.leaderboard ol li mark::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -11px;
+    left: -9px;
+    border-top: 10px solid #c24448;
+    border-left: 10px solid transparent;
+    transition: all 0.1s ease-in-out;
+    opacity: 0;
+}
+
+.leaderboard ol li mark::after {
+    left: auto;
+    right: -9px;
+    border-left: none;
+    border-right: 10px solid transparent;
+}
+
+.leaderboard ol li small {
+    position: relative;
+    z-index: 2;
+    display: block;
+    text-align: right;
+}
+
+.leaderboard ol li::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fa6855;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+
+.leaderboard ol li:hover {
+    z-index: 2;
+    overflow: visible;
+}
+
+.leaderboard ol li:hover::after {
+    opacity: 1;
+    transform: scaleX(1.06) scaleY(1.03);
+}
+
+.leaderboard ol li:hover mark::before,
+.leaderboard ol li:hover mark::after {
+    opacity: 1;
+    transition: all 0.35s ease-in-out;
+}
+
