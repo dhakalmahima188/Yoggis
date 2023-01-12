@@ -1425,3 +1425,7 @@ body {
 .the-most img {
     max-width: 100%;
 }
+#videofeed div {
+  -ms-flex: 1; /* IE 10 */
+  flex: 1;
+}
