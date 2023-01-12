@@ -51,10 +51,23 @@ def home(request):
     return render(request, 'yoggis/home.html', context)
 
 def general(request):
-    return render(request, 'yoggis/general.html')
+    yogas= Yoga.objects.all()
+    general_yogas=yogas.filter(yoga_category__type__contains="General")
+    general=general_yogas.filter(difficulty__contains="C")
+    context={
+        "general":general
+    }
+    return render(request, 'yoggis/general.html',context)
 
 def squad(request):
     return render(request,'yoggis/squad.html')
 
 def session(request):
     return render(request,'yoggis/session.html')
+def chronic(request):
+    return render(request,'yoggis/chronic.html')
+
+def tpose(request):
+    return render(request,'yoggis/tpose.html')
+# def leaderboard(request):
+#     return render(request,'yoggis/leaderboard.html')

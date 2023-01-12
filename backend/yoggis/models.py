@@ -2,12 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class YogaScore(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    score = models.IntegerField()
 
-    def __str__(self):
-        return self.user.username
 
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
@@ -65,3 +60,11 @@ class CorrectVectorLocations(models.Model):
 
     def __str__(self):
         return self.angle_location
+
+class YogaScore(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    yoga = models.ForeignKey(Yoga, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
