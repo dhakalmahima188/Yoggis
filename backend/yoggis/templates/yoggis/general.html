@@ -46,49 +46,37 @@
 
       <div class="section-title">
         
-        <p>Advanced Poses</p>
+        <p>Advanced</p>
       </div>
 
 
       <div class="row">
+        {% for advanced_yoga in advanced %}
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
-            <a href="{% url 'general' %}">
+            <a href="{% url 'tpose' %}">
             <span class="clickable" >
               <div class="icon-box">
-              <div class="icon" ><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title">T-pose</h4>
+              <div class="icon" ><h3 class="title">{{ advanced_yoga.title }}</h4></div>
+              
+              <img class="card-img-top" src="{{ general_yoga.image.url }}" alt="Card image cap">
+              
+
               </div>
             </span>
           </a>
           </div>
+          {% endfor %}
 
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
-          <div class="icon-box">
-            <div class="icon"><i class="bx bx-file"></i></div>
-            <h4 class="title"><a href="">Chronic diseases</a></h4>
-          </div>
-        </div>
+        
 
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-          <div class="icon-box">
-            <div class="icon"><i class="bx bx-tachometer"></i></div>
-            <h4 class="title"><a href="">Challanges</a></h4>
-          </div>
-        </div>
 
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-          <div class="icon-box">
-            <div class="icon"><i class="bx bx-world"></i></div>
-            <h4 class="title"><a href="">Squad</a></h4>
-          </div>
-        </div>
-
+        
       </div>
 
     </div>
   </section><!-- End Services Section -->
 
-  
 
+ 
 {% endblock main %}
 

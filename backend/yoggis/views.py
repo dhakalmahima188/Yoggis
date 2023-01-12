@@ -36,19 +36,24 @@ def home(request):
 
 
 def general(request):
-    yogas = Yoga.objects.all()
-    general_yogas = yogas.filter(yoga_category__type__contains="General")
+    general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
     gen = general_yogas.filter(difficulty__contains="C")
+    adv=general_yogas.filter(difficulty__contains="A")
+    print("gen")
     context = {
-        "general": gen
+        "general": gen,
+        "advanced":adv
     }
     return render(request, 'yoggis/general.html',context)
-    
+
 def chronic(request):
+    print("hiiii")
     yogas= Yoga.objects.all()
     asthmaa=yogas.filter(yoga_category__type__contains="Asthma")
     back=yogas.filter(yoga_category__type__contains="Back-Pain")
-
+    print("hello")
+    print(asthmaa)
+    print(back)
     context={
         "asthma":asthmaa,
         "backpain":back
