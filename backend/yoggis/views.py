@@ -38,32 +38,30 @@ def home(request):
 def general(request):
     general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
     gen = general_yogas.filter(difficulty__contains="C")
-    adv=general_yogas.filter(difficulty__contains="A")
+    adv = general_yogas.filter(difficulty__contains="A")
     print("gen")
     context = {
         "general": gen,
-        "advanced":adv
+        "advanced": adv
     }
-    return render(request, 'yoggis/general.html',context)
+    return render(request, 'yoggis/general.html', context)
+
 
 def chronic(request):
     print("hiiii")
-    yogas= Yoga.objects.all()
-    asthmaa=yogas.filter(yoga_category__type__contains="Asthma")
-    back=yogas.filter(yoga_category__type__contains="Back-Pain")
+    yogas = Yoga.objects.all()
+    asthmaa = yogas.filter(yoga_category__type__contains="Asthma")
+    back = yogas.filter(yoga_category__type__contains="Back-Pain")
     print("hello")
     print(asthmaa)
     print(back)
-    context={
-        "asthma":asthmaa,
-        "backpain":back
+    context = {
+        "asthma": asthmaa,
+        "backpain": back
     }
-    return render(request, 'yoggis/chronic.html',context)
+    return render(request, 'yoggis/chronic.html', context)
 
 
-
-    
-    
 def challenges(request):
     return render(request, 'yoggis/challenges.html')
 
@@ -77,10 +75,6 @@ def squad(request):
 
 def session(request):
     return render(request, 'yoggis/session.html')
-
-
-def chronic(request):
-    return render(request, 'yoggis/chronic.html')
 
 
 def tpose(request):
