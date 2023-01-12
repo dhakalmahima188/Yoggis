@@ -3,7 +3,7 @@ from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.urls import reverse
 from django.conf import settings
 
-from .models import Yoga, YogaScore
+from .models import Yoga, YogaScore, UserDisorder
 
 if settings.SERVE:
     from .posedetection import gen_frames
@@ -77,7 +77,9 @@ def yoga_detail_view(request, pk1):
         yog = Yoga.objects.get(pk=pk1)
         context['yoga'] = yog
         leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk)
+        to_avoid = yog.avoid_for_disorder.all()
         context['leaderboard'] = leaderboard
+        context['avoid_for'] = to_avoid
     except Yoga.DoesNotExist:
         raise Http404('Book does not exist')
 
