@@ -1211,11 +1211,11 @@ body {
   # leaderboard
   --------------------------------------------------------------*/
 .leaderboard {
-    position: relative;
-    top: 30%;
-    left: 25%;
+    position: absolute;
+    top: 80%;
+    left: 65%;
     transform: translate(-50%, -50%);
-    width: 300px;
+    width: 400px;
     height: 308px;
     background: linear-gradient(to bottom, #3a404d, #181c26);
     border-radius: 10px;
@@ -1432,4 +1432,12 @@ body {
 .button_text{
   margin-top:20px;
   /* padding:20px; */
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
 }

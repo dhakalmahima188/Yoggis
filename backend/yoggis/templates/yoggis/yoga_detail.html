@@ -2,37 +2,73 @@
 {% block main %}
 
 {% load static %}
+<style>
+    body {
+        padding-top: 100px;
+        font-family: "Open Sans", sans-serif;
+        color: #212529;
+    }
 
-    <div class="container" data-aos="fade-up">
-
-      <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="card card-custom">
-              <img class="card-img-top" src="{{ yoga.image.url }}" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="title"><a href="">{{ yoga.title }}</a></h4>
-                    <p>{{ yoga.description }}</p>
+    @media (max-width: 979px) {
+        body {
+            padding-top: 0px;
+        }
+    }
+</style>
+<div class="container shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="column">
+            <h2>{{ yoga.title }}</h2>
+            <p>{{ yoga.description }}</p>
+            {% if yoga.how_to_perform %}
+            <h4>How to Perform:</h4>
+            <p>{{ yoga.how_to_perform }}</p>
+            {% endif %}
+            <div class="row">
+            {% if yoga.avoid_for %}
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
+                    <h4 class="title">Avoid For:</h4>
+                    <ul>
+                        {% for avoid in yoga.avoid_for.all %}
+                        <li>{{ avoid }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
+                    <h4 class="title">Difficulty: {{ yoga.get_difficulty_display }}</h4>
                 </div>
             </div>
-          </div>
 
-    <!-- ======= Leader board ======= -->
-    <div class="leaderboard">
-    <h1>
-        <svg class="ico-cup">
-            <use xlink:href="#cup"></use>
-        </svg>
-        Most active Yoggis
-    </h1>
-    <ol>
-        {% for leader in leaderboard %}
-        <li>
-            <mark>{{ leader.user.username }}</mark>
-            <small>{{ leader.score }}</small>
-        </li>
-        {% endfor %}
-    </ol>
-</div>
+            <div>
+                <button class="btn btn-primary" id="start-yoga">Start Yoga</button>
+            </div>
+        </div>
 
+        <div class="column">
+            <div class="container">
+                <img src="{{ yoga.image.url }}" class="img-fluid rounded d-block" style="height: fit-content;">
+            </div>
+            <div class="container">
+                <div class="leaderboard">
+                    <h1>
+                        <svg class="ico-cup">
+                            <use xlink:href="#cup"></use>
+                        </svg>
+                        Most active Yoggis
+                    </h1>
+                    <ol>
+                        {% for leader in leaderboard %}
+                        <li>
+                            <mark>{{ leader.user.username }}</mark>
+                            <small>{{ leader.score }}</small>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 {% endblock main %}
