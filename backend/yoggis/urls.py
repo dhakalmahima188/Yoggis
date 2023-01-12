@@ -9,6 +9,7 @@ urlpatterns = [
     path('challenges/',views.challenges,name='challenges'),
     path('chronic/',views.chronic,name='chronic'),
     path('leaderboard/',views.leaderboard,name='leaderboard'),
+    path('tpose/',views.tpose,name='tpose')
 
 
 ]

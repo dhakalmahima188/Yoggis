@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7y1=@=4$-_vt#jtfm=dp52d^u&kki4f+vf+43joi2#2*myrpz1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SERVE = False
+SERVE = True
 
 ALLOWED_HOSTS = ['4.224.27.113','hackaweek.krishbin.tech','127.0.0.1','krishbin.centralindia.cloudapp.azure.com']
 
