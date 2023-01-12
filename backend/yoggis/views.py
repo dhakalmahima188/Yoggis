@@ -43,11 +43,15 @@ def general(request):
         "general": gen
     }
     return render(request, 'yoggis/general.html',context)
+    
 def chronic(request):
     yogas= Yoga.objects.all()
     asthmaa=yogas.filter(yoga_category__type__contains="Asthma")
+    back=yogas.filter(yoga_category__type__contains="Back-Pain")
+
     context={
-        "asthma":asthmaa
+        "asthma":asthmaa,
+        "backpain":back
     }
     return render(request, 'yoggis/chronic.html',context)
 
