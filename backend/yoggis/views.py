@@ -59,8 +59,8 @@ def general(request):
     }
     return render(request, 'yoggis/general.html',context)
 
-def challenges(request):
-    return render(request,'yoggis/challenges.html')
+# def challenges(request):
+#     return render(request,'yoggis/challenges.html')
 
 def chronic(request):
     return render(request,'yoggis/chronic.html')
@@ -69,3 +69,5 @@ def leaderboard(request):
 
 def tpose(request):
     return render(request,'yoggis/tpose.html')
+# def leaderboard(request):
+#     return render(request,'yoggis/leaderboard.html')

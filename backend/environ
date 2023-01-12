@@ -1,0 +1,6 @@
+export POSTGRES_USER="nads"
+export POSTGRES_PASSWORD="nads123"
+export POSTGRES_DATABASE="hackaweek"
+export POSTGRES_SERVER="20.210.222.169"
+export AZURE_STORAGE_KEY="3SMBil+xGbnxM5a7cWxelN8XdYUX+BQPunsvO3msaObuko/HueBz0V/sjLe7qEE+hIkaIix355k/+AStM5mNvg=="
+export AZURE_STORAGE_CONNECTIONSTRING="DefaultEndpointsProtocol=https;AccountName=hackaweek;AccountKey=3SMBil+xGbnxM5a7cWxelN8XdYUX+BQPunsvO3msaObuko/HueBz0V/sjLe7qEE+hIkaIix355k/+AStM5mNvg==;EndpointSuffix=core.windows.net"
