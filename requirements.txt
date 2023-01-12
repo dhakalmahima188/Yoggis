@@ -16,6 +16,7 @@ django-admin==2.0.1
 django-cors-headers==3.13.0
 django-excel-base==1.0.5
 django-excel-response2==3.0.3
+django-jazzmin==2.6.0
 django-six==1.0.4
 django-storages==1.13.2
 django-storages-azure==1.6.8
