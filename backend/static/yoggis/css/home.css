@@ -511,7 +511,7 @@ body {
     border-radius: 15px;
     text-align: center;
     border-bottom: 3px solid #fff;
-    height: 200px;
+    height: 250px;
     width:250px;
   }
   .services .card-custom{
@@ -562,6 +562,9 @@ body {
   
     
 
+  }
+  .time_challenge{
+    font-size: x-small;
   }
   
   /*--------------------------------------------------------------
@@ -1421,4 +1424,12 @@ body {
 
 .the-most img {
     max-width: 100%;
+}
+#videofeed div {
+  -ms-flex: 1; /* IE 10 */
+  flex: 1;
+}
+.button_text{
+  margin-top:20px;
+  /* padding:20px; */
 }
