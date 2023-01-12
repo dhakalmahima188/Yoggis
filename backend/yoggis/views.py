@@ -38,9 +38,9 @@ def home(request):
 def general(request):
     yogas = Yoga.objects.all()
     general_yogas = yogas.filter(yoga_category__type__contains="General")
-    general = general_yogas.filter(difficulty__contains="C")
+    gen = general_yogas.filter(difficulty__contains="C")
     context = {
-        "general": general
+        "general": gen
     }
     return render(request, 'yoggis/general.html', context)
 
