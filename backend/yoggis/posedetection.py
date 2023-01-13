@@ -125,11 +125,12 @@ def getAccuracy(landmarks,image,display=False):
     try:           # Get coordinates
                     #left
         l11 = calculateAngle(get_cordinate(23,landmarks), get_cordinate(11,landmarks), get_cordinate(13,landmarks))
-        l13 = calculateAngle(get_cordinate(11,landmarks), get_cordinate(13,landmarks), get_cordinate(15,landmarks))
-        l15 = calculateAngle(get_cordinate(13,landmarks), get_cordinate(15,landmarks), get_cordinate(17,landmarks))
+        l13 = calculateAngle(get_cordinate(11,landmarks), get_cordinate(13,landmarks), get_cordinate(20,landmarks))
+        l20 = calculateAngle(get_cordinate(13,landmarks), get_cordinate(20,landmarks), get_cordinate(17,landmarks))
         l23 = calculateAngle(get_cordinate(11,landmarks), get_cordinate(23,landmarks), get_cordinate(25,landmarks))
         l25 = calculateAngle(get_cordinate(23,landmarks), get_cordinate(25,landmarks), get_cordinate(27,landmarks))
-        # print(l11,l13,l15,l23,l25)
+        # print(l11,l13,l20,l23,l25)
+       
     #right
         r12 = calculateAngle(get_cordinate(24,landmarks), get_cordinate(12,landmarks), get_cordinate(14,landmarks))
         r14 = calculateAngle(get_cordinate(12,landmarks), get_cordinate(14,landmarks), get_cordinate(16,landmarks))
@@ -140,41 +141,87 @@ def getAccuracy(landmarks,image,display=False):
         # print(get_cordinate(11,landmarks)[0],get_cordinate(11,landmarks)[1])
         e1=-(l11-actual[0])
         e2=-(l13-actual[1])
-        e3=-(l15-actual[2])
+        e3=-(l20-actual[2])
         e4=-(r12-actual[5])
         e5=-(r14-actual[6])
         e6=-(r16-actual[7])
                 
+        print(l11,l13,l20,l23,l25,r12,r14,r16,r24,r26)  
+       # print(e1,e2,e3,e4,e5,e6)   
                     # print(e2,e5)
                                 
-        lerror=' '    
-        if(e1>10):
-            lerror=lerror+"lift your left shoulder down"
-            setposition=13
-        elif(e1<-10):
-            lerror=lerror+"lift your left shoulder up"
-            setposition=13
+        lerror=' '
+        
+        
+            
+        if(e1>20 or e1>300) :
+            lerror=lerror+"lift your right shoulder down"
+            setposition=11
+        elif(e1<-20 or e1<-300) :
+            lerror=lerror+"lift your right shoulder up"
+            setposition=11
+ 
         else:
-            lerror=lerror+"0k"
-            setposition=13
+            lerror=lerror+"ok"
+            setposition=11
+            
+        
         
         rerror=' '    
-        if(e5>10):
-            rerror=rerror+"lift your left shoulder down"
-            rsetposition=14
-        elif(e5<-10):
+        if( e4>20 or e4>300):
             rerror=rerror+"lift your left shoulder up"
-            rsetposition=14
+            rsetposition=12
+        elif( e4<-20 or e4<-300):
+            rerror=rerror+"lift your left shoulder down"
+            rsetposition=12
+      
         else:
             rerror=rerror+"ok"
-            rsetposition=14
+            rsetposition=12
+    
+        
+        
+        lerror_elbow=' '    
+        if( e2>20):
+            lerror_elbow=lerror_elbow+"make your elbow straight"
+            lelbow=13
+        elif( e2<-20):
+            lerror_elbow=lerror_elbow+"make your elbow straight"
+            lelbow=13
+      
+        else:
+            lerror_elbow=lerror_elbow+"ok"
+            lelbow=13
+        
+        rerror_elbow=' '    
+        if( e5>20):
+            rerror_elbow=rerror_elbow+"make your elbow straight"
+            relbow=14
+        elif( e5<-20):
+            rerror_elbow=rerror_elbow+"make your elbow straight"
+            relbow=14
+      
+        else:
+            rerror_elbow=rerror_elbow+"ok"
+            relbow=14
             
+        
         error={
             "lerror": lerror,
-            "rerror": rerror
+            "rerror": rerror,
+            "lerror_elbow":lerror_elbow,
+            "rerror_elbow":rerror_elbow
         }
-        print(get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1])
+
         # Visualize angle
+        cv2.putText(image, str(rerror_elbow), 
+                     (get_cordinate(relbow,landmarks)[0],get_cordinate( relbow,landmarks)[1]),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )    
+        cv2.putText(image, str(lerror_elbow), 
+                    (get_cordinate(lelbow,landmarks)[0],get_cordinate(lelbow,landmarks)[1]),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )    
         cv2.putText(image, str(lerror), 
                      (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
@@ -182,7 +229,7 @@ def getAccuracy(landmarks,image,display=False):
         cv2.putText(image, str(rerror), 
                     (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
-                            )       
+                            )      
         cv2.putText(image, str("Welcome to yogis"), 
                     (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA )
 
@@ -238,7 +285,7 @@ def gen_frames():
         if landmarks:
             # Perform the Pose Accuracy Stats.
             frame, _ = getAccuracy(landmarks, frame, display=False)
-            print(_)
+            # print(_)
         # Display the frame.
         # cv2.imshow('Pose Accuracy Stats', frame)
         ret, buffer = cv2.imencode('.jpg', frame)
