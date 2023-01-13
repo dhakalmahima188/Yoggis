@@ -11,6 +11,7 @@ import numpy as np
 import csv
 import os
 from django.conf import settings
+import pyttsx3
 
 # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -214,7 +215,7 @@ def getAccuracy(landmarks,image,display=False):
             "lerror_elbow":lerror_elbow,
             "rerror_elbow":rerror_elbow
         }
-
+        
         # Visualize angle
         cv2.putText(image, str(rerror_elbow), 
                      (get_cordinate(relbow,landmarks)[0],get_cordinate( relbow,landmarks)[1]),
@@ -226,21 +227,26 @@ def getAccuracy(landmarks,image,display=False):
                             )    
         cv2.putText(image, str(lerror), 
                      (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 	(255,255,255), 2, cv2.LINE_AA
                             )    
         cv2.putText(image, str(rerror), 
                     (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
                             )      
-        cv2.putText(image, str("Welcome to yogis"), 
-                    (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA )
+        # cv2.putText(image, str("Welcome to yogis"), 
+        #             (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA )
+
+        
+
+       
 
         if display:
     
         # Display the resultant image.
             plt.figure(figsize=[10,10])
-            plt.imshow(image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
-            
+            plt.imshow(image[:,:,::-1]);plt.title("Output Image");plt.axis('off')
+        
+           
         else:
             
             # Return the output image and the classified label.
@@ -286,7 +292,13 @@ def gen_frames():
         # Check if the landmarks are detected.
         if landmarks:
             # Perform the Pose Accuracy Stats.
-            frame, _ = getAccuracy(landmarks, frame, display=False)
+            frame, error = getAccuracy(landmarks, frame, display=False)
+            
+            engine=pyttsx3.init()
+
+            engine.say(error.values())
+            engine.runAndWait()
+            # engine.say(error[lerror])
             # print(_)
         # Display the frame.
 
@@ -300,6 +312,9 @@ def gen_frames():
         # )
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
+        
+        
         #print("hi",frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+

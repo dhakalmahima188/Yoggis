@@ -3,7 +3,10 @@ from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.urls import reverse
 from django.conf import settings
 
-from .models import Yoga, YogaScore
+
+from .models import Yoga, YogaScore, UserDisorder
+
+
 if settings.SERVE:
     from .posedetection import gen_frames
 
@@ -56,8 +59,18 @@ def chronic(request):
     }
     return render(request, 'yoggis/chronic.html', context)
 
+def meditation(request):
+    med=Yoga.objects.filter(yoga_category__type__contains="Meditation")
+    context={
+        "meditation":med
+    }
+    return render(request,'yoggis/meditation.html',context)
+    
+
 
 def challenges(request):
+    
+    
     return render(request, 'yoggis/challenges.html')
 
 
@@ -73,6 +86,7 @@ def session(request):
 
 
 def tpose(request):
+ 
     return render(request, 'yoggis/tpose.html')
 
 
