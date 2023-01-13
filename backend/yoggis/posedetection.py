@@ -12,6 +12,10 @@ import csv
 import os
 from django.conf import settings
 import pyttsx3
+import time
+from random import randrange
+from asgiref.sync import async_to_sync
+
 
 # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
@@ -148,20 +152,18 @@ def getAccuracy(landmarks,image,display=False):
         e4=-(r12-actual[5])
         e5=-(r14-actual[6])
         e6=-(r16-actual[7])
-                
-        # print(l11,l13,l20,l23,l25,r12,r14,r16,r24,r26)  
+
+       # print(l11,l13,l20,l23,l25,r12,r14,r16,r24,r26)
        # print(e1,e2,e3,e4,e5,e6)   
                     # print(e2,e5)
                                 
         lerror=' '
-        
-        
-            
+
         if(e1>20 or e1>300) :
-            lerror=lerror+"lift your right shoulder down"
+            lerror=lerror+"lift right shoulder down"
             setposition=11
         elif(e1<-20 or e1<-300) :
-            lerror=lerror+"lift your right shoulder up"
+            lerror=lerror+"lift right shoulder up"
             setposition=11
  
         else:
@@ -172,10 +174,10 @@ def getAccuracy(landmarks,image,display=False):
         
         rerror=' '    
         if( e4>20 or e4>300):
-            rerror=rerror+"lift your left shoulder up"
+            rerror=rerror+"lift left shoulder up"
             rsetposition=12
         elif( e4<-20 or e4<-300):
-            rerror=rerror+"lift your left shoulder down"
+            rerror=rerror+"lift left shoulder down"
             rsetposition=12
       
         else:
@@ -186,10 +188,10 @@ def getAccuracy(landmarks,image,display=False):
         
         lerror_elbow=' '    
         if( e2>20):
-            lerror_elbow=lerror_elbow+"make your elbow straight"
+            lerror_elbow=lerror_elbow+"make elbow straight"
             lelbow=13
         elif( e2<-20):
-            lerror_elbow=lerror_elbow+"make your elbow straight"
+            lerror_elbow=lerror_elbow+"make elbow straight"
             lelbow=13
       
         else:
@@ -198,10 +200,10 @@ def getAccuracy(landmarks,image,display=False):
         
         rerror_elbow=' '    
         if( e5>20):
-            rerror_elbow=rerror_elbow+"make your elbow straight"
+            rerror_elbow=rerror_elbow+"make elbow straight"
             relbow=14
         elif( e5<-20):
-            rerror_elbow=rerror_elbow+"make your elbow straight"
+            rerror_elbow=rerror_elbow+"make elbow straight"
             relbow=14
       
         else:
@@ -258,20 +260,21 @@ def getAccuracy(landmarks,image,display=False):
         print("caught",e)
                 
    
-
-
+@async_to_sync
+async def speak(text):
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
 
 def gen_frames():
     # Setup Pose function for video.
     pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
-
     # Initialize the VideoCapture object to read from the webcam.
     
     camera_video = cv2.VideoCapture(0)
-
     # Initialize a variable to store the time of the previous frame.
     time1 = 0
-
+    starttime = time.time()
     # Iterate until the video is accessed successfully.
     while camera_video.isOpened():
         # Read a frame.
@@ -293,14 +296,11 @@ def gen_frames():
         if landmarks:
             # Perform the Pose Accuracy Stats.
             frame, error = getAccuracy(landmarks, frame, display=False)
-            
-            engine=pyttsx3.init()
-
-            engine.say(error.values())
-            engine.runAndWait()
-            # engine.say(error[lerror])
-            # print(_)
-        # Display the frame.
+            if (time.time() - starttime) > 3:
+                er = [v for k, v in error.items() if v != ' ok' ]
+                if len(er) > 0:
+                    speak(er[randrange(len(er))])
+                    starttime = time.time()
 
         # channel_layer = get_channel_layer()
         # async_to_sync(channel_layer.group_send)(
