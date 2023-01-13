@@ -28,10 +28,10 @@
             {% if avoid_for %}
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
                 <div class="container">
-                    <h4 class="title">Avoid For:</h4><br>
+                    <h4 class="title text-nowrap">Avoid For:</h4>
                     <ul>
                         {% for avoid in avoid_for %}
-                        <li>{{ avoid }}</li>
+                        <li class="text-nowrap text-danger">{{ avoid }}</li>
                         {% endfor %}
                     </ul>
                 </div>
