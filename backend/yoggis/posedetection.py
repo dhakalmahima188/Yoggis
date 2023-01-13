@@ -1,3 +1,5 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.http import HttpResponse
 import cv2
 import math
@@ -287,7 +289,15 @@ def gen_frames():
             frame, _ = getAccuracy(landmarks, frame, display=False)
             # print(_)
         # Display the frame.
-        # cv2.imshow('Pose Accuracy Stats', frame)
+
+        # channel_layer = get_channel_layer()
+        # async_to_sync(channel_layer.group_send)(
+        #     'test',
+        #     {
+        #         'type': 'chat',
+        #         'message': "nadika and mahima"
+        #     }
+        # )
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         #print("hi",frame)

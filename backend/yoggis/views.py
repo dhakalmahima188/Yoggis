@@ -3,8 +3,7 @@ from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.urls import reverse
 from django.conf import settings
 
-from .models import Yoga, YogaScore, UserDisorder
-
+from .models import Yoga, YogaScore
 if settings.SERVE:
     from .posedetection import gen_frames
 
@@ -48,13 +47,9 @@ def general(request):
 
 
 def chronic(request):
-    print("hiiii")
     yogas = Yoga.objects.all()
     asthmaa = yogas.filter(yoga_category__type__contains="Asthma")
     back = yogas.filter(yoga_category__type__contains="Back-Pain")
-    print("hello")
-    print(asthmaa)
-    print(back)
     context = {
         "asthma": asthmaa,
         "backpain": back
