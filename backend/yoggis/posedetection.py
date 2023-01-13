@@ -6,10 +6,13 @@ import mediapipe as mp
 import matplotlib.pyplot as plt
 import statistics
 import numpy as np
+import csv
+import os
+from django.conf import settings
 
 # Initializing mediapipe pose class.
 mp_pose = mp.solutions.pose
-
+results=0
 # Setting up the Pose function.
 pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_complexity=2)
 
@@ -73,7 +76,7 @@ def detectPose(image, pose, display=True):
     else:
         
         # Return the output image and the found landmarks.
-        return output_image, landmarks    
+        return output_image, landmarks   
 
 def calculateAngle(landmark1, landmark2, landmark3):
     '''
@@ -104,112 +107,104 @@ def calculateAngle(landmark1, landmark2, landmark3):
     # Return the calculated angle.
     return angle
 
-def tPoseAccuracy(landmarks, output_image, display=False):
-    '''
-    This function classifies yoga poses depending upon the angles of various body joints.
-    Args:
-        landmarks: A list of detected landmarks of the person whose pose needs to be classified.
-        output_image: A image of the person with the detected pose landmarks drawn.
-        display: A boolean value that is if set to true the function displays the resultant image with the pose label 
-        written on it and returns nothing.
-    Returns:
-        output_image: The image with the detected pose landmarks drawn and pose label written.
-        label: The classified pose label of the person in the output_image.
+def get_cordinate(i,landmarks):
+    return landmarks[mp_pose.PoseLandmark(i).value][0],landmarks[mp_pose.PoseLandmark(i).value][1],landmarks[mp_pose.PoseLandmark(i).value][2]
 
-    '''
+def getAccuracy(landmarks,image,display=False):
+    actual=[]
+    with open(os.path.join(settings.BASE_DIR, 'data.csv'), 'r') as file:
+        reader = csv.reader(file)
+        i=0
+        for row in reader:
+            for i in range(1,len(row)):        
+                actual.append(float(row[i]))
     
-    # Initialize the label of the pose. It is not known at this stage.
-    # label = 'Unknown Pose'
-    label = 'T Pose'
-    displayAccuracy = '0.00'
+    setposition=0   
 
-    # Specify the color (Red) with which the label will be written on the image.
-    color = (0, 0, 255)
-    
-    # Calculate the required angles.
-    #----------------------------------------------------------------------------------------------------------------
-    
-    # Get the angle between the left shoulder, elbow and wrist points. 
-    left_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
-                                      landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
-                                      landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
-    
-    # Get the angle between the right shoulder, elbow and wrist points. 
-    right_elbow_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
-                                       landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value],
-                                       landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])   
-    
-    # Get the angle between the left elbow, shoulder and hip points. 
-    left_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value],
-                                         landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value],
-                                         landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
-
-    # Get the angle between the right hip, shoulder and elbow points. 
-    right_shoulder_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
-                                          landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value],
-                                          landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
-
-    # Get the angle between the left hip, knee and ankle points. 
-    left_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value],
-                                     landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value],
-                                     landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value])
-
-    # Get the angle between the right hip, knee and ankle points 
-    right_knee_angle = calculateAngle(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value],
-                                      landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value],
-                                      landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value])
-    
-    #----------------------------------------------------------------------------------------------------------------
-    
-    # Check if it is the warrior II pose or the T pose.
-    # As for both of them, both arms should be straight and shoulders should be at the specific angle.
-    #----------------------------------------------------------------------------------------------------------------
-    
-    # Check if the both arms are straight.
-    if left_elbow_angle > 165 and left_elbow_angle < 195 and right_elbow_angle > 165 and right_elbow_angle < 195:
-
-        # Check if shoulders are at the required angle.
-        if left_shoulder_angle > 80 and left_shoulder_angle < 110 and right_shoulder_angle > 80 and right_shoulder_angle < 110:
-
-    # Check if it is the T pose.
-    #----------------------------------------------------------------------------------------------------------------
-    
-            # Check if both legs are straight
-            if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle > 160 and right_knee_angle < 195:
-                    pass
-            else:
-                data1 = [abs(177.5-left_knee_angle),abs(177.5-right_knee_angle)]
-                accuracy = statistics.mean(data1)
-                displayAccuracy = "Make sure your knee is not extended beyond your ankle. Your current error rate is:" + str(accuracy)
+                
+    try:           # Get coordinates
+                    #left
+        l11 = calculateAngle(get_cordinate(23,landmarks), get_cordinate(11,landmarks), get_cordinate(13,landmarks))
+        l13 = calculateAngle(get_cordinate(11,landmarks), get_cordinate(13,landmarks), get_cordinate(15,landmarks))
+        l15 = calculateAngle(get_cordinate(13,landmarks), get_cordinate(15,landmarks), get_cordinate(17,landmarks))
+        l23 = calculateAngle(get_cordinate(11,landmarks), get_cordinate(23,landmarks), get_cordinate(25,landmarks))
+        l25 = calculateAngle(get_cordinate(23,landmarks), get_cordinate(25,landmarks), get_cordinate(27,landmarks))
+        # print(l11,l13,l15,l23,l25)
+    #right
+        r12 = calculateAngle(get_cordinate(24,landmarks), get_cordinate(12,landmarks), get_cordinate(14,landmarks))
+        r14 = calculateAngle(get_cordinate(12,landmarks), get_cordinate(14,landmarks), get_cordinate(16,landmarks))
+        r16 = calculateAngle(get_cordinate(18,landmarks), get_cordinate(16,landmarks), get_cordinate(14,landmarks))
+        r24 = calculateAngle(get_cordinate(12,landmarks), get_cordinate(24,landmarks), get_cordinate(26,landmarks))
+        r26 = calculateAngle(get_cordinate(24,landmarks), get_cordinate(26,landmarks), get_cordinate(28,landmarks))
+        # print(r12,r14,r16,r24,r26)
+        # print(get_cordinate(11,landmarks)[0],get_cordinate(11,landmarks)[1])
+        e1=-(l11-actual[0])
+        e2=-(l13-actual[1])
+        e3=-(l15-actual[2])
+        e4=-(r12-actual[5])
+        e5=-(r14-actual[6])
+        e6=-(r16-actual[7])
+                
+                    # print(e2,e5)
+                                
+        lerror=' '    
+        if(e2>10):
+            lerror=lerror+"lift your left shoulder down"
+            setposition=13
+        elif(e2<-10):
+            lerror=lerror+"lift your left shoulder up"
+            setposition=13
         else:
-            data1 = [abs(100-left_shoulder_angle),abs(100-right_shoulder_angle)]
-            accuracy = statistics.mean(data1)
-            displayAccuracy = "Make sure your arms are fully extended with fingers pointed and arms parallel to the ground. Your current accuracy is:"+ str(accuracy)
-            if left_knee_angle > 160 and left_knee_angle < 195 and right_knee_angle > 160 and right_knee_angle < 195:
-                pass
-            else:
-                data1 = [abs(177.5-left_knee_angle),abs(177.5-right_knee_angle)]
-                accuracy = statistics.mean(data1)
-                displayAccuracy = "Make sure your knee is not extended beyond your ankle. Your current error rate is:" + str(accuracy)
+            lerror=lerror+"0k"
+            setposition=13
+        
+        rerror=' '    
+        if(e5>10):
+            rerror=rerror+"lift your left shoulder down"
+            rsetposition=14
+        elif(e5<-10):
+            rerror=rerror+"lift your left shoulder up"
+            rsetposition=14
+        else:
+            rerror=rerror+"ok"
+            rsetposition=14
+            
+        error={
+            "lerror": lerror,
+            "rerror": rerror
+        }
+            
+        # Visualize angle
+        cv2.putText(image, str(lerror), 
+                    tuple(np.multiply( (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]) , [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )    
+        cv2.putText(image, str(rerror), 
+                    tuple(np.multiply( (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]) , [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )       
+        cv2.putText(image, str("Welcome to yogis"), 
+                    (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA )
 
-
-    #----------------------------------------------------------------------------------------------------------------
-
-    
-    # Write the label on the output image. 
-    cv2.putText(output_image, displayAccuracy, (10, 30),cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
-    
-    # Check if the resultant image is specified to be displayed.
-    if display:
+        if display:
     
         # Display the resultant image.
-        plt.figure(figsize=[10,10])
-        plt.imshow(output_image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
+            plt.figure(figsize=[10,10])
+            plt.imshow(image[:,:,::-1]);plt.title("Output Image");plt.axis('off');
+            
+        else:
+            
+            # Return the output image and the classified label.
+            return image, error
+
         
-    else:
-        
-        # Return the output image and the classified label.
-        return output_image, displayAccuracy
+            
+    except Exception as e:
+        print("caught",e)
+                
+   
+
+
 
 def gen_frames():
     # Setup Pose function for video.
@@ -242,7 +237,8 @@ def gen_frames():
         # Check if the landmarks are detected.
         if landmarks:
             # Perform the Pose Accuracy Stats.
-            frame, _ = tPoseAccuracy(landmarks, frame, display=False)
+            frame, _ = getAccuracy(landmarks, frame, display=False)
+            print(_)
         # Display the frame.
         # cv2.imshow('Pose Accuracy Stats', frame)
         ret, buffer = cv2.imencode('.jpg', frame)
@@ -250,5 +246,3 @@ def gen_frames():
         #print("hi",frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-
