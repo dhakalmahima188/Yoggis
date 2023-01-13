@@ -5,14 +5,76 @@
 <br>
 <br>
 Copy code
-<div style="display: flex; padding:20px">
-  <img src="{% static 'yoggis/img/tpose.png' %}" style="flex: 1; margin-right: 10px; width: 50%;">
-  <img src="{% url 'video_feed' %}"style="flex: 1; width: 50%;">
-</div>
 
-    <!-- ======= SHow below images side by side ======= -->
-    
-           
+<section id="plans" class="services section-bg pricing py-5">
+
+
+  <div class="container justify-content-center">
+    <div class="row">
+      <!-- Free Tier -->
+      <div class="col-sm-12 col-md-6 col-lg-12 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-body  d-flex flex-column">
+            <div style="display: flex; padding:20px">
+              <img src="{% static 'yoggis/img/etpose.png' %}" style="flex: 1; width: 50%">
+              <img src="{% url 'video_feed' %}" style="flex: 1; width: 50%;border-radius:8%">
+            </div>
+
+
+            <div class="card-body  d-flex flex-column">
+              <div style="display: flex; padding:20px">
+
+
+                <div style="flex: 1; margin-right: 20px; width: 50%">
+
+                  <div class="card">
+                    <div class="card-header">
+                      <b>Live Feedback </b>
+                    </div>
+                    <div class="card-body">
+
+                      <p class="card-text">Lift your left Shoulder UP</p>
+                      <p class="card-text">Lift your left Shoulder UP</p>
+                      <p class="card-text">Lift your left Shoulder UP</p>
+                      <button style="background-color:green;border-radius:8%" type="button" class="btn btn-success">
+                        Time : 4:59</button>
+                    </div>
+                  </div>
+                </div>
+                <div style="flex: 1; width: 50%">
+
+                  <div class="card">
+                    <div class="card-header">
+                      Featured
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Special title treatment</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <a href="#" class="btn btn-sucess">Accuracy</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+
+  </div>
+</section>
+
+
+
+
 
 
 {% endblock main %}

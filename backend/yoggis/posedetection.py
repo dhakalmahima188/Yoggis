@@ -146,7 +146,7 @@ def getAccuracy(landmarks,image,display=False):
         e5=-(r14-actual[6])
         e6=-(r16-actual[7])
                 
-        print(l11,l13,l20,l23,l25,r12,r14,r16,r24,r26)  
+        # print(l11,l13,l20,l23,l25,r12,r14,r16,r24,r26)  
        # print(e1,e2,e3,e4,e5,e6)   
                     # print(e2,e5)
                                 
