@@ -27,12 +27,15 @@
             <div class="row">
             {% if avoid_for %}
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
-                    <h4 class="title">Avoid For:</h4>
+                <div class="container">
+                    <h4 class="title">Avoid For:</h4><br>
                     <ul>
                         {% for avoid in avoid_for %}
                         <li>{{ avoid }}</li>
                         {% endfor %}
                     </ul>
+                </div>
+
                 </div>
             {% endif %}
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
@@ -41,9 +44,7 @@
             </div>
 
             <div>
-                <a href="{% url 'tpose' %}">
-                <button class="btn btn-primary" id="start-yoga">Start Yoga</button>
-                </a>
+                <a href="{% url 'tpose' %}"><button class="btn btn-primary" id="start-yoga">Start Yoga</button></a>
             </div>
         </div>
 
