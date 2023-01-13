@@ -177,14 +177,13 @@ def getAccuracy(landmarks,image,display=False):
         # Visualize angle
         cv2.putText(image, str(lerror), 
                     tuple(np.multiply( (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]) , [640, 480]).astype(int)), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
-                            )    
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 	(165,42,42), 2, cv2.LINE_AA
+                            )   
         cv2.putText(image, str(rerror), 
-                    tuple(np.multiply( (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]) , [640, 480]).astype(int)), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
-                            )       
+                    (50,60),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (220,20,60), 2, cv2.LINE_AA)
+                              
         cv2.putText(image, str("Welcome to yogis"), 
-                    (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA )
+                    (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,69,0), 2, cv2.LINE_AA )
 
         if display:
     
@@ -238,7 +237,6 @@ def gen_frames():
         if landmarks:
             # Perform the Pose Accuracy Stats.
             frame, _ = getAccuracy(landmarks, frame, display=False)
-            print(_)
         # Display the frame.
         # cv2.imshow('Pose Accuracy Stats', frame)
         ret, buffer = cv2.imencode('.jpg', frame)
