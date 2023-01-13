@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['4.224.27.113',
                  'localhost']
 
 INSTALLED_APPS = [
-    'daphne',
+    # 'daphne',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
