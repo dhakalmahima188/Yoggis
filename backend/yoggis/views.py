@@ -41,7 +41,7 @@ def general(request):
     general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
     gen = general_yogas.filter(difficulty__contains="C")
     adv = general_yogas.filter(difficulty__contains="A")
-    print("gen")
+    disorder=gen.filter(avoid_for_disorder__type__contains="Asthma")
     context = {
         "general": gen,
         "advanced": adv
@@ -102,6 +102,11 @@ def yoga_detail_view(request, pk1):
         to_avoid = yog.avoid_for_disorder.all()
         context['leaderboard'] = leaderboard
         context['avoid_for'] = to_avoid
+        general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
+
+        gen = general_yogas.filter(difficulty__contains="C")
+        disorder=gen.filter(avoid_for_disorder__type__contains="Asthma")
+        context['dis']=disorder
     except Yoga.DoesNotExist:
         raise Http404('Book does not exist')
 

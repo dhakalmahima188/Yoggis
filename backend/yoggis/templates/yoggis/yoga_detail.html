@@ -15,6 +15,8 @@
         }
     }
 </style>
+
+
 <div class="container shadow-sm p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="column">
@@ -32,6 +34,11 @@
                     <ul>
                         {% for avoid in avoid_for %}
                         <li class="text-nowrap text-danger">{{ avoid }}</li>
+                            {% for d in dis %}
+                                {% if d %}
+                                    <div class="alert alert-warning" role="alert" >Alert!!!</div>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -44,7 +51,7 @@
             </div>
 
             <div>
-                <a href="{% url 'tpose' %}"><button class="btn btn-primary" id="start-yoga">Start Yoga</button></a>
+                <a href="{% url 'tpose' %}"><button class="btn btn-primary" id="start-yoga" ondblclick="myalert()">Start Yoga</button></a>
             </div>
         </div>
 
@@ -75,5 +82,12 @@
         </div>
     </div>
 </div>
+<script>
+    function myalert() {
+        alert("Welcome to GeeksforGeeks.\n " +
+            "It is the best portal for computer" +
+                    "science enthusiasts!");
+    }
+</script>
 
 {% endblock main %}
