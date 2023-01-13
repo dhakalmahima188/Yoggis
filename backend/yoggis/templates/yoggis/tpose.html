@@ -2,12 +2,15 @@
 {% block main %}
 
 {% load static %}
+
 <br>
 <br>
 Copy code
 <div style="display: flex; padding:20px">
   <img src="{% static 'yoggis/img/tpose.png' %}" style="flex: 1; margin-right: 10px; width: 50%;">
+  
   <img src="{% url 'video_feed' %}"style="flex: 1; width: 50%;">
+ 
 </div>
 
     <!-- ======= SHow below images side by side ======= -->

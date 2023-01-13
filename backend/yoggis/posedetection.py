@@ -149,13 +149,13 @@ def getAccuracy(landmarks,image,display=False):
                                 
         lerror=' '    
         if(e1>10):
-            lerror=lerror+"lift your left shoulder down"
+            lerror="lift your left shoulder down"
             setposition=13
         elif(e1<-10):
-            lerror=lerror+"lift your left shoulder up"
+            lerror="lift your left shoulder up"
             setposition=13
         else:
-            lerror=lerror+"0k"
+            lerror="0k"
             setposition=13
         
         rerror=' '    
@@ -173,18 +173,18 @@ def getAccuracy(landmarks,image,display=False):
             "lerror": lerror,
             "rerror": rerror
         }
-        print(get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1])
+        
         # Visualize angle
         cv2.putText(image, str(lerror), 
                      (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 	(255,255,255), 2, cv2.LINE_AA
                             )    
         cv2.putText(image, str(rerror), 
                     (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 2, cv2.LINE_AA
                             )       
-        cv2.putText(image, str("Welcome to yogis"), 
-                    (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,69,0), 2, cv2.LINE_AA )
+        # cv2.putText(image, str("Welcome to yogis"), 
+        #             (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,69,0), 2, cv2.LINE_AA )
 
         if display:
     
@@ -245,3 +245,4 @@ def gen_frames():
         #print("hi",frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+

@@ -1,0 +1,49 @@
+{% extends "yoggis/common.html" %}
+{% block main %}
+{% load static %}
+
+<br>
+<br>
+<br>
+    <!-- ======= Services Section ======= -->
+    <section id="yogas" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+           
+          
+          <p>Try Meditation</p>
+        </div>
+        <div class="row">
+          {% for medPose in meditation %}
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
+              <a href="{% url 'tpose' %}">
+              <span class="clickable" >
+                <div class="icon-box">
+                <div class="icon" ><h3 class="title">{{ medPose.title }}</h4></div>
+                
+                <img class="card-img-top" src="{{ medPose.image.url }}" alt="Card image cap">
+                
+                </div>
+              </span>
+            </a>
+            </div>
+            {% endfor %}
+  
+          
+  
+  
+          
+        </div>
+        
+
+        
+      </div>
+    </section><!-- End Services Section -->
+
+   
+   
+   
+
+
+{% endblock main %}
