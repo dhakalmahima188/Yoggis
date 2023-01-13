@@ -53,9 +53,6 @@ def chronic(request):
     yogas = Yoga.objects.all()
     asthmaa = yogas.filter(yoga_category__type__contains="Asthma")
     back = yogas.filter(yoga_category__type__contains="Back-Pain")
-    print("hello")
-    print(asthmaa)
-    print(back)
     context = {
         "asthma": asthmaa,
         "backpain": back

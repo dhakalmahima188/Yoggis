@@ -25,11 +25,11 @@
             <p>{{ yoga.how_to_perform }}</p>
             {% endif %}
             <div class="row">
-            {% if yoga.avoid_for %}
+            {% if avoid_for %}
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
                     <h4 class="title">Avoid For:</h4>
                     <ul>
-                        {% for avoid in yoga.avoid_for.all %}
+                        {% for avoid in avoid_for %}
                         <li>{{ avoid }}</li>
                         {% endfor %}
                     </ul>
