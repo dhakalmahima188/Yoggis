@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
-
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
     description = models.TextField()
@@ -47,7 +45,7 @@ class Yoga(models.Model):
         default=BEGINNER,
     )
     yoga_category = models.ManyToManyField(YogaCategory)
-    avoid_for_disorder = models.ManyToManyField(UserDisorder,blank=True)
+    avoid_for_disorder = models.ManyToManyField(UserDisorder, blank=True)
 
     def __str__(self):
         return self.title
@@ -61,10 +59,11 @@ class CorrectVectorLocations(models.Model):
     def __str__(self):
         return self.angle_location
 
+
 class YogaScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField()
-    yoga = models.ForeignKey(Yoga, on_delete=models.CASCADE)
+    yoga = models.ForeignKey(Yoga, on_delete=models.CASCADE, related_name='yogaOwner')
 
     def __str__(self):
         return self.user.username

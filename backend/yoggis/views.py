@@ -24,15 +24,17 @@ def yoga(request):
 
 
 def home(request):
-    trending_yogas = Yoga.objects.all()
+    trending_yogas = Yoga.objects.all().exclude(title__in=['Sukasana','Savasana'])
     if len(trending_yogas) >= 4:
         trending_yogas = trending_yogas[0:4]
-    leaderboard = YogaScore.objects.all()
-    if len(leaderboard) >= 5:
-        leaderboard = leaderboard[0:5]
+    unq_ygs = YogaScore.objects.values('yoga').distinct()
+    pks = [a['yoga'] for a in unq_ygs]
+    ygs = Yoga.objects.filter(pk__in=pks)
+    if len(ygs) >= 4:
+        ygs = ygs[0:4]
     context = {
         "trending_yogas": trending_yogas,
-        "leaderboard": leaderboard
+        "challenges": ygs
     }
     return render(request, 'yoggis/home.html', context)
 
@@ -40,7 +42,7 @@ def home(request):
 def general(request):
     general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
     gen = general_yogas.filter(difficulty__contains="C")
-    adv = general_yogas.filter(difficulty__contains="A")
+    adv = general_yogas.filter(difficulty__contains="B")
     print("gen")
     context = {
         "general": gen,
@@ -98,7 +100,7 @@ def yoga_detail_view(request, pk1):
     try:
         yog = Yoga.objects.get(pk=pk1)
         context['yoga'] = yog
-        leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk)
+        leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk).order_by('-score')
         to_avoid = yog.avoid_for_disorder.all()
         context['leaderboard'] = leaderboard
         context['avoid_for'] = to_avoid
