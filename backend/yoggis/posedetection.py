@@ -148,10 +148,10 @@ def getAccuracy(landmarks,image,display=False):
                     # print(e2,e5)
                                 
         lerror=' '    
-        if(e2>10):
+        if(e1>10):
             lerror=lerror+"lift your left shoulder down"
             setposition=13
-        elif(e2<-10):
+        elif(e1<-10):
             lerror=lerror+"lift your left shoulder up"
             setposition=13
         else:
@@ -173,15 +173,16 @@ def getAccuracy(landmarks,image,display=False):
             "lerror": lerror,
             "rerror": rerror
         }
-            
+        print(get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1])
         # Visualize angle
         cv2.putText(image, str(lerror), 
-                    tuple(np.multiply( (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]) , [640, 480]).astype(int)), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 	(165,42,42), 2, cv2.LINE_AA
-                            )   
+                     (get_cordinate(setposition,landmarks)[0],get_cordinate(setposition,landmarks)[1]),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )    
         cv2.putText(image, str(rerror), 
-                    (50,60),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (220,20,60), 2, cv2.LINE_AA)
-                              
+                    (get_cordinate(rsetposition,landmarks)[0],get_cordinate(rsetposition,landmarks)[1]),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA
+                            )       
         cv2.putText(image, str("Welcome to yogis"), 
                     (10,10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,69,0), 2, cv2.LINE_AA )
 
