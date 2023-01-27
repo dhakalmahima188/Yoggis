@@ -66,13 +66,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hackaweek',
+        'NAME': 'yoggis',
         'USER': 'nads',
-        'PASSWORD': 'nads123',
-        'HOST': "20.210.222.169",
+        'PASSWORD': 'nepal123',
+        'HOST': "34.131.43.238",
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'verify-ca',
+            'sslcert': os.path.join(BASE_DIR, 'backend/client-cert.pem'),
+            'sslkey': os.path.join(BASE_DIR, 'backend/client-key.pem'),
+            'sslrootcert': os.path.join(BASE_DIR, 'backend/server-ca.pem'),
+        },
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'hackaweek',
+#         'USER': 'nads',
+#         'PASSWORD': 'nads123',
+#         'HOST': "20.210.222.169",
+#         'PORT': '5432',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
