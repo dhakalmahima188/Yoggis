@@ -54,6 +54,7 @@ def general(request):
     }
     return render(request, 'yoggis/general.html', context)
 
+@login_required(login_url='/login')
 def chronic(request):
     yogas = Yoga.objects.all()
     asthmaa = yogas.filter(yoga_category__type__contains="Asthma")
@@ -64,6 +65,7 @@ def chronic(request):
     }
     return render(request, 'yoggis/chronic.html', context)
 
+@login_required(login_url='/login')
 def meditation(request):
     med=Yoga.objects.filter(yoga_category__type__contains="Meditation")
     context={
@@ -94,7 +96,7 @@ def tpose(request):
 
 # def leaderboard(request):
 #     return render(request,'yoggis/leaderboard.html')
-
+@login_required(login_url='/login')
 def yoga_detail_view(request, pk1):
     context = {}
     try:
