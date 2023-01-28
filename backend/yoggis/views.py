@@ -2,14 +2,38 @@ from django.shortcuts import render
 from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.conf import settings
-
-
+from twilio.rest import Client
+import schedule
+import time
 from .models import Yoga, YogaScore, UserDisorder
-
+# from django_crontab import decorators
 
 if settings.SERVE:
     from .posedetection import gen_frames
 
+# @decorators.crontab(minute="30",hour="14")
+def sendMessage(request):
+    # Twilio account SID and auth token
+    account_sid = 'ACb1f5211276b92b89d72bca9b91467ffd'
+    auth_token = 'fb5f4197ff6cf48fa678648599a0816d'
+
+    # create a Twilio client
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        to="+9779840044672", 
+        from_="+16068067346",
+        body='Hello, its a yoga time ! Get fresh and be ready !'
+    )
+def sendSMS(request):
+    schedule.every().day.at("11:50").do(sendMessage)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+def send_sms_view(request):
+    sendSMS(request)
+    return render(request, 'yoggis/sendSMS.html')
 
 def videofeed(request):
     if settings.SERVE:
