@@ -16,5 +16,8 @@ urlpatterns = [
     path('yoga/<int:pk1>', views.yoga_detail_view, name='yoga-detail'),
     # path('challenges/',views.challenges,name='challenges'),
     # path('leaderboard/',views.leaderboard,name='leaderboard'),
+    path("register", views.register, name="register"),
+    path("login", views.login, name="login"),
+    path("logout",views.logout,name="logout")
 
 ]
