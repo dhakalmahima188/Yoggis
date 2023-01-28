@@ -172,55 +172,31 @@
     </section><!-- End Services Section -->
 
     <!-- ======= Services Section ======= -->
-    <section id="plans" class="services section-bg">
+    <section id="challenge" class="services section-bg">
       <div class="container" data-aos="fade-up">
-
+{% if challenges %}
         <div class="section-title">
 
           <h2>Trending Now</h2>
           <p>Join the challenge</p>
         </div>
+    <div class="row">
+{% for c in challenges %}
 
-        <div class="row">
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+
             <div class="icon-box">
               <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-              <img class="image_yoga" src="../../static/yoggis/img/surya.jpg ">
-
-              <h4 class="title"><a href="#">Surya Namaskar</a></h4>
+              <img class="image_yoga" src="{{ c.image.url }} ">
+   <h4 class="title"><a href="{% url 'yoga-detail' c.id %}">{{ c.title }}</a></h4>
               <h2 class="time_challenge">Time: 7:30-8:00 AM</h2>
-            </div>
-          </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box">
-              <!-- <div class="icon"><i class="bx bx-file"></i></div> -->
-              <img class="image_yoga" src="../../static/yoggis/img/warrior.jpeg ">
-              <h4 class="title"><a href="">Warrior II</a></h4>
-              <h2 class="time_challenge">Time: 6:30-7:00 AM</h2>
             </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box">
-              <!-- <div class="icon"><i class="bx bx-tachometer"></i></div> -->
-              <div><img class="image_yoga" src="../../static/yoggis/img/tri.jpg "></div>
-              <h4 class="title"><a href="">Trikonasana</a></h4>
-              <h2 class="time_challenge">Time: 8:30-8:45 AM</h2>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-            <div class="icon-box">
-              <div><img class="image_yoga" src="../../static/yoggis/img/ustra.jpg "></div>
-              <!-- <div class="icon"><i class="bx bx-world"></i></div> -->
-              <h4 class="title"><a href="">Ustrasana</a></h4>
-              <h2 class="time_challenge">Time: 6:00-6:15 AM</h2>
-            </div>
-          </div>
+</div>
+{% endfor %}
 
         </div>
-
+{% endif %}
       </div>
     </section><!-- End Services Section -->
     <section id="yogas" class="services section-bg">
@@ -255,7 +231,7 @@
     </section><!-- End Services Section -->
 
     <!-- ======= Pricing ======= -->
-    <section id="plans" class="services section-bg pricing py-5">
+    <section id="pricing" class="services section-bg pricing py-5">
       <div class="section-title">
         <p>Pricing</p>
       </div>
@@ -343,7 +319,7 @@
               </div>
               <div class="member-info">
                 <h4>Nadika Poudel</h4>
-                <span>ML Specialist</span>
+                <span>ML and Backend Specialist</span>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -404,7 +380,7 @@
                 Lalitpur, 44600<br>
                 Nepal<br><br>
                 <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> info@example.com<br>
+                <strong>Email:</strong> yoggis@gmail.com<br>
               </p>
             </div>
 
@@ -422,11 +398,9 @@
             <div class="col-lg-3 col-md-6 footer-links">
               <h4>Our Services</h4>
               <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoggis</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Research</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Training</a></li>
               </ul>
             </div>
 
