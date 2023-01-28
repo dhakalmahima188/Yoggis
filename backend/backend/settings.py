@@ -94,6 +94,8 @@ DATABASES = {
 #     }
 # }
 
+# AUTH_USER_MODEL='yoggis.User'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',

@@ -8,7 +8,7 @@ from .models import Yoga, YogaScore, UserDisorder
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
 from django.contrib.messages import constants as messages
-from .models import Yoga, YogaScore, UserDisorder
+from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
 from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
@@ -180,3 +180,21 @@ def profile(request):
     }
     return render(request, 'yoggis/profile.html', disord)
     # return render(request,'yoggis/profile.html')
+    
+def updateUserDisorder(request,pid):
+    try:
+        print("hello",pid)
+        d_obj = UserDisorder.objects.get(pk=pid)
+        print(d_obj)
+        print(request.user)
+        sd_obj = SUserDisorder.objects.filter(user=request.user)[0]
+        print(sd_obj)
+        if sd_obj:
+            print("existing object")
+            sd_obj.user_disorder.add(d_obj)
+        else:
+            print("hello making new object")
+            SUserDisorder.objects.create(user=request.user.id, user_disorder=d_obj.id)
+    except:
+        pass 
+    # return redirect('profile')
