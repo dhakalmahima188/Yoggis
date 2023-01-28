@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.conf import settings
+
+from .models import Yoga, YogaScore, UserDisorder
+# from django_crontab import decorators
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
 from django.contrib.messages import constants as messages
@@ -10,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
     from .posedetection import gen_frames
+
 
 
 def videofeed(request):

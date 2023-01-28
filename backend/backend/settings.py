@@ -24,6 +24,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'yoggis',
+    'twilio',
+    'scheduler',
+    'django_crontab',
+     
 ]
 
 ASGI_APPLICATION = 'backend.asgi.application'
@@ -106,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CRONJOBS=[
+    ('00 20 * * *', 'yoggis.cron.sendMessage')
+]
+
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
