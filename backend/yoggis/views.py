@@ -5,10 +5,8 @@ from django.conf import settings
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
 from django.contrib.messages import constants as messages
-
-
 from .models import Yoga, YogaScore, UserDisorder
-
+from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
     from .posedetection import gen_frames
@@ -25,7 +23,7 @@ def videofeed(request):
 def yoga(request):
     return render(request, 'yoggis/yoga.html')
 
-
+@login_required(login_url='/login')
 def home(request):
     trending_yogas = Yoga.objects.all().exclude(title__in=['Sukasana','Savasana'])
     if len(trending_yogas) >= 4:
@@ -41,7 +39,7 @@ def home(request):
     }
     return render(request, 'yoggis/home.html', context)
 
-
+@login_required(login_url='/login')
 def general(request):
     general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
     gen = general_yogas.filter(difficulty__contains="C")
@@ -52,7 +50,6 @@ def general(request):
         "advanced": adv
     }
     return render(request, 'yoggis/general.html', context)
-
 
 def chronic(request):
     yogas = Yoga.objects.all()
@@ -73,10 +70,8 @@ def meditation(request):
     
 
 
-def challenges(request):
-    
-    
-    return render(request, 'yoggis/challenges.html')
+def challenges(request): 
+       return render(request, 'yoggis/challenges.html')
 
 
 def squad(request):
@@ -91,8 +86,7 @@ def session(request):
 
 
 def tpose(request):
- 
-    return render(request, 'yoggis/tpose.html')
+     return render(request, 'yoggis/tpose.html')
 
 
 # def leaderboard(request):
@@ -173,4 +167,7 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/')       
+    return redirect('yoggis/login.html')       
+
+def profile(request):
+    return render(request,'yoggis/profile.html')
