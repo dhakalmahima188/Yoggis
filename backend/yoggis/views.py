@@ -106,9 +106,10 @@ def yoga_detail_view(request, pk1):
         context['leaderboard'] = leaderboard
         context['avoid_for'] = to_avoid
         general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
-
+        backpain_yogas = Yoga.objects.filter(yoga_category__type__contains="Back-Pain")
         gen = general_yogas.filter(difficulty__contains="C")
         context['gen']=gen
+        context['backpain']=backpain_yogas
         disorder=gen.filter(avoid_for_disorder__type__contains="Asthma")
         context['dis']=disorder
         context['category']=yog.yoga_category.all()

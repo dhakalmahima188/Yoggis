@@ -88,26 +88,28 @@
 <div class="container shadow-sm p-3 mb-5 bg-white rounded">
     <div class="column">
         <div class="row">
-            <h1>You can also try</h1>
-            <ul>
+            
+                
                 {% for ct in category %}
-                <li>
-                    
+                
+                
                     {% if ct.type == "General" %}
+                    <h1>You can also try</h1>
                    
                     <ul>
                     {% for generalYoga in gen %}
                     <li>
-                    <h4>{{ generalYoga.title }}</h1>
+                    <h6>{{ generalYoga.title }}</h1>
                     </li>
                     {% endfor %}
                     </ul>
                     {% endif %}
+                    
                   
                    
-                </li>
+               
                 {% endfor %}
-            </ul>
+            
 
             
                 
