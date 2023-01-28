@@ -7,13 +7,8 @@ from .models import Yoga, YogaScore, UserDisorder
 # from django_crontab import decorators
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
-<<<<<<< HEAD
 from django.contrib import messages
 from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
-=======
-from django.contrib.messages import constants as messages
-from .models import Yoga, YogaScore, UserDisorder, SUserDisorder, YogaCategory
->>>>>>> c2616fb490bdbd0f006d9e049212259b89e0c984
 from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
