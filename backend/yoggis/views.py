@@ -177,10 +177,11 @@ def logout(request):
     auth.logout(request)
     return redirect('yoggis/login.html')       
 
+@login_required(login_url='/login')
 def profile(request):
     disorders = UserDisorder.objects.all()
-    s_disorders=SUserDisorder.objects.get(user=request.user)
-    print(s_disorders)
+    s_disorders=SUserDisorder.objects.filter(user=request.user)
+   
     s_disord={
         "s_name": s_disorders,
          "name": disorders
