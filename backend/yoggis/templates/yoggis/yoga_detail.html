@@ -20,10 +20,9 @@
 <div class="container shadow-sm p-3 mb-5 bg-white rounded">
     <div class="row">
         <div class="column">
-            <h2>{{ yoga.id }}</h2>
             <h2>{{ yoga.title }}</h2>
             <p>{{ yoga.description }}</p>
-            <p>{{ yoga.yoga_category }}</p>
+            
             {% if yoga.how_to_perform %}
             <h4>How to Perform:</h4>
             <p>{{ yoga.how_to_perform }}</p>
@@ -82,24 +81,44 @@
                 {% endif %}
             </div>
         </div>
-        <div class="column">
-            <div class="row">
-                <h1>You can also try</h1>
-                <div class="row">
-                    Yoga1
-                </div>
-                <div class="row">
-                    Yoga2
-                </div>
-                
-                    
-                </div>
-                
-
-        </div>
-    </div>
+        
    
 </div>
+
+<div class="container shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="column">
+        <div class="row">
+            
+                
+                {% for ct in category %}
+                
+                
+                    {% if ct.type == "General" %}
+                    <h1>You can also try</h1>
+                   
+                    <ul>
+                    {% for generalYoga in gen %}
+                    <li>
+                    <h6>{{ generalYoga.title }}</h1>
+                    </li>
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+                    
+                  
+                   
+               
+                {% endfor %}
+            
+
+            
+                
+            </div>
+            
+
+    </div>
+</div>
+
 
 
 

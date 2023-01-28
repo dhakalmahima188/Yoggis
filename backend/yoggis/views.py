@@ -7,8 +7,13 @@ from .models import Yoga, YogaScore, UserDisorder
 # from django_crontab import decorators
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
+<<<<<<< HEAD
 from django.contrib import messages
 from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
+=======
+from django.contrib.messages import constants as messages
+from .models import Yoga, YogaScore, UserDisorder, SUserDisorder, YogaCategory
+>>>>>>> c2616fb490bdbd0f006d9e049212259b89e0c984
 from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
@@ -99,16 +104,21 @@ def yoga_detail_view(request, pk1):
     context = {}
     try:
         yog = Yoga.objects.get(pk=pk1)
+        yog
         context['yoga'] = yog
         leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk).order_by('-score')
         to_avoid = yog.avoid_for_disorder.all()
         context['leaderboard'] = leaderboard
         context['avoid_for'] = to_avoid
         general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
-
+        backpain_yogas = Yoga.objects.filter(yoga_category__type__contains="Back-Pain")
         gen = general_yogas.filter(difficulty__contains="C")
+        context['gen']=gen
+        context['backpain']=backpain_yogas
         disorder=gen.filter(avoid_for_disorder__type__contains="Asthma")
         context['dis']=disorder
+        context['category']=yog.yoga_category.all()
+        
     except Yoga.DoesNotExist:
         raise Http404('Book does not exist')
 

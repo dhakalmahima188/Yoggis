@@ -94,8 +94,6 @@ DATABASES = {
     }
 }
 
-# AUTH_USER_MODEL='yoggis.User'f
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
