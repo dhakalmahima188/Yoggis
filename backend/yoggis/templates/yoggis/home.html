@@ -55,7 +55,7 @@
             <div class="row gy-4">
               <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
                 <h1>Welcome to Yoggis</h1>
-                
+
                 <h2>Perfect your practice with AI-powered yoga feedback and guidance</h2>
               </div>
               <div class="col-lg-6 order-1 order-lg-2 hero-img">
@@ -130,7 +130,7 @@
             <a href="{% url 'general' %}">
               <span class="clickable">
                 <div class="icon-box">
-                  <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/treepose.jpeg' %}" ></i></div>
+                  <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/treepose.jpeg' %}"></i></div>
                   <h4 class="title">General Yoga Poses</h4>
                 </div>
               </span>
@@ -144,7 +144,7 @@
             <a href="{% url 'chronic' %}">
               <span class="clickable">
                 <div class="icon-box">
-                  <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/warrior.jpeg' %}" ></i></div>
+                  <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/warrior.jpeg' %}"></i></div>
                   <h4 class="title">Yoga for Chronic Diseases</h4>
                 </div>
               </span>
@@ -155,7 +155,7 @@
             <a href="{% url 'meditation' %}">
               <span class="clickable">
                 <div class="icon-box">
-                  <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/hero-img.jpeg' %}" ></div>
+                  <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/hero-img.jpeg' %}"></div>
                   <h4 class="title">Meditation</h4>
                 </div>
               </span>
@@ -164,7 +164,7 @@
 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
             <div class="icon-box">
-              <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/squad.jpg' %}" ></div>
+              <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/squad.jpg' %}"></div>
               <h4 class="title"><a href="/squad">Yoga Squad</a></h4>
             </div>
           </div>
@@ -177,29 +177,29 @@
     <!-- ======= Services Section ======= -->
     <section id="challenge" class="services section-bg">
       <div class="container" data-aos="fade-up">
-{% if challenges %}
+        {% if challenges %}
         <div class="section-title">
 
           <h2>Trending Now</h2>
           <p>Join the challenge</p>
         </div>
-    <div class="row">
-{% for c in challenges %}
+        <div class="row">
+          {% for c in challenges %}
 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
 
             <div class="icon-box">
               <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
               <img class="image_yoga" src="{{ c.image.url }} ">
-   <h4 class="title"><a href="{% url 'yoga-detail' c.id %}">{{ c.title }}</a></h4>
+              <h4 class="title"><a href="{% url 'yoga-detail' c.id %}">{{ c.title }}</a></h4>
               <h2 class="time_challenge">Time: 7:30-8:00 AM</h2>
 
             </div>
-</div>
-{% endfor %}
+          </div>
+          {% endfor %}
 
         </div>
-{% endif %}
+        {% endif %}
       </div>
     </section><!-- End Services Section -->
     <section id="yogas" class="services section-bg">
@@ -216,9 +216,9 @@
             <div class="card card-custom ">
               <a href="{% url 'yoga-detail' pk1=trend_yoga.id %}">
                 <span class="clickable">
-                    <div>
-                        <img class="card-img-top" src="{{ trend_yoga.image.url }}" alt="Alternate">
-                    </div>
+                  <div>
+                    <img class="card-img-top" src="{{ trend_yoga.image.url }}" alt="Alternate">
+                  </div>
                   <div class="card-body d-grid mt-auto">
                     <h4 class="title">{{ trend_yoga.title }}</h4>
                     <p>{{ trend_yoga.description|truncatechars:80 }}</p>
@@ -304,190 +304,115 @@
         </div>
       </div>
     </section>
-  <!-- ======= Services Section ======= -->
-  <section id="yogas" class="services section-bg">
-    <div class="container" data-aos="fade-up">
 
-      <div class="section-title">
-
-        <p>Our Services</p>
-      </div>
-
-      <div class="row">
-
-
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-          <a href="{% url 'general' %}">
-            <span class="clickable">
-              <div class="icon-box">
-                <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/treepose.jpeg' %}" ></i></div>
-                <h4 class="title">General Yoga Poses</h4>
-              </div>
-            </span>
-          </a>
-        </div>
-
-
-
-
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-          <a href="{% url 'chronic' %}">
-            <span class="clickable">
-              <div class="icon-box">
-                <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/warrior.jpeg' %}" ></i></div>
-                <h4 class="title">Yoga for Chronic Diseases</h4>
-              </div>
-            </span>
-          </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-          <a href="{% url 'meditation' %}">
-            <span class="clickable">
-              <div class="icon-box">
-                <div class="icon" ><img class="image_yoga" src="{% static 'yoggis/img/hero-img.jpeg' %}" ></div>
-                <h4 class="title">Meditation</h4>
-              </div>
-            </span>
-          </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="400">
-          <div class="icon-box">
-            <div class="icon"><img class="image_yoga" src="{% static 'yoggis/img/squad.jpg' %}" ></div>
-            <h4 class="title"><a href="/squad">Yoga Squad</a></h4>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section><!-- End Services Section -->
-
-  <!-- ======= Services Section ======= -->
-  <section id="challenge" class="services section-bg">
-    <div class="container" data-aos="fade-up">
-{% if challenges %}
-      <div class="section-title">
-
-        <h2>Trending Now</h2>
-        <p>Join the challenge</p>
-      </div>
-  <div class="row">
-{% for c in challenges %}
-
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-
-          <div class="icon-box">
-            <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
-            <img class="image_yoga" src="{{ c.image.url }} ">
- <h4 class="title"><a href="{% url 'yoga-detail' c.id %}">{{ c.title }}</a></h4>
-            <h2 class="time_challenge">Time: 7:30-8:00 AM</h2>
-
-          </div>
-</div>
-{% endfor %}
-
-      </div>
-{% endif %}
-    </div>
-  </section><!-- End Services Section -->
+   
+    
     <!-- ======= About the team ======= -->
     <section id="team" class="services section-bg team">
-      <div class="container" data-aos="fade-up">
-      <div class="section-title">
+      <div class="container " data-aos="fade-up">
+        <div class="section-title">
 
-        <p>Our Team</p>
-      </div>
-
-        <div class="row gy-6">
-
-          <div class="col-sm-12 col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="team-member">
-              <div class="member-img" style="width:200px;height:200px;border-radius:50%;z-index:1">
-                <img src="{% static 'yoggis/img/team/nadika.jpg' %}" class="img-fluid" alt="">
-              </div>
-              <div class="member-info">
-                <h4>Nadika Poudel</h4>
-                <span>ML, Backend and Research Specialist</span>
-              </div>
+          <p>Our Team</p>
+        </div>
+        <div class="col d-flex justify-content-center">
+          
+          <div class="team-member" data-aos="zoom-in" data-aos-delay="200" style="padding:30px">
+            <div class="member-img" style="width:200px;height:200px;border-radius:50%;z-index:1">
+              <img src="{% static 'yoggis/img/team/nadika.jpg' %}" class="img-fluid" alt="">
             </div>
+            <div class="member-info">
+              <h4>Nadika Poudel</h4>
+              <span>ML and Backend  Specialist</span>
+            </div>
+          </div>
+
          
-
-          <div class="col-xl-7 col-md-5 d-flex" data-aos="zoom-in" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img" style="width:200px;height:200px;border-radius:50%;z-index:1">
-                <img src="{% static 'yoggis/img/team/mahima.jpg' %}" class="img-fluid" alt="">
-              </div>
-              <div class="member-info">
-                <h4>Mahima Dhakal</h4>
-                <span>Python and Frontend Specialist</span>
-              </div>
+          <div class="team-member" data-aos="zoom-in" data-aos-delay="200" style="padding:30px">
+            <div class="member-img" style="width:200px;height:200px;border-radius:50%;z-index:1">
+              <img src="{% static 'yoggis/img/team/mahima.jpg' %}" class="img-fluid" alt="">
+            </div>
+            <div class="member-info">
+              <h4>Mahima Dhakal</h4>
+              <span>Python and Frontend Specialist</span>
             </div>
           </div>
+
+  
+  
         </div>
-        
-        </div>
-
-      </div> 
-    </section>
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
 
 
 
-      <div class="footer-top">
-        <div class="container">
-          <div class="row">
+       
 
-            <div class="col-lg-3 col-md-6 footer-contact">
-              <h3>Yoggis</h3>
-              <p>
-                Pulchowk <br>
-                Lalitpur, 44600<br>
-                Nepal<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> yoggis@gmail.com<br>
-              </p>
-            </div>
 
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Useful Links</h4>
-              <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-              </ul>
-            </div>
 
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Our Services</h4>
-              <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoggis</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Research</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Training</a></li>
-              </ul>
-            </div>
+      
 
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Our Social Networks</h4>
-              <p></p>
-              <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-              </div>
-            </div>
-
-          </div>
-        </div>
       </div>
 
 
-    </footer><!-- End Footer -->
 
-    {% endblock main %}
+
+</div>
+</section>
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-6 footer-contact">
+          <h3>Yoggis</h3>
+          <p>
+            Pulchowk <br>
+            Lalitpur, 44600<br>
+            Nepal<br><br>
+            <strong>Phone:</strong> +1 5589 55488 55<br>
+            <strong>Email:</strong> yoggis@gmail.com<br>
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Yoggis</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Research</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Yoga Training</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Our Social Networks</h4>
+          <p></p>
+          <div class="social-links mt-3">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</footer><!-- End Footer -->
+
+{% endblock main %}

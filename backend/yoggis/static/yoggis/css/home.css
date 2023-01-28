@@ -1509,8 +1509,7 @@ body {
   overflow: hidden;
 
 }
+.team-member {
+  padding:20px
+}
 
-/* .team-center_div{
-display:inline-block;
-justify-content: center;
-} */
