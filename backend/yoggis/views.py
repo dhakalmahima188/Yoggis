@@ -170,4 +170,10 @@ def logout(request):
     return redirect('yoggis/login.html')       
 
 def profile(request):
-    return render(request,'yoggis/profile.html')
+    disorders = UserDisorder.objects.all()
+    
+    disord={
+        "name": disorders
+    }
+    return render(request, 'yoggis/profile.html', disord)
+    # return render(request,'yoggis/profile.html')

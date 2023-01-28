@@ -58,7 +58,7 @@
           <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
           {% if user.is_authenticated %}         
           <li><a href="/logout">Logout</a></li>
-          <li><a href="#" >{{user.first_name}}</a></li>
+          <li><a href="/profile" >{{user.first_name}}</a></li>
           {% else %}	
           <li><a href="/register">Register</a></li>
           <li><a href="/login">Login</a></li>
