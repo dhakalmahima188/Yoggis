@@ -1,38 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-</head>
-<body>
-    <li>{{user.first_name}}</a></li>
-    <li>{{user.email}}</a></li>
-    
-    {% for dis in name %}
-    <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" >
-        
-        <span class="clickable" >
-          <div class="icon-box">
-          <div class="icon" ><h3 class="title">{{ dis.type }}</h4></div>
-         
-          </div>
-        </span>
-      </a>
-      </div>
-      {% endfor %}
+{% extends "yoggis/common.html" %}
+{% block main %}
 
-    <h1>Add Category</h1>
-    <form action="category" method="post">
-        {% csrf_token %}
-        <input type="text" name="category" placeholder="category"><br>
-        <input type="Submit">
-    </form>
-    <div>
-        {% for message in messages %}
-        <h3> {{message}}  </h3>
-        {% endfor %}
+{% load static %}
+<br>
+<br>
+<!-- ======= Services Section ======= -->
+
+
+<section id="plans" class="services section-bg pricing py-5">
+
+
+  <div class="container justify-content-center">
+    <div class="row">
+      <!-- Free Tier -->
+      <div class="col-sm-12 col-md-6 col-lg-12 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-body  d-flex flex-column">
+          
+
+            <div class="card-body  d-flex flex-column">
+              <div style="display: flex; padding:20px">
+
+
+                <section id="profile" class="services ">
+                    <div class="container" data-aos="fade-up">
+                
+                        <div class="section-title">
+                
+                            <p>Hi !! {{user.username}}</p>
+                        </div>
+                
+                
+                       
+                
+                                    <h5> Name : {{user.first_name}}</h5>
+                                    <h5> Email: {{user.email}} </h5>
+                
+                                    {% for dis in name %}
+                                    <div class="icon">
+                                        <h3 class="title">{{ dis.type }}</h4>
+                                    </div>
+                                    {% endfor %}
+                         
+                            
+
+                
+                
+                        <h1>Add Category</h1>
+                        <form action="category" method="post">
+                            {% csrf_token %}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ADD<i class="bi bi-plus"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for dis in name %}
+                                    <div class="icon">
+                                        <a class="dropdown-item" href="{% url 'update-usersd' dis.id %}">{{ dis.type }}</a>
+                                        <h3 class="title"></h4>
+                                    </div>
+                                    {% endfor %}
+                                  
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            {% for message in messages %}
+                            <h3> {{message}} </h3>
+                            {% endfor %}
+                        </div>
+                
+                    </div>
+                </section><!-- End Services Section -->
+                
+
+               
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
     </div>
-</body>
-</html>
+
+  </div>
+
+
+  </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock main %}

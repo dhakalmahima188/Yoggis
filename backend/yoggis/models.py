@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
     description = models.TextField()
@@ -67,3 +68,7 @@ class YogaScore(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class SUserDisorder(models.Model):
+       user_disorder=models.ManyToManyField(UserDisorder,blank=True)
+       user=models.ForeignKey(User,on_delete=models.CASCADE)
