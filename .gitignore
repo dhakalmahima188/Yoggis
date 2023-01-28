@@ -1,4 +1,6 @@
 venv/
 __pycache__/
 environ
-*.pem
+client-cert.pem
+client-key.pem
+server-ca.pem

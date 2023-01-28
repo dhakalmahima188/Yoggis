@@ -17,4 +17,9 @@ urlpatterns = [
     # path('challenges/',views.challenges,name='challenges'),
     # path('leaderboard/',views.leaderboard,name='leaderboard'),
     path('send_sms/', views.send_sms_view, name='send_sms'),
+    path("register", views.register, name="register"),
+    path("login", views.login, name="login"),
+    path("logout",views.logout,name="logout"),
+    path("profile",views.profile,name="profile")
+
 ]
