@@ -15,7 +15,6 @@ if settings.SERVE:
     from .posedetection import gen_frames
 
 
-
 def videofeed(request):
     if settings.SERVE:
         response = StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
