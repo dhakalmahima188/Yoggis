@@ -13,42 +13,30 @@
   <div class="container justify-content-center">
     <div class="row">
       <!-- Free Tier -->
-      <div class="col-sm-12 col-md-6 col-lg-12 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+    
         <div class="card mb-5 mb-lg-0">
           <div class="card-body  d-flex flex-column">
           
 
             <div class="card-body  d-flex flex-column">
-              <div style="display: flex; padding:20px">
+              <div style="display: flex; padding:10px">
 
 
                 <section id="profile" class="services ">
-                    <div class="container" data-aos="fade-up">
+                  <div class="section-title">
                 
-                        <div class="section-title">
-                
-                            <p>Hi !! {{user.username}}</p>
-                        </div>
-                
-                
+                    <p>Hi !! {{user.username}}</p>
+                </div>
+                    <div class="container" data-aos="fade-up">                
                        
-                
-                                    <h5> Name : {{user.first_name}}</h5>
-                                    <h5> Email: {{user.email}} </h5>
-                
-                                    {% for dis in name %}
-                                    <div class="icon">
-                                        <h3 class="title">{{ dis.type }}</h4>
-                                    </div>
-                                    {% endfor %}
-                         
-                            
-
-                
-                
-                        <h1>Add Category</h1>
-                        <form action="category" method="post">
-                            {% csrf_token %}
+                                    <h5> <b>Name : </b> {{user.first_name}}</h5>
+                                    <h5> <b>Email: </b> {{user.email}} </h5>  
+<br><br>
+                                    <h5><b>Disease Categories </b> </h5>
+                                        <h6 >{{ s_name.user_disorder }}</h6>
+                                                                       
+                          
+                                                 
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,22 +44,19 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% for dis in name %}
-                                    <div class="icon">
-                                        <a class="dropdown-item" href="{% url 'update-usersd' dis.id %}">{{ dis.type }}</a>
-                                        <h3 class="title"></h4>
-                                    </div>
+                                        <a class="dropdown-item" href="{% url 'update-usersd' dis.id %}">{{ dis.type }}</a>                                                                           
                                     {% endfor %}
                                   
                                 </div>
+                                <br><br>
                             </div>
-                        </form>
+                 
                         <div>
-                            {% for message in messages %}
-                            <h3> {{message}} </h3>
-                            {% endfor %}
+                          
                         </div>
                 
                     </div>
+               
                 </section><!-- End Services Section -->
                 
 

@@ -1504,7 +1504,13 @@ body {
   }
 }
 
-.team .team-member .member-img {
+.team .team-member  .member-img {
   border-radius: 8px;
   overflow: hidden;
+
 }
+
+/* .team-center_div{
+display:inline-block;
+justify-content: center;
+} */

@@ -7,7 +7,7 @@ from .models import Yoga, YogaScore, UserDisorder
 # from django_crontab import decorators
 from django.contrib.auth.models import User, auth
 from django.shortcuts import redirect
-from django.contrib.messages import constants as messages
+from django.contrib import messages
 from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
 from django.contrib.auth.decorators import login_required
 
@@ -174,11 +174,15 @@ def logout(request):
 
 def profile(request):
     disorders = UserDisorder.objects.all()
-    
-    disord={
-        "name": disorders
+    s_disorders=SUserDisorder.objects.get(user=request.user)
+    print(s_disorders)
+    s_disord={
+        "s_name": s_disorders,
+         "name": disorders
     }
-    return render(request, 'yoggis/profile.html', disord)
+    
+  
+    return render(request, 'yoggis/profile.html', s_disord)
     # return render(request,'yoggis/profile.html')
     
 def updateUserDisorder(request,pid):
@@ -187,7 +191,7 @@ def updateUserDisorder(request,pid):
         d_obj = UserDisorder.objects.get(pk=pid)
         print(d_obj)
         print(request.user)
-        sd_obj = SUserDisorder.objects.filter(user=request.user)[0]
+        sd_obj = SUserDisorder.objects.get(user=request.user)
         print(sd_obj)
         if sd_obj:
             print("existing object")
@@ -197,4 +201,21 @@ def updateUserDisorder(request,pid):
             SUserDisorder.objects.create(user=request.user.id, user_disorder=d_obj.id)
     except:
         pass 
-    # return redirect('profile')
+    return redirect('profile')
+    
+# def updateUserDisorder(request, pid):
+#     try:
+#         print("hello", pid)
+#         d_obj = UserDisorder.objects.get(pk=pid)
+#         print(d_obj)
+#         print(request.user)
+#         sd_obj, created = SUserDisorder.objects.get(user=request.user)
+#         if not created:
+#             sd_obj.user_disorder.add(d_obj)
+#         else:
+#             sd_obj.user_disorder.set([d_obj])
+#     except Exception as e:
+#         print(e)
+    
+#     return("profile")
+   
