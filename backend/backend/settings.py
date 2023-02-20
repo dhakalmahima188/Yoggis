@@ -67,30 +67,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'yoggis',
-#         'USER': 'nads',
-#         'PASSWORD': 'nepal123',
-#         'HOST': "34.131.43.238",
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'verify-ca',
-#             'sslcert': os.path.join(BASE_DIR, 'backend/client-cert.pem'),
-#             'sslkey': os.path.join(BASE_DIR, 'backend/client-key.pem'),
-#             'sslrootcert': os.path.join(BASE_DIR, 'backend/server-ca.pem'),
-#         },
-#     }
-# }
+
 DATABASES = {
+    # previous database
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'hackaweek',
+    #     'USER': 'nads',
+    #     'PASSWORD': 'nads123',
+    #     'HOST': "20.210.222.169",
+    #     'PORT': '80',
+    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hackaweek',
-        'USER': 'nads',
-        'PASSWORD': 'nads123',
-        'HOST': "20.210.222.169",
-        'PORT': '80',
+        'NAME': 'yoggis',
+        'USER': 'nadika',
+        'PASSWORD': 'Minor123',
+        'HOST': "20.197.24.11",
+        'PORT': '5432',
     }
 }
 
