@@ -7,10 +7,9 @@ DEBUG = True
 
 SERVE = True
 
-ALLOWED_HOSTS = ['4.224.27.113',
-                 'hackaweek.krishbin.tech',
+ALLOWED_HOSTS = ['20.41.114.123',
+                 'yoggis.koreacentral.cloudapp.azure.com',
                  '127.0.0.1',
-                 'krishbin.centralindia.cloudapp.azure.com',
                  'localhost']
 
 INSTALLED_APPS = [
