@@ -56,9 +56,8 @@ joints = [
     'right_ankle'
 ]
 
-
-#assign tree actual angles from csv file
 def tree_actual_angles():
+    
     tree_pose_angles = {
         x+"_angle" : None for x in joints
     }
@@ -73,7 +72,6 @@ def tree_actual_angles():
 
     return tree_pose_angles
 
-
 def return_angle(landmark1, landmark2, landmark3):
     x1, y1 = landmark1.x, landmark1.y
     x2, y2 = landmark2.x, landmark2.y
@@ -86,7 +84,6 @@ def return_angle(landmark1, landmark2, landmark3):
         
     # Return the calculated angle.
     return angle
-
 
 def compute_joint_angles(pose):
     left_elbow_angle = return_angle(pose[landmark_names.index('left_wrist')], 
@@ -124,7 +121,6 @@ def compute_joint_angles(pose):
                        'right_knee_angle' :right_knee_angle}
     return computed_angles
 
-
 def get_pose_prediction(pose):
     pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten())                    
     X = pd.DataFrame([pose_row])
@@ -136,9 +132,11 @@ def generate_errors(pose_name, pose):
     #calculate the angles
     tree_pose_angles = tree_actual_angles()
     actual_angles = compute_joint_angles(pose)
+    for a,b in actual_angles.items():
+        print(f"{a} : {b}")
     max_diff = 0
     diff_joint = ""    
-    if pose_name == "t":
+    if pose_name == "tree":
         for angles in actual_angles.keys():
             
             if tree_pose_angles[angles] is not None:
@@ -157,8 +155,6 @@ async def speak(text):
 def genFrames(debug = False):
     cap = cv2.VideoCapture(0)
     curr_time = 0
-
-
     #pose model
     with mp_pose.Pose() as pose_tracker:
 
@@ -183,13 +179,8 @@ def genFrames(debug = False):
                 pose_name, score_arr = get_pose_prediction(pose)
                 score = round(score_arr[np.argmax(score_arr)],2)
 
-                line_color = mp_drawing.DrawingSpec(color=(0, 0, 150), thickness=2, circle_radius=2)
-                circle_color = mp_drawing.DrawingSpec(color=(0, 0, 200), thickness=2, circle_radius=2)
-
                 #put redirect bhako link ko number instead of pose name for the website
                 if pose_name == "tree" and score > 0.72:
-                    line_color = mp_drawing.DrawingSpec(color=(0, 150, 0), thickness=2, circle_radius=2)
-                    circle_color = mp_drawing.DrawingSpec(color=(0, 200, 0), thickness=2, circle_radius=2)
                     difference, name = generate_errors(pose_name, pose)
                     if curr_time >30:
                         speak("Maintain pose")
@@ -208,6 +199,8 @@ def genFrames(debug = False):
                 if debug:
 
                     coords = (100, 100)          
+                    cv2.rectangle(frame, (coords[0], coords[1]+5), (coords[0]+len(pose_name)*20, coords[1]-30), (245, 117, 16), -1)
+                    cv2.putText(frame, pose_name, coords, cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
                                 # Get status box
                     cv2.rectangle(frame, (0,0), (250, 60), (245, 117, 16), -1)
@@ -222,13 +215,9 @@ def genFrames(debug = False):
 
                     if pose_landmarks is not None:
                         mp_drawing.draw_landmarks(
-                        frame,
-                        pose_landmarks,
-                        mp_pose.POSE_CONNECTIONS,
-                        line_color,
-                        circle_color
-                    )
-                        
+                        image=frame,
+                        landmark_list=pose_landmarks,
+                        connections=mp_pose.POSE_CONNECTIONS)
 
 
 
