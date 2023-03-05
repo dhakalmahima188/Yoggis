@@ -117,7 +117,7 @@ def calculateAngle(landmark1, landmark2, landmark3):
 def get_cordinate(i,landmarks):
     return landmarks[mp_pose.PoseLandmark(i).value][0],landmarks[mp_pose.PoseLandmark(i).value][1],landmarks[mp_pose.PoseLandmark(i).value][2]
 
-def getAccuracy(landmarks,image,display=False):
+def getAccuracy(landmarks,image,yoga='T-Pose',display=False):
     actual=[]
     with open(os.path.join(settings.BASE_DIR, 'data.csv'), 'r') as file:
         reader = csv.reader(file)
@@ -146,6 +146,8 @@ def getAccuracy(landmarks,image,display=False):
         r26 = calculateAngle(get_cordinate(24,landmarks), get_cordinate(26,landmarks), get_cordinate(28,landmarks))
         # print(r12,r14,r16,r24,r26)
         # print(get_cordinate(11,landmarks)[0],get_cordinate(11,landmarks)[1])
+
+
         e1=-(l11-actual[0])
         e2=-(l13-actual[1])
         e3=-(l20-actual[2])

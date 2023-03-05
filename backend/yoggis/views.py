@@ -94,6 +94,9 @@ def tpose(request):
      return render(request, 'yoggis/tpose.html')
 
 
+
+
+
 # def leaderboard(request):
 #     return render(request,'yoggis/leaderboard.html')
 @login_required(login_url='/login')
