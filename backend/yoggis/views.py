@@ -74,6 +74,8 @@ def meditation(request):
     }
     return render(request,'yoggis/meditation.html',context)
     
+def backpain(request): 
+       return render(request, 'yoggis/backpain.html')
 
 
 def challenges(request): 
