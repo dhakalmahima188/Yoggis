@@ -5,7 +5,7 @@ import math
 import numpy as np
 import pandas as pd
 import warnings
-from gtts import gTTS
+# from gtts import gTTS
 import os
 import time
 from asgiref.sync import async_to_sync
