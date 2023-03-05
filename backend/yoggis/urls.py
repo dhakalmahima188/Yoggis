@@ -10,6 +10,7 @@ urlpatterns = [
     path('squad/session/', views.session, name='session'),
     path('general/', views.general, name='general'),
     path('chronic/', views.chronic, name='chronic'),
+    path('backpain/', views.backpain, name='backpain'),
     path('tpose/', views.tpose, name='tpose'),
     path('general', views.general, name='general'),
     path('meditation/', views.meditation, name='meditation'),

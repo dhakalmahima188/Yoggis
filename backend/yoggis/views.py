@@ -13,11 +13,12 @@ from django.contrib.auth.decorators import login_required
 
 if settings.SERVE:
     from .posedetection import gen_frames
+    from .newposedetection import genFrames
 
 
 def videofeed(request):
     if settings.SERVE:
-        response = StreamingHttpResponse(gen_frames(), content_type="multipart/x-mixed-replace; boundary=frame")
+        response = StreamingHttpResponse(genFrames(True), content_type="multipart/x-mixed-replace; boundary=frame")
         response['Cache-Control'] = 'no-cache'
         return response
     return HttpResponseRedirect(reverse('home'))
@@ -73,6 +74,8 @@ def meditation(request):
     }
     return render(request,'yoggis/meditation.html',context)
     
+def backpain(request): 
+       return render(request, 'yoggis/backpain.html')
 
 
 def challenges(request): 

@@ -44,6 +44,7 @@ def detectPose(image, pose, display=True):
     
     # Convert the image from BGR into RGB format.
     imageRGB = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
     
     # Perform the Pose Detection.
     results = pose.process(imageRGB)
@@ -138,7 +139,7 @@ def getAccuracy(landmarks,image,yoga='T-Pose',display=False):
         l25 = calculateAngle(get_cordinate(23,landmarks), get_cordinate(25,landmarks), get_cordinate(27,landmarks))
         # print(l11,l13,l20,l23,l25)
        
-    #right
+        #right
         r12 = calculateAngle(get_cordinate(24,landmarks), get_cordinate(12,landmarks), get_cordinate(14,landmarks))
         r14 = calculateAngle(get_cordinate(12,landmarks), get_cordinate(14,landmarks), get_cordinate(16,landmarks))
         r16 = calculateAngle(get_cordinate(18,landmarks), get_cordinate(16,landmarks), get_cordinate(14,landmarks))
@@ -268,7 +269,7 @@ async def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-def gen_frames():
+def gen_frames(pose_name):
     # Setup Pose function for video.
     pose_video = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, model_complexity=1)
     # Initialize the VideoCapture object to read from the webcam.
@@ -304,14 +305,7 @@ def gen_frames():
                     speak(er[randrange(len(er))])
                     starttime = time.time()
 
-        # channel_layer = get_channel_layer()
-        # async_to_sync(channel_layer.group_send)(
-        #     'test',
-        #     {
-        #         'type': 'chat',
-        #         'message': "nadika and mahima"
-        #     }
-        # )
+
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         

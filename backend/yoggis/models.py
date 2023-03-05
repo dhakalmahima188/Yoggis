@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
     description = models.TextField()
@@ -19,7 +17,6 @@ class YogaCategory(models.Model):
 
     def __str__(self):
         return self.type
-
 
 class Yoga(models.Model):
     BEGINNER = 'C'
@@ -55,14 +52,14 @@ class Yoga(models.Model):
 class CorrectVectorLocations(models.Model):
     angle_location = models.CharField(max_length=20)
     angle_value = models.FloatField()
-    angle_of = models.ForeignKey(Yoga, on_delete=models.CASCADE)
+    angle_of = models.ForeignKey(Yoga, on_delete=models.CASCADE) #delete all instances of the model when the referenced object is deleted
 
     def __str__(self):
         return self.angle_location
 
 
 class YogaScore(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #create a many-to-one relationship 
     score = models.IntegerField()
     yoga = models.ForeignKey(Yoga, on_delete=models.CASCADE, related_name='yogaOwner')
 
