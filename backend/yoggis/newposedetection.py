@@ -162,7 +162,7 @@ def generate_errors(pose_name, pose):
     actual_angles = compute_joint_angles(pose)
     max_diff = 0
     diff_joint = ""    
-    if pose_name == "t":
+    if pose_name == "tree":
         for angles in actual_angles.keys():
             
             if tree_pose_angles[angles] is not None:
@@ -215,6 +215,7 @@ def genFrames(debug = False):
                     line_color = mp_drawing.DrawingSpec(color=(0, 150, 0), thickness=2, circle_radius=2)
                     circle_color = mp_drawing.DrawingSpec(color=(0, 200, 0), thickness=2, circle_radius=2)
                     difference, name = generate_errors(pose_name, pose)
+                    print(difference, name)
                     if curr_time >30:
                         speak("Maintain pose")
                         curr_time = 0
@@ -243,6 +244,9 @@ def genFrames(debug = False):
                                 # Display Probability
                     cv2.putText(frame, 'PROB', (15,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
                     cv2.putText(frame, str(score), (10,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                    
+                    
+                    #display error
 
                     if pose_landmarks is not None:
                         mp_drawing.draw_landmarks(
