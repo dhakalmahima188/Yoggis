@@ -61,7 +61,7 @@ joints = [
 
 
 #assign tree actual angles from csv file
-def tree_actual_angles():
+def actual_refrence_angles(pose_name):
    
     tree_pose_angles = {
             x+"_angle" : None for x in joints
@@ -74,8 +74,9 @@ def tree_actual_angles():
         reader = csv.reader(file)
         i=0
         for row in reader:
-            for i in range(1,len(row)):
-                tree_pose_angles.update({keys[i-1]:float(row[i])})
+            if row[0] == pose_name:
+                for i in range(1,len(row)):
+                    tree_pose_angles.update({keys[i-1]:float(row[i])})
 
 
         return tree_pose_angles
@@ -131,7 +132,23 @@ def compute_joint_angles(pose):
                        'right_knee_angle' :right_knee_angle}
     return computed_angles
 
+def error_messages():
+        arms_err_msgs = ['move left arm up', 'move left arm down', 
+                        'move right arm up', 'move right arm down',
+                        'straighten your left arm', 'straighten your right arm']
 
+        legs_err_msgs = ['move left leg up', 'move left leg down', 
+                        'move right leg up', 'move right leg down'
+                        'straighten your left leg', 'straighten your right leg'
+                        'bend your knees', 'bend your left knee', 'bend your right knee', 'move your legs apart', 
+                        'bring your legs closer']
+
+        hips_error_message = ['lean to the left', 'lean to the right', 'stand straight']
+
+        back_error_message = ['bend your back', 'straighten your back']
+
+        head_error_message = ['put your head straight']
+    
 def get_pose_prediction(pose):
     pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten())                    
     X = pd.DataFrame([pose_row])
@@ -141,7 +158,7 @@ def get_pose_prediction(pose):
 
 def generate_errors(pose_name, pose):
     #calculate the angles
-    tree_pose_angles = tree_actual_angles()
+    tree_pose_angles = actual_refrence_angles("tree")
     actual_angles = compute_joint_angles(pose)
     max_diff = 0
     diff_joint = ""    

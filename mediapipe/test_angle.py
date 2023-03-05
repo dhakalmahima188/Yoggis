@@ -67,7 +67,7 @@ for filename in os.listdir(input_folder):
             left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle = calculate_angle(a)
             
                 
-        with open('data.csv', 'a') as file:
-            writer = csv.writer(file)
-            writer.writerow([file_name,left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle])
-        count+=1
+            with open('data.csv', 'a',newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([file_name,left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle])
+            count+=1
