@@ -1,5 +1,6 @@
 import mediapipe as mp
 import cv2
+import csv
 import pickle
 import math
 import numpy as np
@@ -14,6 +15,8 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import HttpResponse
 import pyttsx3
+
+#TODO: add new pose from admin
 
 warnings.filterwarnings("ignore")
 
@@ -59,19 +62,23 @@ joints = [
 
 #assign tree actual angles from csv file
 def tree_actual_angles():
+   
     tree_pose_angles = {
-        x+"_angle" : None for x in joints
-    }
+            x+"_angle" : None for x in joints
+        }
+
+ 
+    keys=[  x+"_angle" for x in joints]
+        
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        i=0
+        for row in reader:
+            for i in range(1,len(row)):
+                tree_pose_angles.update({keys[i-1]:float(row[i])})
 
 
-    tree_pose_angles['left_elbow_angle'] = 180
-    tree_pose_angles['right_elbow_angle'] = 180
-    tree_pose_angles['left_shoulder_angle'] = 180
-    tree_pose_angles['right_shoulder_angle'] = 180
-    tree_pose_angles['left_hip_angle'] = 180
-    tree_pose_angles['right_hip_angle'] = 180
-
-    return tree_pose_angles
+        return tree_pose_angles
 
 
 def return_angle(landmark1, landmark2, landmark3):
