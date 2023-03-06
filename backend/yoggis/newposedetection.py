@@ -132,23 +132,23 @@ def compute_joint_angles(pose):
                        'right_knee_angle' :right_knee_angle}
     return computed_angles
 
-def error_messages():
-        arms_err_msgs = ['move left arm up', 'move left arm down', 
-                        'move right arm up', 'move right arm down',
-                        'straighten your left arm', 'straighten your right arm']
 
-        legs_err_msgs = ['move left leg up', 'move left leg down', 
-                        'move right leg up', 'move right leg down'
-                        'straighten your left leg', 'straighten your right leg'
-                        'bend your knees', 'bend your left knee', 'bend your right knee', 'move your legs apart', 
-                        'bring your legs closer']
+arms_err_msgs = ['move left arm up', 'move left arm down', 
+                'move right arm up', 'move right arm down',
+                'straighten your left arm', 'straighten your right arm']
 
-        hips_error_message = ['lean to the left', 'lean to the right', 'stand straight']
+legs_err_msgs = ['move left leg up', 'move left leg down', 
+                'move right leg up', 'move right leg down'
+                'straighten your left leg', 'straighten your right leg'
+                'bend your knees', 'bend your left knee', 'bend your right knee', 'move your legs apart', 
+                'bring your legs closer']
 
-        back_error_message = ['bend your back', 'straighten your back']
+hips_error_message = ['lean to the left', 'lean to the right', 'stand straight']
 
-        head_error_message = ['put your head straight']
-    
+back_error_message = ['bend your back', 'straighten your back']
+
+head_error_message = ['put your head straight']
+
 def get_pose_prediction(pose):
     pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten())                    
     X = pd.DataFrame([pose_row])
@@ -239,19 +239,49 @@ def genFrames(debug = False):
                     circle_color = mp_drawing.DrawingSpec(color=(0, 200, 0), thickness=2, circle_radius=2)
                     difference, name = generate_errors(pose_name, pose)
                     print(difference, name)
-                    if curr_time >30:
+                    if curr_time >0:
                         speak("Maintain pose")
                         curr_time = 0
 
                 elif pose_name == "tree" and score <0.72:
-                    if curr_time >30:
-                        speak("Improve the pose")
-                        curr_time = 0
+                    difference, name = generate_errors(pose_name, pose)
+                    print(difference, name)
+                            
+                    if (name == 'left_shoulder_angle'):
+                        if (difference > 0):
+                            error = arms_err_msgs[0]
+                        else:
+                            error = arms_err_msgs[1]
+                    elif (name == 'right_shoulder_angle'):
+                        if (difference > 0):
+                            error = arms_err_msgs[2]
+                        else:
+                            error = arms_err_msgs[3]
+                    elif (name == 'left_elbow_angle'):
+                        error = "straighten your left arm"
+                    elif (name == 'right_elbow_angle'):
+                        error = "straighten your right arm"
+                    elif (name == 'left_hip_angle'):
 
-                else:
-                    if curr_time >= 50:
-                        speak("Improve Pose")
-                        curr_time = 0
+                        error = hips_error_message[0]
+                    elif (name == 'right_hip_angle'):
+                        error = hips_error_message[1]
+                    elif (name == 'left_knee_angle'):
+
+                        error = legs_err_msgs[8]
+                    elif (name == 'right_knee_angle'):
+                        error = legs_err_msgs[9]
+                    else:
+                        print('detect bhayena', name, difference)
+                        if curr_time >0:
+                                speak("Improve the pose")
+                                curr_time = 0
+
+                        else:
+                            if curr_time >= 50:
+                                speak("Improve Pose")
+                                curr_time = 0
+                    speak(error)
 
                 if debug:
 
@@ -266,8 +296,8 @@ def genFrames(debug = False):
 
                                 # Display Probability
                     cv2.putText(frame, 'PROB', (15,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
-                    cv2.putText(frame, str(score), (10,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-                    
+                    #cv2.putText(frame, str(score), (10,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                    cv2.putText(frame, error, (get_coordinate("_".join(name.split("_")[:2]), landmarks)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
                     
                     #display error
 
