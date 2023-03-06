@@ -75,7 +75,21 @@
 </section>
 
 
-
+<script>
+  var redirectTime = new Date('{{ request.session.redirect_time }}');
+  console.log('Redirect time:', redirectTime);
+  var currentTime = new Date();
+  console.log('Current time:', currentTime);
+  var timeRemaining = redirectTime - currentTime;
+  console.log('Time remaining:', timeRemaining);
+  if (timeRemaining > 0) {
+      setTimeout(function() {
+          window.location.href = '{% url "chronic" %}';
+      }, timeRemaining);
+  } else {
+      window.location.href = '{% url "chronic" %}';
+  }
+  </script>
 
 
 

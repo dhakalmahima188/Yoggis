@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 from django.shortcuts import render
 from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
@@ -10,6 +11,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
 from django.contrib.auth.decorators import login_required
+import pytz
 
 if settings.SERVE:
     from .posedetection import gen_frames
@@ -93,13 +95,28 @@ def session(request):
     return render(request, 'yoggis/session.html')
 
 
+# def tpose(request):
+#      return render(request, 'yoggis/tpose.html')
+
+
+# def tpose(request):
+#     if 'redirect_time' not in request.session:
+#         # Set the redirect time to 20 seconds in the future
+#         redirect_time = datetime.now() + timedelta(seconds=120)
+#         # Convert the datetime object to a string
+#         request.session['redirect_time'] = redirect_time.isoformat()
+#     return render(request, 'yoggis/tpose.html')
 def tpose(request):
-     return render(request, 'yoggis/tpose.html')
-
-
-
-
-
+    if request.session.get('redirect_time', None):
+        redirect_time = datetime.fromisoformat(request.session['redirect_time']).replace(tzinfo=pytz.UTC)
+        current_time = datetime.now(tz=pytz.UTC)
+        if current_time >= redirect_time:
+            del request.session['redirect_time']
+            return redirect('chronic')
+    else:
+        redirect_time = datetime.now(tz=pytz.UTC) + timedelta(seconds=60)
+        request.session['redirect_time'] = redirect_time.isoformat()
+    return render(request, 'yoggis/tpose.html')
 # def leaderboard(request):
 #     return render(request,'yoggis/leaderboard.html')
 @login_required(login_url='/login')

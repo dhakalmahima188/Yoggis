@@ -12,7 +12,24 @@
             </div>
         </div>
     </div>
-  <script type="text/javascript">
+    
+    <!-- <script>
+        var redirectAfter = '{{ request.session.redirect_after }}';
+        if (redirectAfter) {
+            var redirectTime = new Date(redirectAfter);
+            var currentTime = new Date();
+            var timeRemaining = redirectTime - currentTime;
+            if (timeRemaining <= 0) {
+                window.location.href = '/chronic/';
+            } else {
+                setTimeout(function() {
+                    window.location.href = '/chronic/';
+                }, timeRemaining);
+            }
+        }
+        </script> -->
+        
+  <!-- <script type="text/javascript">
       let url = `ws://${window.location.host}/ws/socket-server`
 
       const chatSocket = new WebSocket(url)
@@ -21,7 +38,7 @@
           let data = JSON.parse(e.data)
           console.log('Data', data)
       }
-  </script>
+  </script> -->
     </body>
 
 
