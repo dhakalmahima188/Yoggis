@@ -61,7 +61,7 @@ joints = [
 
 
 #assign tree actual angles from csv file
-def tree_actual_angles():
+def actual_refrence_angles(pose_name):
    
     tree_pose_angles = {
             x+"_angle" : None for x in joints
@@ -74,8 +74,9 @@ def tree_actual_angles():
         reader = csv.reader(file)
         i=0
         for row in reader:
-            for i in range(1,len(row)):
-                tree_pose_angles.update({keys[i-1]:float(row[i])})
+            if row[0] == pose_name:
+                for i in range(1,len(row)):
+                    tree_pose_angles.update({keys[i-1]:float(row[i])})
 
 
         return tree_pose_angles
@@ -131,7 +132,23 @@ def compute_joint_angles(pose):
                        'right_knee_angle' :right_knee_angle}
     return computed_angles
 
+def error_messages():
+        arms_err_msgs = ['move left arm up', 'move left arm down', 
+                        'move right arm up', 'move right arm down',
+                        'straighten your left arm', 'straighten your right arm']
 
+        legs_err_msgs = ['move left leg up', 'move left leg down', 
+                        'move right leg up', 'move right leg down'
+                        'straighten your left leg', 'straighten your right leg'
+                        'bend your knees', 'bend your left knee', 'bend your right knee', 'move your legs apart', 
+                        'bring your legs closer']
+
+        hips_error_message = ['lean to the left', 'lean to the right', 'stand straight']
+
+        back_error_message = ['bend your back', 'straighten your back']
+
+        head_error_message = ['put your head straight']
+    
 def get_pose_prediction(pose):
     pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten())                    
     X = pd.DataFrame([pose_row])
@@ -141,7 +158,7 @@ def get_pose_prediction(pose):
 
 def generate_errors(pose_name, pose):
     #calculate the angles
-    tree_pose_angles = tree_actual_angles()
+    tree_pose_angles = actual_refrence_angles("t")
     actual_angles = compute_joint_angles(pose)
     max_diff = 0
     diff_joint = ""    
@@ -154,6 +171,21 @@ def generate_errors(pose_name, pose):
                         max_diff = actual_angles[angles] - tree_pose_angles[angles]
                         diff_joint = angles
     return max_diff, diff_joint
+
+
+def get_coordinate(joint_name, landmarks):
+    joint_dict = {'nose': 0, 'left_eye_inner': 1, 'left_eye': 2, 'left_eye_outer': 3, 'right_eye_inner': 4,
+                  'right_eye': 5, 'right_eye_outer': 6, 'left_ear': 7, 'right_ear': 8, 'mouth_left': 9,
+                  'mouth_right': 10, 'left_shoulder': 11, 'right_shoulder': 12, 'left_elbow': 13, 'right_elbow': 14,
+                  'left_wrist': 15, 'right_wrist': 16, 'left_pinky': 17, 'right_pinky': 18, 'left_index': 19,
+                  'right_index': 20, 'left_thumb': 21, 'right_thumb': 22, 'left_hip': 23, 'right_hip': 24,
+                  'left_knee': 25, 'right_knee': 26, 'left_ankle': 27, 'right_ankle': 28, 'left_heel': 29,
+                  'right_heel': 30, 'left_foot_index': 31, 'right_foot_index': 32}
+    if joint_name in joint_dict:
+        return landmarks[joint_dict[joint_name]][0], landmarks[joint_dict[joint_name]][1]
+    else:
+        return None
+
 
 @async_to_sync
 async def speak(text):
@@ -175,7 +207,9 @@ def genFrames(debug = False):
             # Recolor Feed
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
-
+            height, width, _ = image.shape
+            landmarks = []
+    
             # Make Detections
             result= pose_tracker.process(image)
             pose_landmarks = result.pose_landmarks
@@ -183,6 +217,12 @@ def genFrames(debug = False):
             # Recolor image back to BGR for rendering
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            
+            for landmark in result.pose_landmarks.landmark:
+            
+            # Append the landmark into the list.
+                landmarks.append((int(landmark.x * width), int(landmark.y * height),
+                                  (landmark.z * width)))
 
             try:
                 pose = pose_landmarks.landmark
@@ -198,6 +238,7 @@ def genFrames(debug = False):
                     line_color = mp_drawing.DrawingSpec(color=(0, 150, 0), thickness=2, circle_radius=2)
                     circle_color = mp_drawing.DrawingSpec(color=(0, 200, 0), thickness=2, circle_radius=2)
                     difference, name = generate_errors(pose_name, pose)
+                    print(difference, name)
                     if curr_time >30:
                         speak("Maintain pose")
                         curr_time = 0
@@ -226,6 +267,9 @@ def genFrames(debug = False):
                                 # Display Probability
                     cv2.putText(frame, 'PROB', (15,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
                     cv2.putText(frame, str(score), (10,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                    
+                    
+                    #display error
 
                     if pose_landmarks is not None:
                         mp_drawing.draw_landmarks(
