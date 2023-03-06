@@ -15,6 +15,9 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import HttpResponse
 import pyttsx3
+from .models import YogaScore,Yoga
+
+
 
 #TODO: add new pose from admin
 
@@ -193,10 +196,28 @@ async def speak(text):
     engine.say(text)
     engine.runAndWait() 
 
-def genFrames(debug = False):
+def genFrames(request,yoga_id,debug = False):
     cap = cv2.VideoCapture(0)
     curr_time = 0
+    user = request.user
+    yoga = Yoga.objects.get(id=yoga_id)
+    print(yoga.title)
 
+    # Update the user's Yoga score for the current pose
+    try:
+        yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
+    except YogaScore.DoesNotExist:
+        yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
+    # try:
+    #     #search for the user's score for particular pose
+
+
+    #     yoga_score = YogaScore.objects.filter(user=request.user).get(yoga.title=="Tree Pose")
+
+    # except YogaScore.DoesNotExist:
+    #     # Handle case where the user does not have a score yet
+    #     return
+    
 
     #pose model
     with mp_pose.Pose() as pose_tracker:
@@ -241,11 +262,15 @@ def genFrames(debug = False):
                     print(difference, name)
                     if curr_time >30:
                         speak("Maintain pose")
+                        yoga_score.score += 1  # Increase the score by 1
+                        yoga_score.save()
                         curr_time = 0
 
                 elif pose_name == "tree" and score <0.72:
                     if curr_time >30:
                         speak("Improve the pose")
+                        yoga_score.score += 1  # Increase the score by 1
+                        yoga_score.save()
                         curr_time = 0
 
                 else:

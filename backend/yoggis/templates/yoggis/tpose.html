@@ -6,7 +6,7 @@
 <br>
 <br>
 
-
+<h1>{{ yoga.title }}</h1>
 
 <section id="plans" class="services section-bg pricing py-5">
 
@@ -19,7 +19,7 @@
           <div class="card-body  d-flex flex-column">
             <div style="display: flex; padding:20px">
               <img src="{% static 'yoggis/img/etpose.png' %}" style="flex: 1; width: 50%">
-              <img src="{% url 'video_feed' %}" style="flex: 1; width: 50%;border-radius:8%">
+              <img src="{% url 'video_feed' pk=yoga.id %}" style="flex: 1; width: 50%;border-radius:8%">
             </div>
 
 
@@ -77,11 +77,8 @@
 
 <script>
   var redirectTime = new Date('{{ request.session.redirect_time }}');
-  console.log('Redirect time:', redirectTime);
   var currentTime = new Date();
-  console.log('Current time:', currentTime);
   var timeRemaining = redirectTime - currentTime;
-  console.log('Time remaining:', timeRemaining);
   if (timeRemaining > 0) {
       setTimeout(function() {
           window.location.href = '{% url "chronic" %}';

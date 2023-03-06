@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('yoga/', views.yoga, name='yoga'),
-    path('video_feed/', views.videofeed, name='video_feed'),
+    path('video_feed/<int:pk>', views.videofeed, name='video_feed'),
     path('', views.home, name='home'),
     path('general', views.general, name='general'),
     path('squad/', views.squad, name='squad'),
@@ -11,7 +11,7 @@ urlpatterns = [
     path('general/', views.general, name='general'),
     path('chronic/', views.chronic, name='chronic'),
     path('backpain/', views.backpain, name='backpain'),
-    path('tpose/', views.tpose, name='tpose'),
+    path('tpose/<int:pk>', views.tpose, name='tpose'),
     path('general', views.general, name='general'),
     path('meditation/', views.meditation, name='meditation'),
     path('yoga/<int:pk1>', views.yoga_detail_view, name='yoga-detail'),
@@ -21,6 +21,6 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("login", views.login, name="login"),
     path("logout",views.logout,name="logout"),
-    path("profile",views.profile,name="profile")
+    path("profile",views.profile,name="profile"),
 
 ]

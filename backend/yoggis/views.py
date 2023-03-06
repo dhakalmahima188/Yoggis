@@ -18,9 +18,9 @@ if settings.SERVE:
     from .newposedetection import genFrames
 
 
-def videofeed(request):
+def videofeed(request,pk):
     if settings.SERVE:
-        response = StreamingHttpResponse(genFrames(True), content_type="multipart/x-mixed-replace; boundary=frame")
+        response = StreamingHttpResponse(genFrames(request,pk,True), content_type="multipart/x-mixed-replace; boundary=frame")
         response['Cache-Control'] = 'no-cache'
         return response
     return HttpResponseRedirect(reverse('home'))
@@ -106,7 +106,14 @@ def session(request):
 #         # Convert the datetime object to a string
 #         request.session['redirect_time'] = redirect_time.isoformat()
 #     return render(request, 'yoggis/tpose.html')
-def tpose(request):
+def tpose(request, pk):
+    context = {}
+    try:
+        yog = Yoga.objects.get(pk=pk)
+        context['yoga'] = yog
+    except Yoga.DoesNotExist:
+        raise Http404('Book does not exist')
+    
     if request.session.get('redirect_time', None):
         redirect_time = datetime.fromisoformat(request.session['redirect_time']).replace(tzinfo=pytz.UTC)
         current_time = datetime.now(tz=pytz.UTC)
@@ -116,7 +123,11 @@ def tpose(request):
     else:
         redirect_time = datetime.now(tz=pytz.UTC) + timedelta(seconds=60)
         request.session['redirect_time'] = redirect_time.isoformat()
-    return render(request, 'yoggis/tpose.html')
+    return render(request, 'yoggis/tpose.html',context=context)
+
+
+
+
 # def leaderboard(request):
 #     return render(request,'yoggis/leaderboard.html')
 @login_required(login_url='/login')
@@ -184,7 +195,7 @@ def register(request):
                 return redirect('register')
             else:   
                 user = User.objects.create_user(username=username, password=password1, email=email,first_name=first_name,last_name=last_name)
-                user.save();
+                user.save()
                 print('user created')
                 return redirect('login')
 
