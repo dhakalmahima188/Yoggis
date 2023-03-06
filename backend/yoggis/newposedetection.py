@@ -158,11 +158,11 @@ def get_pose_prediction(pose):
 
 def generate_errors(pose_name, pose):
     #calculate the angles
-    tree_pose_angles = actual_refrence_angles("tree")
+    tree_pose_angles = actual_refrence_angles("t")
     actual_angles = compute_joint_angles(pose)
     max_diff = 0
     diff_joint = ""    
-    if pose_name == "tree":
+    if pose_name == "t":
         for angles in actual_angles.keys():
             
             if tree_pose_angles[angles] is not None:
@@ -171,6 +171,21 @@ def generate_errors(pose_name, pose):
                         max_diff = actual_angles[angles] - tree_pose_angles[angles]
                         diff_joint = angles
     return max_diff, diff_joint
+
+
+def get_coordinate(joint_name, landmarks):
+    joint_dict = {'nose': 0, 'left_eye_inner': 1, 'left_eye': 2, 'left_eye_outer': 3, 'right_eye_inner': 4,
+                  'right_eye': 5, 'right_eye_outer': 6, 'left_ear': 7, 'right_ear': 8, 'mouth_left': 9,
+                  'mouth_right': 10, 'left_shoulder': 11, 'right_shoulder': 12, 'left_elbow': 13, 'right_elbow': 14,
+                  'left_wrist': 15, 'right_wrist': 16, 'left_pinky': 17, 'right_pinky': 18, 'left_index': 19,
+                  'right_index': 20, 'left_thumb': 21, 'right_thumb': 22, 'left_hip': 23, 'right_hip': 24,
+                  'left_knee': 25, 'right_knee': 26, 'left_ankle': 27, 'right_ankle': 28, 'left_heel': 29,
+                  'right_heel': 30, 'left_foot_index': 31, 'right_foot_index': 32}
+    if joint_name in joint_dict:
+        return landmarks[joint_dict[joint_name]][0], landmarks[joint_dict[joint_name]][1]
+    else:
+        return None
+
 
 @async_to_sync
 async def speak(text):
@@ -192,7 +207,9 @@ def genFrames(debug = False):
             # Recolor Feed
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
-
+            height, width, _ = image.shape
+            landmarks = []
+    
             # Make Detections
             result= pose_tracker.process(image)
             pose_landmarks = result.pose_landmarks
@@ -200,6 +217,12 @@ def genFrames(debug = False):
             # Recolor image back to BGR for rendering
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            
+            for landmark in result.pose_landmarks.landmark:
+            
+            # Append the landmark into the list.
+                landmarks.append((int(landmark.x * width), int(landmark.y * height),
+                                  (landmark.z * width)))
 
             try:
                 pose = pose_landmarks.landmark
