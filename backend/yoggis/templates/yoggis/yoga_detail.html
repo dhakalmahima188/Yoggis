@@ -85,8 +85,13 @@
         </div>
         <div>
 
-            <h1>Helo mahima</h1>
-
+            
+            {% for s in score_list %}
+            <li>
+                <!-- <mark>{{ s.user.username }}</mark> -->
+                <h1>Mero Score: {{ s.my_list }} </h1>
+            </li>
+            {% endfor %}
 
         </div>
         

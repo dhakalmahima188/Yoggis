@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Line Chart JS</title>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+    <style type="text/css">      
+      #container { 
+        width: 50%; height: 50%; margin: 0; padding: 0; 
+      } 
+    </style>
+  </head>
+  <body>  
+    <div id="container"></div>
+    <script>
+      anychart.onDocumentReady(function () {
+  
+        // add data
+        var data = [
+          1,2,3,9,20
+     
+        ];
+  
+        // create a data set
+        var dataSet = anychart.data.set(data);
+
+        // map the data for all series
+        var firstSeriesData = dataSet.mapAs({x: 0, value: 1});
+        var secondSeriesData = dataSet.mapAs({x: 0, value: 2});
+        var thirdSeriesData = dataSet.mapAs({x: 0, value: 3});
+
+        // create a line chart
+        var chart = anychart.line();
+
+        // create the series and name them
+        
+        var thirdSeries = chart.line(thirdSeriesData);
+        thirdSeries.name("Accuracy");
+
+        // add a legend
+        chart.legend().enabled(true);
+  
+        // add a title
+        chart.title("Progress Chart of your Yoga Session");
+  
+        // specify where to display the chart
+        chart.container("container");
+  
+        // draw the resulting chart
+        chart.draw();
+  
+      });
+    </script>
+  </body>
+</html>

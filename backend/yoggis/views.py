@@ -140,8 +140,8 @@ def yoga_detail_view(request, pk1):
         context['yoga'] = yog
         leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk).order_by('-score')        
              
-        score_list = YogaScore.objects.filter(user=request.user,fieldname='my_list')
-        print(score_list)
+        score_list = YogaScore.objects.filter(user=request.user,yoga__pk__contains=yog.pk)
+        # print(score_list)
         
         to_avoid = yog.avoid_for_disorder.all()
         context['score_list']=score_list
@@ -222,12 +222,15 @@ def logout(request):
 
 @login_required(login_url='/login')
 def profile(request):
+    
     disorders = UserDisorder.objects.all()
     s_disorders=SUserDisorder.objects.filter(user=request.user)
-   
+    score_list = YogaScore.objects.filter(user=request.user)
+    
     s_disord={
         "s_name": s_disorders,
-         "name": disorders
+         "name": disorders,
+         "score_list": score_list,
     }
     
   

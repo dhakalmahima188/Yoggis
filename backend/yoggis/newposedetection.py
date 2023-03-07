@@ -223,8 +223,11 @@ def genFrames(request,yoga_id,debug = False):
 
     #pose model
     with mp_pose.Pose() as pose_tracker:
+        
 
         while cap.isOpened():
+            error=""
+            name=""
             ret, frame = cap.read()
 
             # Recolor Feed
@@ -341,10 +344,14 @@ def genFrames(request,yoga_id,debug = False):
 
 
 
-            except:
+            except Exception as e:
+                print(e)
                 if curr_time > 100:
-                    speak("No pose detected")
-                    curr_time = 0
+                        yoga_score.score += 1
+                        yoga_score.my_list.append(yoga_score.score)
+                        yoga_score.save() 
+                        speak("No pose detected")
+                        curr_time = 0
             
             curr_time +=1
 
