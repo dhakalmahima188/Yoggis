@@ -4,6 +4,7 @@ from django.http.response import StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.urls import reverse
 from django.conf import settings
 
+
 from .models import Yoga, YogaScore, UserDisorder
 # from django_crontab import decorators
 from django.contrib.auth.models import User, auth
@@ -137,8 +138,13 @@ def yoga_detail_view(request, pk1):
         yog = Yoga.objects.get(pk=pk1)
         yog
         context['yoga'] = yog
-        leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk).order_by('-score')
+        leaderboard = YogaScore.objects.filter(yoga__pk__contains=yog.pk).order_by('-score')        
+             
+        score_list = YogaScore.objects.filter(user=request.user,fieldname='my_list')
+        print(score_list)
+        
         to_avoid = yog.avoid_for_disorder.all()
+        context['score_list']=score_list
         context['leaderboard'] = leaderboard
         context['avoid_for'] = to_avoid
         general_yogas = Yoga.objects.filter(yoga_category__type__contains="General")
@@ -150,9 +156,10 @@ def yoga_detail_view(request, pk1):
         context['dis']=disorder
         context['category']=yog.yoga_category.all()
         
-    except Yoga.DoesNotExist:
-        raise Http404('Book does not exist')
-
+    except Exception as e:
+        if e==Yoga.DoesNotExist:
+            raise Http404('Book does not exist')
+        print(e)
     return render(request, 'yoggis/yoga_detail.html', context=context)
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 class UserDisorder(models.Model):
     type = models.CharField(max_length=40)
@@ -61,6 +62,7 @@ class CorrectVectorLocations(models.Model):
 class YogaScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) #create a many-to-one relationship 
     score = models.IntegerField()
+    my_list = ArrayField(models.CharField(max_length=50), blank=True,default=list)
     yoga = models.ForeignKey(Yoga, on_delete=models.CASCADE, related_name='yogaOwner')
 
     def __str__(self):

@@ -206,8 +206,10 @@ def genFrames(request,yoga_id,debug = False):
     # Update the user's Yoga score for the current pose
     try:
         yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
+        # My_list=YogaScore.objects.get(user=user, yoga=yoga)
     except YogaScore.DoesNotExist:
         yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
+        #My_list=YogaScore.objects.create(user=user,my_list=[],yoga=yoga)
     # try:
     #     #search for the user's score for particular pose
 
@@ -262,8 +264,11 @@ def genFrames(request,yoga_id,debug = False):
                     print(difference, name)
                     if curr_time >0:
                         speak("Maintain pose")
-                        yoga_score.score += 1  # Increase the score by 1
-                        yoga_score.save()
+                        yoga_score.score += 1
+                        yoga_score.my_list.append(yoga_score.score)
+                        yoga_score.save() # Increase the score by 1
+                        
+                        
                         curr_time = 0
 
                 elif pose_name == "tree" and score <0.72:
