@@ -218,14 +218,14 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('yoggis/login.html')       
+    return redirect('/login.html')       
 
 @login_required(login_url='/login')
 def profile(request):
-    
+    yog = Yoga.objects.get(pk=6)    
     disorders = UserDisorder.objects.all()
     s_disorders=SUserDisorder.objects.filter(user=request.user)
-    score_list = YogaScore.objects.filter(user=request.user)
+    score_list = YogaScore.objects.filter(user=request.user,yoga__pk__contains=yog.pk)
     
     s_disord={
         "s_name": s_disorders,

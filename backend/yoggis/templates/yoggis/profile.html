@@ -99,14 +99,19 @@
                     <h6>Back Pain</h6>
                     <h6>Aasthma</h6>
                     <h6>{{ s_name.user_disorder }}</h6>
-                    
-                    {% for i in score_list %}
+
+                    <!-- {% for i in score_list %}
                     {% for j in i.my_list %}                  
                        
                   {{j}}
                     
                     {% endfor %}
+                    {% endfor %} -->
+
+                    {% for i in score_list %}
+                    <span id="value"> {{i.my_list}} </span>
                     {% endfor %}
+
 
 
                     <div class="dropdown">
@@ -120,67 +125,73 @@
                         {% endfor %}
                       </div>
                       <br><br>
-                      
+
                     </div>
                     <div>
                     </div>
                   </div>
                 </section><!-- End Services Section -->
                 {% endblock %}
-                
-           
-                 
-                    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
-                    <style type="text/css">      
-                      #container { 
-                        width: 50%; height: 100%; margin-left:50; padding: 20; 
-                      } 
-                    </style>
-                  </head>
-                  <body>  
-                    <div class="container" id="container" data-aos="fade-up" >
-                     
-                    </div>
-                    <script>
-                      anychart.onDocumentReady(function () {
-                  
-                        // add data
-                        var data = [
-                          1,2,3,9,20
-                     
-                        ];
-                  
-                        // create a data set
-                        var dataSet = anychart.data.set(data);
-                
-                        // map the data for all series
-                        var firstSeriesData = dataSet.mapAs({x: 0, value: 1});
-                        var secondSeriesData = dataSet.mapAs({x: 0, value: 2});
-                        var thirdSeriesData = dataSet.mapAs({x: 0, value: 3});
-                
-                        // create a line chart
-                        var chart = anychart.line();
-                
-                        // create the series and name them
-                        
-                        var thirdSeries = chart.line(thirdSeriesData);
-                        thirdSeries.name("Accuracy");
-                
-                        // add a legend
-                        chart.legend().enabled(true);
-                  
-                        // add a title
-                        chart.title("Progress Chart of your Yoga Session");
-                  
-                        // specify where to display the chart
-                        chart.container("container");
-                  
-                        // draw the resulting chart
-                        chart.draw();
-                  
-                      });
-                    </script>
-                 
+
+
+
+                <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+                <style type="text/css">
+                  #container {
+                    width: 50%;
+                    height: 100%;
+                    margin-left: 50;
+                    padding: 20;
+                  }
+                </style>
+
+                <div class="container" id="container" data-aos="fade-up">
+
+                </div>
+                <script>
+                  anychart.onDocumentReady(function () {
+
+
+
+                    // add data
+                    var test = document.getElementById("value").innerHTML;
+                    const arr = JSON.parse(test.replace(/'/g, '"'));
+                    console.log(arr);
+                    
+                    const intArray = arr.map(num => parseInt(num, 10));
+                    data = intArray
+
+
+
+
+                    // create a data set
+                    var dataSet = anychart.data.set(data);
+
+                    var thirdSeriesData = dataSet.mapAs({x: 0, value: 3});
+
+                    // create a line chart
+                    var chart = anychart.line();
+
+                    // create the series and name them
+
+                    var thirdSeries = chart.line(thirdSeriesData);
+                    thirdSeries.name("Accuracy");
+
+                    // add a legend
+                    chart.legend().enabled(true);
+
+                    // add a title
+                    chart.title("Progress Chart of your Yoga Session");
+
+                    // specify where to display the chart
+                    chart.container("container");
+
+                    // draw the resulting chart
+                    chart.draw();
+
+                  });
+                </script>
+
 
 
 
@@ -188,6 +199,7 @@
                     class="bi bi-arrow-up-short"></i></a>
 
                 <!-- Vendor JS Files -->
+
                 <script src="{% static 'yoggis/vendor/aos/aos.js' %}"></script>
                 <script src="{% static 'yoggis/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
                 <script src="{% static 'yoggis/vendor/glightbox/js/glightbox.min.js' %}"></script>
