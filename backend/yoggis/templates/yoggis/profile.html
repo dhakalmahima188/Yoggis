@@ -151,16 +151,13 @@
                 <script>
                   anychart.onDocumentReady(function () {
 
-
-
                     // add data
                     var test = document.getElementById("value").innerHTML;
                     const arr = JSON.parse(test.replace(/'/g, '"'));
                     console.log(arr);
-                    
+
                     const intArray = arr.map(num => parseInt(num, 10));
                     data = intArray
-
 
 
 

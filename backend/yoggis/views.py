@@ -218,7 +218,7 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/login.html')       
+    return redirect('/login?next=/')       
 
 @login_required(login_url='/login')
 def profile(request):
@@ -255,19 +255,5 @@ def updateUserDisorder(request,pid):
         pass 
     return redirect('profile')
     
-# def updateUserDisorder(request, pid):
-#     try:
-#         print("hello", pid)
-#         d_obj = UserDisorder.objects.get(pk=pid)
-#         print(d_obj)
-#         print(request.user)
-#         sd_obj, created = SUserDisorder.objects.get(user=request.user)
-#         if not created:
-#             sd_obj.user_disorder.add(d_obj)
-#         else:
-#             sd_obj.user_disorder.set([d_obj])
-#     except Exception as e:
-#         print(e)
-    
-#     return("profile")
+
    
