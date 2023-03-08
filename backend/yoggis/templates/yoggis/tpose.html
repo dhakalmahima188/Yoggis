@@ -81,10 +81,10 @@
   var timeRemaining = redirectTime - currentTime;
   if (timeRemaining > 0) {
       setTimeout(function() {
-          window.location.href = '{% url "chronic" %}';
+          window.location.href = '{% url "congratulations" %}';
       }, timeRemaining);
   } else {
-      window.location.href = '{% url "chronic" %}';
+      window.location.href = '{% url "congratulations" %}';
   }
   </script>
 

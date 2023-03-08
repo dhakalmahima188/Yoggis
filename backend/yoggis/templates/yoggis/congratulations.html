@@ -1,0 +1,36 @@
+{% extends "yoggis/common.html" %}
+{% block main %}
+{% load static %}
+
+<br>
+<br>
+<br>
+    <!-- ======= Services Section ======= -->
+    <section id="yogas" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+           
+          
+          <p>Congratulations for completing the challenge!</p>
+        </div>
+        <div class="row">
+       
+    <a href='{% url "chronic" %}'>Go to arko page</a>
+    <a href="{% url 'tpose' pk=6 %}">feri try t pose</a>
+          
+  
+  
+          
+        </div>
+        
+
+        
+      </div>
+    </section><!-- End Services Section -->
+
+   
+
+
+
+{% endblock main %}
