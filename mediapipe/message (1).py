@@ -15,8 +15,8 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import HttpResponse
 import pyttsx3
-from .models import YogaScore, Yoga
-import time
+#from .models import YogaScore, Yoga
+
 
 # TODO: add new pose from admin
 
@@ -243,27 +243,22 @@ def draw_on_image(image, pose_name: str, pose_prob):
     cv2.putText(image, str(pose_prob), (10, 40),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
-
-
 def genFrames(request, yoga_id, debug=True):
-    start_time = time.time() 
-    print("hello dost")
     pose_name = "tree"
     cap = cv2.VideoCapture(0)
-    curr_time = 0
-    user = request.user
-    yoga = Yoga.objects.get(id=yoga_id)
+    # curr_time = 0
+    # user = request.user
+    # yoga = Yoga.objects.get(id=yoga_id)
 
-    #Update the user's Yoga score for the current pose
-    try:
-        yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
-    except YogaScore.DoesNotExist:
-        yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
+    # Update the user's Yoga score for the current pose
+    # try:
+    #     yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
+    # except YogaScore.DoesNotExist:
+    #     yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
 
     with mp_pose.Pose() as pose_tracker:
 
         while cap.isOpened():
-            
             ret, frame = cap.read()
 
             # Recolor Feed
@@ -292,10 +287,8 @@ def genFrames(request, yoga_id, debug=True):
                 pose_class, pose_probability = get_pose_prediction(pose)
                 draw_on_image(output_frame, pose_class, pose_probability[2])
 
-                if pose_class == pose_name and pose_probability[2] > 0.5:
+                if pose_class == pose_name and pose_probability[2] > 0.7:
                     message = "Maintain Pose"
-                    yoga_score.score += 1
-                    yoga_score.save() 
                 else:
                     message = "Pose Incorrect"
                     error_joint, error_msg = generate_error_message(pose_name, pose)
@@ -309,22 +302,11 @@ def genFrames(request, yoga_id, debug=True):
                                 0.5, (255, 255, 255), 2,
                                 cv2.LINE_AA)
 
-            except Exception as e:
-                print(e)
-            
+            except:
+                pass
             print(message)
             ret, buffer = cv2.imencode('.jpg', output_frame)
             frame = buffer.tobytes()
-            
-            current_time = time.time()
-            elapsed_time = current_time - start_time
-
-            if elapsed_time >= 20:
-                print("This message is printed after a 5-second delay.")
-                yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
-                yoga_score.save() 
-                break
 
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-    

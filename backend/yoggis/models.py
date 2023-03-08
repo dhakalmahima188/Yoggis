@@ -72,3 +72,6 @@ class YogaScore(models.Model):
 class SUserDisorder(models.Model):
        user_disorder=models.ManyToManyField(UserDisorder,blank=True)
        user=models.ForeignKey(User,on_delete=models.CASCADE)
+       
+       def __str__(self):
+           return self.user_disorder
