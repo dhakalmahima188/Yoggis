@@ -262,7 +262,7 @@ class PoseDetection:
         return joint_name, error_msg
 
     def generate_frames(self,request,yoga_id, debug=False):
-        
+        start_time = time.time() 
         cap = cv2.VideoCapture(0)
         count = 0
         
@@ -333,6 +333,14 @@ class PoseDetection:
 
                 ret, buffer = cv2.imencode('.jpg', output_frame)
                 frame = buffer.tobytes()
+                current_time = time.time()
+                elapsed_time = current_time - start_time
+
+                if elapsed_time >= 20:
+                    print("This message is printed after a 20-second delay. espachi session sakincha")
+                    yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
+                    yoga_score.save() 
+                    break
                 
                 count +=1
                 yield (b'--frame\r\n'
