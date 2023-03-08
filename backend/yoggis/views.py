@@ -15,13 +15,15 @@ from django.contrib.auth.decorators import login_required
 import pytz
 
 if settings.SERVE:
-    from .posedetection import gen_frames
-    from .newposedetection import genFrames
+  from .newposedetection import PoseDetection
 
 
 def videofeed(request,pk):
+    
+    
     if settings.SERVE:
-        response = StreamingHttpResponse(genFrames(request,pk,True), content_type="multipart/x-mixed-replace; boundary=frame")
+        detector=PoseDetection(pk,False)
+        response = StreamingHttpResponse(detector.generate_frames(request,pk), content_type="multipart/x-mixed-replace; boundary=frame")
         response['Cache-Control'] = 'no-cache'
         return response
     return HttpResponseRedirect(reverse('home'))

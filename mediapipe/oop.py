@@ -6,7 +6,7 @@ import math
 import numpy as np
 import pandas
 import warnings
-#from gtts import gTTS
+from gtts import gTTS
 import os
 import time
 from asgiref.sync import async_to_sync
@@ -15,8 +15,7 @@ import asyncio
 from channels.layers import get_channel_layer
 from django.http import HttpResponse
 import pyttsx3
-from .models import YogaScore, Yoga
-import time
+
 
 class PoseDetection:
 
@@ -73,7 +72,6 @@ class PoseDetection:
 
     def __init__(self, pose_name, is_series=False):
         self.pose_name = "tree"
-        self.user=None
         # load model accordint go the pose_name
         self.model_name = self.pose_name+".pkl"
         self.model_path = "..\mediapipe\models\\" +self.model_name
@@ -261,21 +259,9 @@ class PoseDetection:
             error_msg = "move back"
         return joint_name, error_msg
 
-    def generate_frames(self,request,yoga_id, debug=False):
-        
+    def generate_frames(self, debug=False):
         cap = cv2.VideoCapture(0)
         count = 0
-        
-        print("hello",request.user)
-        user = request.user
-        yoga = Yoga.objects.get(id=yoga_id)
-        try:
-            yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
-        except YogaScore.DoesNotExist:
-            yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
-
-        
-        
         with self.mp_pose.Pose() as pose_tracker:
 
             while cap.isOpened():
@@ -310,10 +296,8 @@ class PoseDetection:
                     self.draw_on_image(
                         output_frame, pose_class, pose_probability[2])
 
-                    if pose_class == self.pose_name and pose_probability[2] > 0.5:
+                    if pose_class == self.pose_name and pose_probability[2] > 0.7:
                         message = "Maintain Pose"
-                        yoga_score.score += 1
-                        yoga_score.save() 
                     else:
                         message = "Pose Incorrect"
                         error_joint, error_msg = self.generate_error_message(
