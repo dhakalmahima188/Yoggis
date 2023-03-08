@@ -335,7 +335,7 @@ class PoseDetection:
                 frame = buffer.tobytes()
                 current_time = time.time()
                 elapsed_time = current_time - start_time
-
+                #yo jati chaincha rakhne
                 if elapsed_time >= 20:
                     print("This message is printed after a 20-second delay. espachi session sakincha")
                     yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
