@@ -165,6 +165,7 @@
                     var dataSet = anychart.data.set(data);
 
                     var thirdSeriesData = dataSet.mapAs({x: 0, value: 3});
+                   
 
                     // create a line chart
                     var chart = anychart.line();
@@ -173,6 +174,10 @@
 
                     var thirdSeries = chart.line(thirdSeriesData);
                     thirdSeries.name("Accuracy");
+                    thirdSeries.stroke({
+                      color: "green",
+                      thickness: 3
+                  });
 
                     // add a legend
                     chart.legend().enabled(true);
