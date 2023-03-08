@@ -39,22 +39,13 @@
                       <p class="card-text">Lift your left Shoulder UP</p>
                       <p class="card-text">Lift your left Shoulder UP</p>
                       <button style="background-color:green;border-radius:8%" type="button" class="btn btn-success">
-                        Time : 4:59</button>
+                         <span id="time">00:20 s</span> </button>
                     </div>
                   </div>
                 </div>
                 <div style="flex: 1; width: 50%">
 
-                  <div class="card">
-                    <div class="card-header">
-                      Featured
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-sucess">Accuracy</a>
-                    </div>
-                  </div>
+                 
                 </div>
               </div>
             </div>
@@ -74,6 +65,35 @@
   </div>
 </section>
 
+<!-- timer in html -->
+<!-- Display the countdown timer in an element -->
+
+
+<script>
+
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds+ " s";
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 20,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+</script>
 
 <script>
   var redirectTime = new Date('{{ request.session.redirect_time }}');
