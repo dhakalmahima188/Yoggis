@@ -259,6 +259,7 @@ class PoseDetection:
             error_msg = "error in the right knee"
         else:
             error_msg = "move back"
+            print("kei bhayena ta")
         return joint_name, error_msg
 
     def generate_frames(self,request,yoga_id, debug=False):
@@ -321,6 +322,7 @@ class PoseDetection:
                         # print(error_joint, error_msg)
                         error_msg_coords = self.get_coordinate(
                             "_".join(error_joint.split("_")[:2]), landmarks)
+                        print(error_msg,error_msg_coords)
                         cv2.putText(output_frame,
                                     error_msg,
                                     error_msg_coords,
