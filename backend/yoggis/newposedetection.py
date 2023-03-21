@@ -137,8 +137,7 @@ class PoseDetection:
             if self.ideal_angles[angles] is not None:
                 diff = abs(actual_angles[angles] - self.ideal_angles[angles])
                 if diff > abs(max_diff):
-                    max_diff = actual_angles[angles] - \
-                        self.ideal_angles[angles]
+                    max_diff = actual_angles[angles] - self.ideal_angles[angles]
                     diff_joint = angles
         return max_diff, diff_joint
 

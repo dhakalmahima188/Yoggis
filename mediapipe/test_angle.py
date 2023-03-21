@@ -5,7 +5,7 @@ import csv
 import os
 
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_complexity=2)
+pose = mp_pose.Pose(static_image_mode=True, min_detection_confidence=0.3, model_complexity=0)
 mp_drawing = mp.solutions.drawing_utils 
 
 #add from admin pannel
@@ -49,25 +49,28 @@ def calculate_angle(a):
 
 input_folder = './Poses/'
 count=0
-for filename in os.listdir(input_folder): 
-        file_path = os.path.join(input_folder, filename)   
-        file_name=filename.split(".")[0]      
-        sample_img  = cv2.imread(file_path)
-        results = pose.process(cv2.cvtColor(sample_img, cv2.COLOR_BGR2RGB))
-        a = dict()
+try:
+    for filename in os.listdir(input_folder): 
+            file_path = os.path.join(input_folder, filename)   
+            file_name=filename.split(".")[0]      
+            sample_img  = cv2.imread(file_path)
+            results = pose.process(cv2.cvtColor(sample_img, cv2.COLOR_BGR2RGB))
+            a = dict()
 
-        if results.pose_landmarks:
+            if results.pose_landmarks:
 
-        
-            for i in range(33):
-                name = (mp_pose.PoseLandmark(i).name).lower()
-                x = results.pose_landmarks.landmark[mp_pose.PoseLandmark(i).value].x
-                y = results.pose_landmarks.landmark[mp_pose.PoseLandmark(i).value].y
-                a[name] = Joint(name, x, y)
-            left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle = calculate_angle(a)
             
+                for i in range(33):
+                    name = (mp_pose.PoseLandmark(i).name).lower()
+                    x = results.pose_landmarks.landmark[mp_pose.PoseLandmark(i).value].x
+                    y = results.pose_landmarks.landmark[mp_pose.PoseLandmark(i).value].y
+                    a[name] = Joint(name, x, y)
+                left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle = calculate_angle(a)
                 
-            with open('data.csv', 'a',newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([file_name,left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle])
-            count+=1
+                    
+                with open('data.csv', 'a',newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([file_name,left_elbow_angle, right_elbow_angle, left_shoulder_angle, right_shoulder_angle, left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle])
+                count+=1
+except Exception as e:
+    print(e)
