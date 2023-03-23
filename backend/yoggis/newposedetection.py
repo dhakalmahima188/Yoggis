@@ -59,6 +59,9 @@ class PoseDetection:
     arms_err_msgs = ['move left arm up', 'move left arm down',
                      'move right arm up', 'move right arm down',
                      'straighten your left arm', 'straighten your right arm']
+    
+    elbow_err_msgs=["bend  left elbow","bend  right elbow"
+                "straighten your left elbow","straighten your right elbow","1","2"]
 
     legs_err_msgs = ['move left leg up', 'move left leg down',
                      'move right leg up', 'move right leg down'
@@ -246,15 +249,15 @@ class PoseDetection:
 
         elif (joint_name == 'right_shoulder_angle'):
             if (difference > 0):
-                error_msg = self.arms_err_msgs[2]
-            else:
                 error_msg = self.arms_err_msgs[3]
+            else:
+                error_msg = self.arms_err_msgs[2]
 
         elif (joint_name == 'left_elbow_angle'):
-            error_msg = "straighten your left arm"
+           error_msg = self.elbow_err_msgs[0]
 
         elif (joint_name == 'right_elbow_angle'):
-            error_msg = "straighten your right arm"
+            error_msg = self.elbow_err_msgs[1]
 
         elif (joint_name == 'left_hip_angle'):
             error_msg = self.hips_error_message[0]
@@ -333,9 +336,21 @@ class PoseDetection:
                                     cv2.FONT_HERSHEY_SIMPLEX,
                                     0.5, (255, 255, 255), 2,
                                     cv2.LINE_AA)
+                        
+                        if pose_landmarks :
+                            self.mp_drawing.draw_landmarks(
+                                output_frame,
+                                pose_landmarks,
+                                self.mp_pose.POSE_CONNECTIONS,
+                               self.mp_drawing.DrawingSpec(
+                color=(0, 0, 150), thickness=2, circle_radius=2),
+                               self. mp_drawing.DrawingSpec(
+                color=(0, 0, 200), thickness=2, circle_radius=2)
+                            )
+
                 except Exception as e:
                     pass
-
+                
                 ret, buffer = cv2.imencode('.jpg', output_frame)
                 frame = buffer.tobytes()
                 current_time = time.time()
