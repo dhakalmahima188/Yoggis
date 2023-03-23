@@ -86,7 +86,7 @@ class PoseDetection:
         100:"series_1"
     }
     
-    def __init__(self, pose_name, is_series=False):
+    def __init__(self, pose_name):
      
         self.user = None
         self.pose_name = self.yoga_id_to_name[pose_name]
@@ -94,7 +94,9 @@ class PoseDetection:
         self.model_name = self.pose_name+".pkl"
         self.model_path = "..\mediapipe\models\\" + self.model_name
         print(os.listdir('..\mediapipe\models\.'))
-        self.is_series = is_series
+        self.is_series = False
+        if "series" in self.pose_name:
+            self.is_series = True
         warnings.filterwarnings("ignore")
         self.ideal_angles = self.actual_refrence_angles()
         self.load_model()
