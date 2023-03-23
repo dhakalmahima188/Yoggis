@@ -7,7 +7,7 @@ class UserDisorder(models.Model):
     description = models.TextField()
     user_disorder_image = models.ImageField(upload_to='userDisorderImages/')
 
-    def __str__(self):
+    def __str__(self): 
         return self.type
 
 

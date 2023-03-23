@@ -1,4 +1,7 @@
+<meta http-equiv="Refresh" content="20; url='../congratulations'" />
 {% extends "yoggis/common.html" %}
+
+
 {% block main %}
 
 {% load static %}
@@ -6,7 +9,7 @@
 <br>
 <br>
 
-
+<h1>{{ yoga.title }}</h1>
 
 <section id="plans" class="services section-bg pricing py-5">
 
@@ -14,50 +17,41 @@
   <div class="container justify-content-center">
     <div class="row">
       <!-- Free Tier -->
-      <div class="col-sm-12 col-md-6 col-lg-12 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-        <div class="card mb-5 mb-lg-0">
+
+
+      <div class="card mb-5 mb-lg-0">
+        <div class="card-body  d-flex flex-column">
+          <div style="display: flex; padding:20px">
+
+            <img id="my_image" src="{% static 'yoggis/img/warrior.jpg' %}"
+              style="flex: 1; width: 50%;border-radius:8% ;padding: 10px">
+
+            <img src="{% url 'video_feed' pk=24 %}" style="flex: 1; width: 50%;border-radius:8%;padding: 10px">
+
+
+          </div>
+
+
           <div class="card-body  d-flex flex-column">
             <div style="display: flex; padding:20px">
-              <img src="{% static 'yoggis/img/backpain_step_1.png' %}" style="flex: 1; width: 50%">
-              <img src="{% url 'video_feed' %}" style="flex: 1; width: 50%;border-radius:8%">
-            </div>
 
 
-            <div class="card-body  d-flex flex-column">
-              <div style="display: flex; padding:20px">
+              <div style="flex: 1; margin-right: 20px; width: 90%">
 
+                <div class="card">
 
-                <div style="flex: 1; margin-right: 20px; width: 50%">
+                  <div style="flex: 1; width: 50%">
+                    <button style="background-color:green;border-radius:8%" type="button" class="btn btn-success">
+                      <span id="time">00:20 s</span> </button>
 
-                  <div class="card">
-                    <div class="card-header">
-                      <b>Live Feedback </b>
-                    </div>
-                    <div class="card-body">
-
-                      <p class="card-text">Step-1</p>
-                      <p class="card-text">Corpse Pose Variation Knees Bent </p>
-                      <p class="card-text">Level: Begineer</p>
-                      <button style="background-color:green;border-radius:8%" type="button" class="btn btn-success">
-                        Time : 4:59</button>
-                    </div>
                   </div>
                 </div>
-                <div style="flex: 1; width: 50%">
 
-                  <!-- <div class="card">
-                    <div class="card-header">
-                      Featured
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-sucess">Accuracy</a>
-                    </div> -->
-                  </div>
-                </div>
+
+
               </div>
             </div>
+
           </div>
 
 
@@ -74,8 +68,55 @@
   </div>
 </section>
 
+<!-- timer in html -->
+<!-- Display the countdown timer in an element -->
 
 
+<script>
+
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds + " s";
+
+      if (--timer < 0) {
+        timer = duration;
+      }
+    }, 1000);
+  }
+
+  window.onload = function () {
+    var fiveMinutes = 20,
+      display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+  };
+</script>
+
+<script>
+  setTimeout(function() {
+     document.getElementById("my_image").src = "{% static 'yoggis/img/downdog.png' %}";
+  }, 10000); // 10000 milliseconds = 10 seconds
+</script>
+
+<!-- 
+<script>
+  var redirectTime = new Date('{{ request.session.redirect_time }}');
+  var currentTime = new Date();
+  var timeRemaining = redirectTime - currentTime;
+  if (timeRemaining > 0) {
+      setTimeout(function() {
+          window.location.href = '{% url "congratulations" %}';
+      }, timeRemaining);
+  } else {
+      window.location.href = '{% url "congratulations" %}';
+  }
+  </script> -->
 
 
 

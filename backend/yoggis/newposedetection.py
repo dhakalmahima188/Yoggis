@@ -58,7 +58,7 @@ class PoseDetection:
     ]
 
     series_poses = {
-        "series_1": ['tree', 't', 'warrior','extended_triangl'],
+        "series_1": ["warrior","downdog",],
         "series_2": ['warrior', 'tree'],
     }
 
@@ -83,7 +83,7 @@ class PoseDetection:
     yoga_id_to_name = {
         6 : "t",
         23 : "tree",
-        100:"series_1"
+        24:"series_1"
     }
     
     def __init__(self, pose_name):
@@ -295,6 +295,7 @@ class PoseDetection:
         count = 0
         print("hello", request.user)
         user = request.user
+        print(yoga_id)
         yoga = Yoga.objects.get(id=yoga_id)
         try:
             yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
@@ -454,7 +455,7 @@ class PoseDetection:
                     series_time_3=series_time_2-series_time_1
 
                     #if correct_frames > 60:
-                    if  abs(series_time_3) > 5:
+                    if  abs(series_time_3) > 10:
                        # print("not waiting",series_time_3)
                         
                         if self.series_poses[self.pose_name][-1] == current_pose_name:
@@ -474,10 +475,17 @@ class PoseDetection:
                         pass
 
                     # yo jati chaincha rakhne
-                    if elapsed_time >= 20:
+                    if elapsed_time >= 22:
                        # print("This message is printed after a 20-second delay. espachi session sakincha")
+                       try:
+                        if len(yoga_score.my_list) == 0:
+                            yoga_score.my_list.append(0)
                         yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
                         yoga_score.save()
+                       except Exception as e:
+                           print(e)
+                           
+                           
                         # break
 
                     count += 1
