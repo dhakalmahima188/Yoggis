@@ -80,19 +80,21 @@ class PoseDetection:
 
     back_error_message = ['bend your back', 'straighten your back']
 
-    # yoga_id_to_name = {
-    #     6 : "t",
-    #     23 : "tree"
-    # }
+    yoga_id_to_name = {
+        6 : "t",
+        23 : "tree",
+        100:"series_1"
+    }
+    
     def __init__(self, pose_name, is_series=False):
-        self.pose_name = "series_1"
+     
         self.user = None
-       # self.pose_name = self.yoga_id_to_name[pose_name]
+        self.pose_name = self.yoga_id_to_name[pose_name]
         # load model accordint go the pose_name
         self.model_name = self.pose_name+".pkl"
         self.model_path = "..\mediapipe\models\\" + self.model_name
         print(os.listdir('..\mediapipe\models\.'))
-        self.is_series = True
+        self.is_series = is_series
         warnings.filterwarnings("ignore")
         self.ideal_angles = self.actual_refrence_angles()
         self.load_model()
@@ -249,7 +251,7 @@ class PoseDetection:
     def generate_error_message(self, pose):
 
         difference, joint_name = self.generate_errors(pose)
-        print(difference, joint_name)
+        #print(difference, joint_name)
         error_msg = ""
 
         if (joint_name == 'left_shoulder_angle'):
@@ -298,14 +300,16 @@ class PoseDetection:
             yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
 
         series_count = 0
-        current_pose_name = self.series_poses[self.pose_name][0]
+        current_pose_name=None   
+        if self.is_series:     
+            current_pose_name = self.series_poses[self.pose_name][0]
        # correct_frames = 0
         series_time_1 = time.time()
 
         with self.mp_pose.Pose() as pose_tracker:
 
             if not self.is_series:
-                while cap.isOpened():
+                while cap.isOpened():   
                     ret, frame = cap.read()
 
                     # Recolor Feed
