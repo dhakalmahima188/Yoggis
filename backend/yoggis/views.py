@@ -22,7 +22,7 @@ def videofeed(request,pk):
     
     
     if settings.SERVE:
-        detector=PoseDetection(pk,True)
+        detector=PoseDetection(100)
         response = StreamingHttpResponse(detector.generate_frames(request,pk), content_type="multipart/x-mixed-replace; boundary=frame")
         response['Cache-Control'] = 'no-cache'
         return response

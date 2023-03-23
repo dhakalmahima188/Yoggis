@@ -455,7 +455,7 @@ class PoseDetection:
 
                     #if correct_frames > 60:
                     if  abs(series_time_3) > 5:
-                        print("not waiting",series_time_3)
+                       # print("not waiting",series_time_3)
                         
                         if self.series_poses[self.pose_name][-1] == current_pose_name:
                             #draw next pose
@@ -467,17 +467,18 @@ class PoseDetection:
                             correct_frames = 0
                             series_time_1=time.time()
                             series_count +=1
-                            print(f"Completed: {self.series_poses[self.pose_name][series_count-1]}")
+                           # print(f"Completed: {self.series_poses[self.pose_name][series_count-1]}")
                             current_pose_name = self.series_poses[self.pose_name][series_count]  
                     else:
-                        print("waiting",series_time_3)
+                        #print("waiting",series_time_3)
+                        pass
 
                     # yo jati chaincha rakhne
                     if elapsed_time >= 20:
-                        print("This message is printed after a 20-second delay. espachi session sakincha")
+                       # print("This message is printed after a 20-second delay. espachi session sakincha")
                         yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
                         yoga_score.save()
-                        break
+                        # break
 
                     count += 1
                     yield (b'--frame\r\n'
