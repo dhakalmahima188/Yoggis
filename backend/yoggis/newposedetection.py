@@ -6,7 +6,7 @@ import math
 import numpy as np
 import pandas
 import warnings
-#from gtts import gTTS
+# from gtts import gTTS
 import os
 import time
 from asgiref.sync import async_to_sync
@@ -17,6 +17,7 @@ from django.http import HttpResponse
 import pyttsx3
 from .models import YogaScore, Yoga
 import time
+
 
 class PoseDetection:
 
@@ -56,12 +57,17 @@ class PoseDetection:
         'right_ankle'
     ]
 
+    series_poses = {
+        "series_1": ['tree', 't', 'warrior','extended_triangl'],
+        "series_2": ['warrior', 'tree'],
+    }
+
     arms_err_msgs = ['move left arm up', 'move left arm down',
                      'move right arm up', 'move right arm down',
                      'straighten your left arm', 'straighten your right arm']
-    
-    elbow_err_msgs=["bend  left elbow","bend  right elbow"
-                "straighten your left elbow","straighten your right elbow","1","2"]
+
+    elbow_err_msgs = ["bend  left elbow", "bend  right elbow"
+                      "straighten your left elbow", "straighten your right elbow", "1", "2"]
 
     legs_err_msgs = ['move left leg up', 'move left leg down',
                      'move right leg up', 'move right leg down'
@@ -74,14 +80,19 @@ class PoseDetection:
 
     back_error_message = ['bend your back', 'straighten your back']
 
+    # yoga_id_to_name = {
+    #     6 : "t",
+    #     23 : "tree"
+    # }
     def __init__(self, pose_name, is_series=False):
-        self.pose_name = "tree"
-        self.user=None
+        self.pose_name = "series_1"
+        self.user = None
+       # self.pose_name = self.yoga_id_to_name[pose_name]
         # load model accordint go the pose_name
         self.model_name = self.pose_name+".pkl"
-        self.model_path = "..\mediapipe\models\\" +self.model_name
+        self.model_path = "..\mediapipe\models\\" + self.model_name
         print(os.listdir('..\mediapipe\models\.'))
-        self.is_series = is_series
+        self.is_series = True
         warnings.filterwarnings("ignore")
         self.ideal_angles = self.actual_refrence_angles()
         self.load_model()
@@ -140,7 +151,8 @@ class PoseDetection:
             if self.ideal_angles[angles] is not None:
                 diff = abs(actual_angles[angles] - self.ideal_angles[angles])
                 if diff > abs(max_diff):
-                    max_diff = actual_angles[angles] - self.ideal_angles[angles]
+                    max_diff = actual_angles[angles] - \
+                        self.ideal_angles[angles]
                     diff_joint = angles
         return max_diff, diff_joint
 
@@ -224,16 +236,15 @@ class PoseDetection:
     async def speak(self, message):
         engine = pyttsx3.init()
         engine.say(message)
-        
 
     def correct_screen(self, image):
         dimensions = image.shape
         overlay = image.copy()
-        cv2.rectangle(overlay, (0, 0), (dimensions[1], dimensions[0]), (0, 255, 0), -1)
+        cv2.rectangle(overlay, (0, 0),
+                      (dimensions[1], dimensions[0]), (0, 255, 0), -1)
         # cv2.putText(overlay, "Maintain Pose",
         #             (dimensions[0]/2, dimensions[1]/2),  cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 3)
         cv2.addWeighted(overlay, 0.5, image, 1-0.5, 0, image)
-
 
     def generate_error_message(self, pose):
 
@@ -274,94 +285,194 @@ class PoseDetection:
             error_msg = "move back"
         return joint_name, error_msg
 
-    def generate_frames(self,request,yoga_id, debug=False):
-        start_time = time.time() 
+    def generate_frames(self, request, yoga_id, debug=False):
+        start_time = time.time()
         cap = cv2.VideoCapture(0)
         count = 0
-        print("hello",request.user)
+        print("hello", request.user)
         user = request.user
-        # yoga = Yoga.objects.get(id=yoga_id)
-        # try:
-        #     yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
-        # except YogaScore.DoesNotExist:
-        #     yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
+        yoga = Yoga.objects.get(id=yoga_id)
+        try:
+            yoga_score = YogaScore.objects.get(user=user, yoga=yoga)
+        except YogaScore.DoesNotExist:
+            yoga_score = YogaScore.objects.create(user=user, score=1, yoga=yoga)
 
-        
-        
+        series_count = 0
+        current_pose_name = self.series_poses[self.pose_name][0]
+       # correct_frames = 0
+        series_time_1 = time.time()
+
         with self.mp_pose.Pose() as pose_tracker:
 
-            while cap.isOpened():
-                ret, frame = cap.read()
+            if not self.is_series:
+                while cap.isOpened():
+                    ret, frame = cap.read()
 
-                # Recolor Feed
-                image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                image.flags.writeable = False
-                height, width, _ = image.shape
+                    # Recolor Feed
+                    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    image.flags.writeable = False
+                    height, width, _ = image.shape
 
-                # Make Detections
-                result = pose_tracker.process(image)
-                pose_landmarks = result.pose_landmarks
+                    # Make Detections
+                    result = pose_tracker.process(image)
+                    pose_landmarks = result.pose_landmarks
 
-                landmarks = []
-                if result.pose_landmarks:
-                    for landmark in result.pose_landmarks.landmark:
-                        # Append the landmark into the list.
-                        landmarks.append(
-                            (int(landmark.x * width), int(landmark.y * height)))
+                    landmarks = []
+                    if result.pose_landmarks:
+                        for landmark in result.pose_landmarks.landmark:
+                            # Append the landmark into the list.
+                            landmarks.append(
+                                (int(landmark.x * width), int(landmark.y * height)))
 
-                # Recolor image back to BGR for rendering
-                image.flags.writeable = True
-                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-                output_frame = image.copy()
-                message = ""
+                    # Recolor image back to BGR for rendering
+                    image.flags.writeable = True
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    output_frame = image.copy()
+                    message = ""
 
-                try:
-                    pose = pose_landmarks.landmark
-                    pose_class, pose_probability = self.get_pose_prediction(
-                        pose)
-                    #self.draw_on_image(
-                    #    output_frame, pose_class, pose_probability[2])
-                    if pose_class == self.pose_name and pose_probability[2] > 0.5:
-                        message = "Maintain Pose"
-                        self.correct_screen(output_frame)
-                    else:
-                        message = "Pose Incorrect"
-                        error_joint, error_msg = self.generate_error_message(
+                    try:
+                        pose = pose_landmarks.landmark
+                        pose_class, pose_probability = self.get_pose_prediction(
                             pose)
-                        error_msg_coords = self.get_coordinate(
-                            "_".join(error_joint.split("_")[:2]), landmarks)
-                        cv2.putText(output_frame,
-                                    error_msg,
-                                    error_msg_coords,
-                                    cv2.FONT_HERSHEY_SIMPLEX,
-                                    0.5, (255, 255, 255), 2,
-                                    cv2.LINE_AA)
-                        
-                        if pose_landmarks :
-                            self.mp_drawing.draw_landmarks(
-                                output_frame,
-                                pose_landmarks,
-                                self.mp_pose.POSE_CONNECTIONS,
-                               self.mp_drawing.DrawingSpec(
-                color=(0, 0, 150), thickness=2, circle_radius=2),
-                               self. mp_drawing.DrawingSpec(
-                color=(0, 0, 200), thickness=2, circle_radius=2)
-                            )
+                        # self.draw_on_image(
+                        #    output_frame, pose_class, pose_probability[2])
+                        if pose_class == self.pose_name and pose_probability[2] > 0.5:
+                            message = "Maintain Pose"
+                            yoga_score.score += 1
+                            yoga_score.save()
+                            self.correct_screen(output_frame)
+                        else:
+                            message = "Pose Incorrect"
+                            error_joint, error_msg = self.generate_error_message(
+                                pose)
+                            error_msg_coords = self.get_coordinate(
+                                "_".join(error_joint.split("_")[:2]), landmarks)
+                            cv2.putText(output_frame,
+                                        error_msg,
+                                        error_msg_coords,
+                                        cv2.FONT_HERSHEY_SIMPLEX,
+                                        0.5, (255, 255, 255), 2,
+                                        cv2.LINE_AA)
 
-                except Exception as e:
-                    pass
-                
-                ret, buffer = cv2.imencode('.jpg', output_frame)
-                frame = buffer.tobytes()
-                current_time = time.time()
-                elapsed_time = current_time - start_time
-                #yo jati chaincha rakhne
-                # if elapsed_time >= 20:
-                #     print("This message is printed after a 20-second delay. espachi session sakincha")
-                #     yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
-                #     yoga_score.save() 
-                #     break
-                
-                count +=1
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+                            if pose_landmarks:
+                                self.mp_drawing.draw_landmarks(
+                                    output_frame,
+                                    pose_landmarks,
+                                    self.mp_pose.POSE_CONNECTIONS,
+                                    self.mp_drawing.DrawingSpec(
+                                        color=(0, 0, 150), thickness=2, circle_radius=2),
+                                    self. mp_drawing.DrawingSpec(
+                                        color=(0, 0, 200), thickness=2, circle_radius=2)
+                                )
+
+                    except Exception as e:
+                        pass
+
+                    ret, buffer = cv2.imencode('.jpg', output_frame)
+                    frame = buffer.tobytes()
+                    current_time = time.time()
+                    elapsed_time = current_time - start_time
+                    # yo jati chaincha rakhne
+                    # if elapsed_time >= 20:
+                    #     print("This message is printed after a 20-second delay. espachi session sakincha")
+                    #     yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
+                    #     yoga_score.save()
+                    #     break
+
+                    count += 1
+                    yield (b'--frame\r\n'
+                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+            else:
+                print("Not series")
+                while cap.isOpened():
+                    ret, frame = cap.read()
+        
+                    # Recolor Feed
+                    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    image.flags.writeable = False
+                    height, width, _ = image.shape
+        
+                    # Make Detections
+                    result = pose_tracker.process(image)
+                    pose_landmarks = result.pose_landmarks
+        
+                    landmarks = []
+                    if result.pose_landmarks:
+                        for landmark in result.pose_landmarks.landmark:
+                            # Append the landmark into the list.
+                            landmarks.append((int(landmark.x * width), int(landmark.y * height)))
+        
+                    # Recolor image back to BGR for rendering
+                    image.flags.writeable = True
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    output_frame = image.copy()
+                    message = ""
+                        
+                    try:
+                        pose = pose_landmarks.landmark
+                        pose_class, pose_probability = self.get_pose_prediction(pose)
+                        print(current_pose_name)
+                        if pose_class == current_pose_name and pose_probability[2] > 0.5:
+                            correct_frames +=1
+                            self.correct_screen(output_frame)
+                        else:
+                            error_joint, error_msg = self.generate_error_message(pose)
+                            #print(error_joint, error_msg)
+                            error_msg_coords = self.get_coordinate(
+                                "_".join(error_joint.split("_")[:2]), landmarks)
+                            cv2.putText(output_frame,
+                                        error_msg,
+                                        error_msg_coords,
+                                        cv2.FONT_HERSHEY_SIMPLEX,
+                                        0.5, (255, 255, 255), 2,
+                                        cv2.LINE_AA)
+                            if pose_landmarks:
+                                self.mp_drawing.draw_landmarks(
+                                    output_frame,
+                                    pose_landmarks,
+                                    self.mp_pose.POSE_CONNECTIONS,
+                                    self.mp_drawing.DrawingSpec(
+                                        color=(0, 0, 150), thickness=2, circle_radius=2),
+                                    self. mp_drawing.DrawingSpec(
+                                        color=(0, 0, 200), thickness=2, circle_radius=2)
+                                )
+                    except Exception as e:
+                        pass
+
+                    ret, buffer = cv2.imencode('.jpg', output_frame)
+                    frame = buffer.tobytes()
+                    current_time = time.time()
+                    series_time_2=time.time()
+                    elapsed_time = current_time - start_time
+                    series_time_3=series_time_2-series_time_1
+
+                    #if correct_frames > 60:
+                    if  abs(series_time_3) > 5:
+                        print("not waiting",series_time_3)
+                        
+                        if self.series_poses[self.pose_name][-1] == current_pose_name:
+                            #draw next pose
+                            # print("hello",series_time_3)
+                            # series_count = 0
+                            pass
+                        
+                        else:
+                            correct_frames = 0
+                            series_time_1=time.time()
+                            series_count +=1
+                            print(f"Completed: {self.series_poses[self.pose_name][series_count-1]}")
+                            current_pose_name = self.series_poses[self.pose_name][series_count]  
+                    else:
+                        print("waiting",series_time_3)
+
+                    # yo jati chaincha rakhne
+                    if elapsed_time >= 20:
+                        print("This message is printed after a 20-second delay. espachi session sakincha")
+                        yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
+                        yoga_score.save()
+                        break
+
+                    count += 1
+                    yield (b'--frame\r\n'
+                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
