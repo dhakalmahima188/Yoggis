@@ -1,4 +1,6 @@
 {% extends "yoggis/common.html" %}
+
+
 {% block main %}
 
 {% load static %}
@@ -35,8 +37,8 @@
                     </div>
                     <div class="card-body">
 
-                      <p class="card-text">Lift your left Shoulder UP</p>
-                      <p class="card-text">Lift your left Shoulder UP</p>
+                      <p class="card-text">Lift your left leg UP</p>
+                      <p class="card-text">Bend Your elbow</p>
                       <p class="card-text">Lift your left Shoulder UP</p>
                       <button style="background-color:green;border-radius:8%" type="button" class="btn btn-success">
                          <span id="time">00:20 s</span> </button>
@@ -95,6 +97,8 @@ window.onload = function () {
 };
 </script>
 
+
+<!-- 
 <script>
   var redirectTime = new Date('{{ request.session.redirect_time }}');
   var currentTime = new Date();
@@ -106,7 +110,7 @@ window.onload = function () {
   } else {
       window.location.href = '{% url "congratulations" %}';
   }
-  </script>
+  </script> -->
 
 
 

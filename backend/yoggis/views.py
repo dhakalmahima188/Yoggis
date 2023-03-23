@@ -117,15 +117,15 @@ def tpose(request, pk):
     except Yoga.DoesNotExist:
         raise Http404('Book does not exist')
     
-    if request.session.get('redirect_time', None):
-        redirect_time = datetime.fromisoformat(request.session['redirect_time']).replace(tzinfo=pytz.UTC)
-        current_time = datetime.now(tz=pytz.UTC)
-        if current_time >= redirect_time:
-            del request.session['redirect_time']
-            return redirect('congratulations')
-    else:
-        redirect_time = datetime.now(tz=pytz.UTC) + timedelta(seconds=20)
-        request.session['redirect_time'] = redirect_time.isoformat()
+    # if request.session.get('redirect_time', None):
+    #     redirect_time = datetime.fromisoformat(request.session['redirect_time']).replace(tzinfo=pytz.UTC)
+    #     current_time = datetime.now(tz=pytz.UTC)
+    #     if current_time >= redirect_time:
+    #         del request.session['redirect_time']
+    #         return redirect('congratulations')
+    # else:
+        # redirect_time = datetime.now(tz=pytz.UTC) + timedelta(seconds=20)
+        # request.session['redirect_time'] = redirect_time.isoformat()
     return render(request, 'yoggis/tpose.html',context=context)
 
 def congratulations(request):
