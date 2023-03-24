@@ -84,7 +84,8 @@ class PoseDetection:
         6 : "t",
         23 : "tree",
         24:"series_1",
-        3: "warrior"
+        3: "warrior",
+        26: "downdog"
 
     }
     
@@ -229,6 +230,7 @@ class PoseDetection:
             X = pandas.DataFrame([pose_row])
             pose_detection_class = self.model.predict(X)[0]
             pose_detection_probability = self.model.predict_proba(X)[0]
+            print(pose_detection_class, pose_detection_probability)
             return pose_detection_class, pose_detection_probability
         except Exception as e:
             print("Error getting predictions: ", e)
@@ -343,10 +345,10 @@ class PoseDetection:
                         pose = pose_landmarks.landmark
                         pose_class, pose_probability = self.get_pose_prediction(
                             pose)
-                        # self.draw_on_image(
-                        #    output_frame, pose_class, pose_probability[2])
-                        if pose_class == self.pose_name and pose_probability[2] > 0.5:
+                        
+                        if pose_class == self.pose_name and round(pose_probability[np.argmax(pose_probability)],2) > 0.7:
                             message = "Maintain Pose"
+                            print("correct")
                             yoga_score.score += 1
                             yoga_score.save()
                             self.correct_screen(output_frame)
@@ -393,7 +395,6 @@ class PoseDetection:
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
             else:
-                print("Not series")
                 while cap.isOpened():
                     ret, frame = cap.read()
         
@@ -421,8 +422,15 @@ class PoseDetection:
                     try:
                         pose = pose_landmarks.landmark
                         pose_class, pose_probability = self.get_pose_prediction(pose)
-                        print(current_pose_name)
-                        if pose_class == current_pose_name and pose_probability[2] > 0.5:
+                        
+                        if current_pose_name == "tree":
+                            actual_probability = pose_probability[1]
+                        if current_pose_name == "warrior":
+                            actual_probability = pose_probability[2]
+                        if current_pose_name == "downdog":
+                            actual_probability = pose_probability[0]
+
+                        if pose_class == current_pose_name and round(pose_probability[np.argmax(pose_probability)],2) > 0.5:
                             correct_frames +=1
                             self.correct_screen(output_frame)
                         else:
