@@ -118,7 +118,6 @@ class PoseDetection:
                 reader = csv.reader(file)
                 i = 0
                 for row in reader:
-                    print(self.pose_name)
                     if row[0] == self.pose_name:
                         for i in range(1, len(row)):
                             real_pose_angles.update({keys[i-1]: float(row[i])})

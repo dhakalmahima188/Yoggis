@@ -110,9 +110,11 @@
                     {% endfor %} -->
 
                     {% for i in score_list %}
-                    <span id="value"> {{i.my_list}} </span>
-                    {% endfor %}
-
+                    {% if i.my_list %}
+                        <span id="value">{{ i.my_list }}</span>
+                    {% endif %}
+                {% endfor %}
+                
 
 
                     <div class="dropdown">

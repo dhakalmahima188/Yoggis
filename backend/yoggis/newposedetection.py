@@ -230,7 +230,6 @@ class PoseDetection:
             X = pandas.DataFrame([pose_row])
             pose_detection_class = self.model.predict(X)[0]
             pose_detection_probability = self.model.predict_proba(X)[0]
-            print(pose_detection_class, pose_detection_probability)
             return pose_detection_class, pose_detection_probability
         except Exception as e:
             print("Error getting predictions: ", e)
@@ -294,7 +293,7 @@ class PoseDetection:
         return joint_name, error_msg
 
     def generate_frames(self, request, yoga_id, debug=False):
-        start_time = time.time()
+       
         cap = cv2.VideoCapture(0)
         count = 0
         print("hello", request.user)
@@ -316,7 +315,9 @@ class PoseDetection:
         with self.mp_pose.Pose() as pose_tracker:
 
             if not self.is_series:
-                while cap.isOpened():   
+                start_time = time.time() 
+                while cap.isOpened(): 
+                    
                     ret, frame = cap.read()
 
                     # Recolor Feed
@@ -383,19 +384,26 @@ class PoseDetection:
                     frame = buffer.tobytes()
                     current_time = time.time()
                     elapsed_time = current_time - start_time
-                    # yo jati chaincha rakhne
-                    # if elapsed_time >= 20:
-                    #     print("This message is printed after a 20-second delay. espachi session sakincha")
-                    #     yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
-                    #     yoga_score.save()
-                    #     break
+                    if elapsed_time >= 15:
+                       print("This message is printed after a 15-second delay. espachi session sakincha")
+                       try:
+                        
+                        yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
+                        yoga_score.save()
+                        start_time = time.time() 
+                        break
+                       except Exception as e:
+                           yoga_score.my_list.append(yoga_score.score)
+                           print(e)
 
                     count += 1
                     yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
             else:
+                start_time = time.time()
                 while cap.isOpened():
+                    
                     ret, frame = cap.read()
         
                     # Recolor Feed
@@ -423,15 +431,10 @@ class PoseDetection:
                         pose = pose_landmarks.landmark
                         pose_class, pose_probability = self.get_pose_prediction(pose)
                         
-                        if current_pose_name == "tree":
-                            actual_probability = pose_probability[1]
-                        if current_pose_name == "warrior":
-                            actual_probability = pose_probability[2]
-                        if current_pose_name == "downdog":
-                            actual_probability = pose_probability[0]
+                        print(f" Need {current_pose_name}, detected {pose_class}, with accuracy {round(pose_probability[np.argmax(pose_probability)],2)}")      
 
-                        if pose_class == current_pose_name and round(pose_probability[np.argmax(pose_probability)],2) > 0.5:
-                            correct_frames +=1
+                        if (pose_class == current_pose_name) and (round(pose_probability[np.argmax(pose_probability)],2) > 0.5):
+                            print("ayena")
                             self.correct_screen(output_frame)
                         else:
                             error_joint, error_msg = self.generate_error_message(pose)
@@ -459,13 +462,13 @@ class PoseDetection:
 
                     ret, buffer = cv2.imencode('.jpg', output_frame)
                     frame = buffer.tobytes()
-                    current_time = time.time()
+                   
                     series_time_2=time.time()
-                    elapsed_time = current_time - start_time
+                   
                     series_time_3=series_time_2-series_time_1
 
                     #if correct_frames > 60:
-                    if  abs(series_time_3) > 10:
+                    if  abs(series_time_3) > 13:
                        # print("not waiting",series_time_3)
                         
                         if self.series_poses[self.pose_name][-1] == current_pose_name:
@@ -483,17 +486,20 @@ class PoseDetection:
                     else:
                         #print("waiting",series_time_3)
                         pass
-
+                    current_time = time.time()
+                    elapsed_time = current_time - start_time
                     # yo jati chaincha rakhne
-                    if elapsed_time >= 22:
-                       # print("This message is printed after a 20-second delay. espachi session sakincha")
-                       try:
-                        if len(yoga_score.my_list) == 0:
-                            yoga_score.my_list.append(0)
-                        yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
-                        yoga_score.save()
-                       except Exception as e:
+                    if elapsed_time >= 45:
+                        print("This message is printed after a 10-second delay. espachi session sakincha")
+                        try:                        
+                            yoga_score.my_list.append(yoga_score.score-int(yoga_score.my_list[-1]))
+                            yoga_score.save()
+                            start_time = time.time()
+                        
+                        except Exception as e:
+                           yoga_score.my_list.append(yoga_score.score)
                            print(e)
+                        break
                            
                            
                         # break
