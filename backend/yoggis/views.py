@@ -13,6 +13,7 @@ from django.contrib import messages
 from .models import Yoga, YogaScore, UserDisorder, SUserDisorder
 from django.contrib.auth.decorators import login_required
 import pytz
+from django.shortcuts import get_object_or_404
 
 if settings.SERVE:
   from .newposedetection import PoseDetection
@@ -28,6 +29,11 @@ def videofeed(request,pk):
         return response
     return HttpResponseRedirect(reverse('home'))
 
+
+def yoga_image(request, pk):
+    yoga = get_object_or_404(Yoga, pk=pk)
+    image_url = yoga.image.url
+    return render(request, 'tpose.html', {'image_url': image_url})
 
 def yoga(request):
     return render(request, 'yoggis/yoga.html')
@@ -112,20 +118,15 @@ def session(request):
 def tpose(request, pk):
     context = {}
     try:
-        yog = Yoga.objects.get(pk=pk)
+        yog = Yoga.objects.get(pk=pk)       
+        image_url = yog.image.url
+
         context['yoga'] = yog
+        context['image_url'] = image_url
+        print(image_url)
     except Yoga.DoesNotExist:
         raise Http404('Book does not exist')
-    
-    # if request.session.get('redirect_time', None):
-    #     redirect_time = datetime.fromisoformat(request.session['redirect_time']).replace(tzinfo=pytz.UTC)
-    #     current_time = datetime.now(tz=pytz.UTC)
-    #     if current_time >= redirect_time:
-    #         del request.session['redirect_time']
-    #         return redirect('congratulations')
-    # else:
-        # redirect_time = datetime.now(tz=pytz.UTC) + timedelta(seconds=20)
-        # request.session['redirect_time'] = redirect_time.isoformat()
+
     return render(request, 'yoggis/tpose.html',context=context)
 
 def congratulations(request):

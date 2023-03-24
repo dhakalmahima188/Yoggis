@@ -22,8 +22,8 @@
       <div class="card mb-5 mb-lg-0">
         <div class="card-body  d-flex flex-column">
           <div style="display: flex; padding:20px">
-            <img src="{% static 'yoggis/img/tree.jpg' %}" style="flex: 1; width: 50%;border-radius:8% ;padding: 10px">
-
+           
+            <img src="{{ yoga.image.url }}" style="flex: 1; width: 50%;border-radius:8% ;padding: 10px">
             <img src="{% url 'video_feed' pk=yoga.id %}" style="flex: 1; width: 50%;border-radius:8%;padding: 10px">
 
           </div>
