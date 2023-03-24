@@ -86,18 +86,18 @@ class PoseDetection:
         24:"series_1",
         3: "warrior",
         26: "downdog"
-
     }
     
     def __init__(self, pose_name):
-     
         self.user = None
         self.pose_name = self.yoga_id_to_name[pose_name]
+        
         # load model accordint go the pose_name
         self.model_name = self.pose_name+".pkl"
         self.model_path = "..\mediapipe\models\\" + self.model_name
         print(os.listdir('..\mediapipe\models\.'))
         self.is_series = False
+        
         if "series" in self.pose_name:
             self.is_series = True
         warnings.filterwarnings("ignore")
