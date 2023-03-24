@@ -58,8 +58,8 @@ class PoseDetection:
     ]
 
     series_poses = {
-        "series_1": ["warrior","downdog",],
-        "series_2": ['warrior', 'tree'],
+        "series_1": ["tree", "warrior","downdog"],
+        "series_2": ['tree', "t"],
     }
 
     arms_err_msgs = ['move left arm up', 'move left arm down',
@@ -83,7 +83,9 @@ class PoseDetection:
     yoga_id_to_name = {
         6 : "t",
         23 : "tree",
-        24:"series_1"
+        24:"series_1",
+        3: "warrior"
+
     }
     
     def __init__(self, pose_name):
