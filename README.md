@@ -11,7 +11,7 @@ Yoggis is an Artificial Intelligence Yoga trainer app that looks after your post
 
 People want to stay fit with simple yoga activities. Not only that, some chronic health problems like back pain also requires yoga exercises recommended by physicians. But even the slightest mistake in posture can lead to serious health problems. 
 
-![alt text](./config-./config-images/images/./config-images/image.png)
+![alt text](./config-images/image.png)
 
 ---
 ## Data and Statistics
