@@ -60,6 +60,14 @@ Our app <b>Yoggis</b> is an AI based yoga trainer app that can help you to do yo
 ## Future Enhancements
 ![alt text](./config-images/image-17.png)
 
+---
+## Contributors
+- Banshaj Paudel
+- Krishbin Paudel
+- Mahima Dhakal
+- Nadika Poudel
+- Prabigya Acharya
+
 
 ---
 ## Thank You!
