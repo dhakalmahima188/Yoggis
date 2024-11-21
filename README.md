@@ -1,37 +1,66 @@
 # Yoggis
 ## A healthy life, in the palm of your hands
 
-Yoggis is an Artificial Intelligence Yoga trainer app that looks after your posture when you try different yoga positions.
+Yoggis is an Artificial Intelligence Yoga trainer app that looks after your posture when you try different yoga positions. Basically, a personalized, on-demand yoga instruction from a virtual AI assistant that provides real-time feedback.
 
-![image credit: https://viso.ai/deep-learning/what-is-deep-learning/](https://viso.ai/wp-content/uploads/2020/10/yoga-cv-pose-visoai-1-1060x559.jpg)
+![./config-images/image credit: https://viso.ai/deep-learning/what-is-deep-learning/](https://viso.ai/wp-content/uploads/2020/10/yoga-cv-pose-visoai-1-1060x559.jpg)
+---
+
 
 ## What problems are we trying to solve?
 
 People want to stay fit with simple yoga activities. Not only that, some chronic health problems like back pain also requires yoga exercises recommended by physicians. But even the slightest mistake in posture can lead to serious health problems. 
 
-## How are we solving it?
+![alt text](./config-./config-images/images/./config-images/image.png)
 
+---
+## Data and Statistics
+![alt text](./config-images/image-1.png)
+
+---
+## How are we solving it?
 Our app <b>Yoggis</b> is an AI based yoga trainer app that can help you to do yoga in the right way. It can not only suggest you yoga exercises but also guide your posture in every step and help you to lead your life to a better and healthy life. We will guide the user with audio feedback.
 
+---
 ## What features do Yoggis have?
+![alt text](./config-images/image-2.png)
+![alt text](./config-images/image-3.png)
+![alt text](./config-images/image-4.png)
+![alt text](./config-images/image-5.png)
+![alt text](./config-images/image-13.png)
 
-- ### Realtime posture detection
-- ### Audio feedback
-- ### Progress tracking
-- ### Warning System
-- ### Yoga squad
-- ### Avatars
+---
+## System Diagram
 
+![alt text](./config-images/image-7.png)
 
-## How are we different?
+---
+## Pose Detection
+![alt text](./config-images/image-9.png)
 
-We are different from other yoga apps because we are using AI to guide you in every step. We are using a pose estimation model to detect your body posture and suggest you the right yoga exercise. We are also using a pose classification model to classify the yoga exercise you are doing and guide you in every step.
+---
+## Error Management
+![alt text](./config-images/image-10.png)
 
+---
+## Results
+![alt text](./config-images/image-19.png)
+![alt text](./config-images/image-18.png)
+
+---
 ## What technologies are we using?
+![alt text](./config-images/image-14.png)
+![alt text](./config-images/image-15.png)
 
-- ### Mediapipe
-- ### TensorFlow
-- ### ReactJS
-- ### Django
-- ### PostgreSQL
-- ### Google TTS
+---
+## Business Model
+![alt text](./config-images/image-16.png)
+
+---
+## Future Enhancements
+![alt text](./config-images/image-17.png)
+
+
+---
+## Thank You!
+
